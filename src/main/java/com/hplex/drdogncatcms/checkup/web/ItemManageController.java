@@ -30,7 +30,6 @@ public class ItemManageController {
             @RequestParam(value="SCMID", defaultValue="") String SCMID,
             Model model) throws Exception {
 
-
         return "";
     }
 
