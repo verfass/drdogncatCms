@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hplex.drdogncatcms.checkup.service.Impl.ItemManageDAO">
+
+
+    <select id="selectItemList" parameterType="String" resultType="itemManageVO">
+        SELECT
+            ID, PARENT_ID, CATEGORY_ID, ITEM_NAME, ITEM_ENG_NAME, ITEM_DESCRIPTION, ITEM_CAUSE, DISEASE_IDS, DISEASE_NAMES, PRODUCT_IDS, REF_RED, REF_GREEN, REF_BLUE, ORD, CHK_AT, DEL_AT, INS_DTTM, UPT_DTTM
+        FROM
+            t_checkup_item
+        WHERE
+            PARENT_ID = #{parentId}
+        ORDER BY
+            ID ASC
+    </select>
+
+    <select id="selectItem" parameterType="String" resultType="itemManageVO">
+        SELECT
+            ID, PARENT_ID, CATEGORY_ID, ITEM_NAME, ITEM_ENG_NAME, ITEM_DESCRIPTION, ITEM_CAUSE, DISEASE_IDS, DISEASE_NAMES, PRODUCT_IDS, REF_RED, REF_GREEN, REF_BLUE, ORD, CHK_AT, DEL_AT, INS_DTTM, UPT_DTTM
+        FROM
+            t_checkup_item
+        WHERE
+            ID = #{id}
+    </select>
+
+</mapper>

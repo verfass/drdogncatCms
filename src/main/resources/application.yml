@@ -1,1 +1,47 @@
+spring:
+  profiles:
+    active: production
 
+  # DB ??.
+  datasource:
+    hikari:
+      driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
+      jdbc-url: jdbc:log4jdbc:mariadb://115.71.238.211:13306/doctordogcat
+      username: "drdogcat"
+      password: "ekrxj!ajd@sid"
+      connectionTimeout: 30000
+      maximumPoolSize: 10
+      maxLifetime: 1800000
+      poolName: HikariCP
+      readOnly: false
+      connectionTestQuery: SELECT 1
+
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: verfass@gmail.com
+    password: zcmgbnybvddsnmpa
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+  logging:
+    config: classpath:log4j2.yml
+
+---
+
+spring:
+  profiles: local
+server:
+  port: 8081
+
+---
+
+spring:
+  profiles: production
+
+server:
+  port: 8081

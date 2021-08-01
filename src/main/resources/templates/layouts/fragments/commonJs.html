@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+>
+
+
+<commonJs th:fragment="commonJsFragment">
+
+    <!-- 공통으로 쓰이는 js파일을 넣는다.-->
+    <script src="/assets/vendor/jquery/dist/jquery.min.js"></script>
+    <script src="/assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/assets/vendor/js-cookie/js.cookie.js"></script>
+    <script src="/assets/vendor/jquery.scrollbar/jquery.scrollbar.min.js"></script>
+    <script src="/assets/vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js"></script>
+    <!-- Argon JS -->
+    <script src="/assets/js/argon.js?v=1.1.0"></script>
+    <!-- Demo JS - remove this in your project -->
+    <script src="/assets/js/demo.min.js"></script>
+    <script src="/assets/js/drdogncat.js"></script>
+    <!-- 공통으로 쓰이는 js파일을 넣는다.-->
+
+
+    <!-- 컨텐츠페이지의 스크립트 영역이 들어감 -->
+    <th:block layout:fragment="script"></th:block>
+    <!-- 컨텐츠페이지의 스크립트 영역이 들어감 -->
+
+</commonJs>
+
+</html>

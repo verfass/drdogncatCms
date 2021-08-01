@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html
+        lagn="ko"
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+>
+
+<head th:replace="layouts/fragments/config :: configFragment"></head>
+
+<commonCss th:replace="layouts/fragments/commonCss :: commonCssFragment"></commonCss>
+
+
+<body>
+
+    <leftMenu th:replace="layouts/fragments/leftMenu :: leftMenuFragment"></leftMenu>
+
+    <!-- Main content -->
+    <div class="main-content" id="panel">
+
+        <topNav th:replace="layouts/fragments/topNav :: topNavFragment"></topNav>
+
+        <pageHeader th:replace="layouts/fragments/pageHeader :: pageHeaderFragment"></pageHeader>
+
+        <!-- Page content -->
+        <div class="container-fluid mt--6">
+
+            <div layout:fragment="content"></div>
+
+            <footer th:replace="layouts/fragments/footer :: footerFragment"></footer>
+
+        </div>
+        <!-- Page content -->
+
+    </div>
+    <!-- Main content -->
+
+    <commonJs th:replace="layouts/fragments/commonJs :: commonJsFragment"></commonJs>
+
+</body>
+
+</html>

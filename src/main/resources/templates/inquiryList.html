@@ -1,0 +1,78 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<script src="/js/jquery-3.5.1.min.js"></script>
+<title><%=title%></title>
+
+</head>
+<body>
+
+<!-- wrap -->
+<img src="/img/etc/logo.png" /> <br>
+<div id="wrap">
+
+</div>
+<!-- //wrap -->
+
+<script>
+    var page_size = 50;
+    var page_idx = 0;
+    $(document).ready(function () {
+        reqList();
+    });
+
+    function reqList() {
+        $.ajax({
+            url: '/customer/inquiry_list',
+            dataType: 'json',
+            type: 'POST',
+            data: {
+                'page_size': page_size, 
+                'page_idx': page_idx
+            },
+            success: function(result) {
+                if(result) {
+                    if(result['result'] == true) {
+                        var html = "";
+                        var list = result['list'];
+                        $.each(list , function(i) {    
+                            html += '<li>';
+							html += '<a href="/customer/inquiry_detail?mode=detail&seq=' + list[i].seq + '">' + list[i].subject + '</a><br>';
+							html += '문의제목 : '+ list[i].subject + '<br>';
+							html += '문의타입 : '+ list[i].type + '<br>';
+							html += '문의내용 : '+ list[i].subject + '<br>';
+							html += '첨부이미지 : <br>';
+							html += '<div>';
+							if(list[i].attach != '') {
+								var arr = list[i].attach.split("||");
+								$.each(arr , function(i) {    
+									html += '<img src="' + arr[i] + '" alt="" style="width:50px;height:50px;">&nbsp;';
+								});
+							}   
+							html += '</div>';							
+							html += '답변여부 : '+ list[i].answer_at + '<br>';
+							html += '답변내용 : '+ list[i].answer_content + '<br>';
+							html += '답변일자 : '+ list[i].answer_dt;
+							html += '</li>';
+							
+							html += '<li></li>';
+                        });	     
+                        $('#wrap').append(html);
+                    }
+                    else {							
+                        alert('오류가 발생하였습니다. 관리자에게 문의해주세요.');								
+                    }
+                }
+            }
+        });	
+    }
+
+
+</script>
+</body>
+</html>
+
