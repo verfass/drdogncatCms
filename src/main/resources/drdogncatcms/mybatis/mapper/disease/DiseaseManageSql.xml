@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hplex.drdogncatcms.disease.service.Impl.DiseaseManageDAO">
+
+    <resultMap type="diseaseManageVO" id="diseaseVO">
+        <result property="seq" column="seq"/>
+        <result property="diseaseName" column="disease_name"/>
+        <result property="diseaseDesc" column="disease_desc"/>
+        <result property="diseaseCause" column="disease_cause"/>
+        <result property="diseasePrevent" column="disease_prevent"/>
+        <result property="chkAt" column="chk_at"/>
+        <result property="delAt" column="del_at"/>
+        <result property="insDttm" column="ins_dttm"/>
+        <result property="uptDttm" column="upt_dttm"/>
+        <result property="insUser" column="ins_user"/>
+        <result property="uptUser" column="upt_user"/>
+    </resultMap>
+
+
+    <select id="selectDiseaseList" parameterType="String" resultMap="diseaseVO">
+        SELECT
+            seq, disease_name, disease_desc, disease_cause, disease_prevent, chk_at, del_at, ins_dttm, upt_dttm, ins_user, upt_user
+        FROM
+            t_disease
+        ORDER BY
+            seq DESC
+    </select>
+
+    <select id="selectDisease" parameterType="String" resultMap="diseaseVO">
+        SELECT
+            seq, disease_name, disease_desc, disease_cause, disease_prevent, chk_at, del_at, ins_dttm, upt_dttm, ins_user, upt_user
+        FROM
+            t_disease
+        WHERE
+            seq = #{seq}
+    </select>
+
+</mapper>

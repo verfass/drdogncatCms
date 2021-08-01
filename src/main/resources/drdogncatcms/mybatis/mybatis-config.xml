@@ -7,5 +7,6 @@
     </settings>
     <typeAliases>
         <typeAlias type="com.hplex.drdogncatcms.checkup.service.ItemManageVO" alias="itemManageVO" />
+        <typeAlias type="com.hplex.drdogncatcms.disease.service.DiseaseManageVO" alias="diseaseManageVO" />
     </typeAliases>
 </configuration>

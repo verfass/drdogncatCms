@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 @Controller
 @Log4j2
@@ -21,16 +22,22 @@ public class ItemManageController {
 
     private ItemManageService itemManageService;
 
-    @GetMapping("/checkup/item")
-    public String item(
+    @GetMapping("/checkup/itemList")
+    public String itemList(
             HttpServletRequest request,
             HttpServletResponse response,
             @ModelAttribute("itemSearchVO") ItemDefaultVO itemSearchVO,
             @ModelAttribute("itemManageVO") ItemManageVO itemManageVO,
-            @RequestParam(value="SCMID", defaultValue="") String SCMID,
+            @RequestParam(value="categoryId", defaultValue="101") String categoryId,
             Model model) throws Exception {
 
-        return "";
+        log.info("itemList start ====================== ");
+
+        List<ItemManageVO> resultList = itemManageService.selectItemList(categoryId);
+
+        model.addAttribute("list", resultList);
+
+        return "checkup/itemList";
     }
 
 
