@@ -11,7 +11,7 @@ public interface ItemManageService {
     public ItemManageVO selectItem(String id) throws Exception;
 
     // update one
-
+    public void updateItem(ItemManageVO itemManageVO) throws Exception;
 
 
 }

@@ -11,5 +11,5 @@ public interface DiseaseManageService {
     public DiseaseManageVO selectDisease(String seq) throws Exception;
 
     // update one
-
+    public void updateDisease(DiseaseManageVO diseaseManageVO) throws Exception;
 }

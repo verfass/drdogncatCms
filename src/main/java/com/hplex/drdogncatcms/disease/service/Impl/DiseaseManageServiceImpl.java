@@ -1,6 +1,5 @@
 package com.hplex.drdogncatcms.disease.service.Impl;
 
-import com.hplex.drdogncatcms.checkup.service.Impl.ItemManageDAO;
 import com.hplex.drdogncatcms.disease.service.DiseaseManageService;
 import com.hplex.drdogncatcms.disease.service.DiseaseManageVO;
 import lombok.AllArgsConstructor;
@@ -29,5 +28,8 @@ public class DiseaseManageServiceImpl implements DiseaseManageService {
     }
 
     // update one
-
+    @Override
+    public void updateDisease(DiseaseManageVO diseaseManageVO) throws Exception {
+        diseaseManageDAO.updateDisease(diseaseManageVO);
+    }
 }

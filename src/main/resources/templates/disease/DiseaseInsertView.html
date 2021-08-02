@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layouts/layoutDefault}">
+
+<!-- 페이지 고유 CSS 추가 -->
+<th:block layout:fragment="css">
+    <!-- Page plugins -->
+    <link rel="stylesheet" href="/assets/vendor/datatables.net-bs4/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="/assets/vendor/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css">
+    <link rel="stylesheet" href="/assets/vendor/datatables.net-select-bs4/css/select.bootstrap4.min.css">
+</th:block>
+<!-- 페이지 고유 CSS 추가 -->
+
+<!-- 페이지 고유 스크립트 추가 -->
+<th:block layout:fragment="script">
+    <!-- Optional JS -->
+    <script src="/assets/vendor/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="/assets/vendor/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
+    <script src="/assets/vendor/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="/assets/vendor/datatables.net-buttons-bs4/js/buttons.bootstrap4.min.js"></script>
+    <script src="/assets/vendor/datatables.net-buttons/js/buttons.html5.min.js"></script>
+    <script src="/assets/vendor/datatables.net-buttons/js/buttons.flash.min.js"></script>
+    <script src="/assets/vendor/datatables.net-buttons/js/buttons.print.min.js"></script>
+    <script src="/assets/vendor/datatables.net-select/js/dataTables.select.min.js"></script>
+    <!-- Optional JS -->
+</th:block>
+<!-- 페이지 고유 스크립트 추가 -->
+
+<div layout:fragment="content">
+    <!--시작  -->
+
+    <div class="card">
+        <!-- Card header -->
+        <div class="card-header">
+            <h3 class="mb-0">검사항목명</h3>
+        </div>
+        <!-- Card body -->
+        <div class="card-body">
+            <div class="row">
+                <div class="col-lg-8">
+                    <p class="mb-0">
+                        설명
+                    </p>
+                </div>
+            </div>
+            <hr />
+            <form method="post" action="#" th:action="@{/checkup/ItemSelectUpdt}" th:object="${itemManageVO}" name="itemManageVO" id="itemManageVO">
+
+                <div class="form-row">
+                    <div class="col-md-4 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="id">검사항목ID</label>
+                            <input type="text" th:field="*{id}" name="id" id="id" placeholder="" class="form-control" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="itemName">검사항목명</label>
+                            <input type="text" th:field="*{itemName}" name="itemName" id="itemName" placeholder="" class="form-control" required>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="itemEngName">검사항목명(영문)</label>
+                            <input type="text" th:field="*{itemEngName}" name="itemEngName" id="itemEngName" placeholder="" class="form-control">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="col-md-12 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="itemDescription">검사항목 설명</label>
+                            <textarea th:field="*{itemDescription}" name="itemDescription" id="itemDescription" rows="5" class="form-control"></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="col-md-12 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="itemCause">검사항목 원인</label>
+                            <textarea th:field="*{itemCause}" name="itemCause" id="itemCause" rows="5" class="form-control"></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="col-md-12 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="diseaseIds">질병코드 목록</label>
+                            <input type="text" th:field="*{diseaseIds}" name="diseaseIds" id="diseaseIds" placeholder="" class="form-control" readonly>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="col-md-12 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="diseaseNames">질병명 목록</label>
+                            <input type="text" th:field="*{diseaseNames}" name="diseaseNames" id="diseaseNames" placeholder="" class="form-control" readonly>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="col-md-4 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="refRed">RGB 기준 값 RED</label>
+                            <input type="text" th:field="*{refRed}" name="refRed" id="refRed" placeholder="" class="form-control" required>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="refGreen">RGB 기준 값 GREEN</label>
+                            <input type="text" th:field="*{refGreen}" name="refGreen" id="refGreen" placeholder="" class="form-control" required>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="refBlue">RGB 기준 값 BLUE</label>
+                            <input type="text" th:field="*{refBlue}" name="refBlue" id="refBlue" placeholder="" class="form-control">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="ord">순서</label>
+                            <input type="text" th:field="*{ord}" name="ord" id="ord" placeholder="" class="form-control">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="chkAt">활성</label>
+                            <input type="text" th:field="*{chkAt}" name="chkAt" id="chkAt" placeholder="" class="form-control">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="col-md-4 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="insDttm">등록일시</label>
+                            <input type="text" th:field="*{insDttm}" name="insDttm" id="insDttm" placeholder="" class="form-control" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="uptDttm">수정일시</label>
+                            <input type="text" th:field="*{uptDttm}" name="uptDttm" id="uptDttm" placeholder="" class="form-control" readonly>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="btn btn-primary" type="submit">수정하기</button>
+
+            </form>
+
+        </div>
+    </div>
+
+
+    <!-- 끝  -->
+</div>
+
+</html>

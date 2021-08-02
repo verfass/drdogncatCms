@@ -1,6 +1,5 @@
 package com.hplex.drdogncatcms.disease.service.Impl;
 
-import com.hplex.drdogncatcms.checkup.service.ItemManageVO;
 import com.hplex.drdogncatcms.disease.service.DiseaseManageVO;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
@@ -18,5 +17,5 @@ public interface DiseaseManageDAO {
     public DiseaseManageVO selectDisease(String seq);
 
     // update one
-
+    public void updateDisease(DiseaseManageVO diseaseManageVO);
 }

@@ -1,16 +1,18 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layouts/layoutDefault}">
 
-<!-- index.html 고유 CSS 추가 -->
+<!-- 페이지 고유 CSS 추가 -->
 <th:block layout:fragment="css">
     <!-- Page plugins -->
     <link rel="stylesheet" href="/assets/vendor/datatables.net-bs4/css/dataTables.bootstrap4.min.css">
     <link rel="stylesheet" href="/assets/vendor/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css">
     <link rel="stylesheet" href="/assets/vendor/datatables.net-select-bs4/css/select.bootstrap4.min.css">
 </th:block>
+<!-- 페이지 고유 CSS 추가 -->
 
-<!-- index.html 고유 스크립트 추가 -->
+<!-- 페이지 고유 스크립트 추가 -->
 <th:block layout:fragment="script">
+
     <!-- Optional JS -->
     <script src="/assets/vendor/datatables.net/js/jquery.dataTables.min.js"></script>
     <script src="/assets/vendor/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
@@ -21,11 +23,34 @@
     <script src="/assets/vendor/datatables.net-buttons/js/buttons.print.min.js"></script>
     <script src="/assets/vendor/datatables.net-select/js/dataTables.select.min.js"></script>
     <!-- Optional JS -->
+    <script type="text/javascript">
+        $(function () {
+            $.fnSelect = function(cd){
+                $("input[name=selectedCd]").val(cd);
+                $("#listForm").attr("action", "/checkup/ItemSelectUpdtView");
+                $("#listForm").submit();
+            }
+        });
+    </script>
+
+    <script  th:inline="javascript">
+        /*<![CDATA[*/
+        var resultMsg = "[[${resultMsg}]]";
+        if (resultMsg.length > 0) alert(testValue);
+        /*]]>*/
+    </script>
+
 </th:block>
+<!-- 페이지 고유 스크립트 추가 -->
 
 <div layout:fragment="content">
     <!--시작  -->
 
+    <!-- listForm -->
+    <form method="post" name="listForm" id="listForm">
+        <input type="hidden" name="selectedCd" id="selectedCd" />
+    </form>
+    <!-- listForm -->
 
     <!-- Table -->
     <div class="row">
@@ -33,8 +58,8 @@
             <div class="card">
                 <!-- Card header -->
                 <div class="card-header">
-                    <h3 class="mb-0">10종 검사 관리</h3>
-                    <p class="text-sm mb-0">
+                    <h3 class="mb-0" th:text="${selectedCd == '101'} ? '10종 검사 관리' : '신장 검사 관리'">10종 검사 관리</h3>
+                    <p class="text-sm mb-0" th:text="${selectedCd == '101'} ? '10종 검사 항목을 관리합니다.' : '신장 검사 항목을 관리합니다.'">
                         10종 검사 항목을 관리합니다.
                     </p>
                 </div>
@@ -42,38 +67,31 @@
                     <table class="table table-flush" id="datatable-basic">
                         <thead class="thead-light">
                         <tr>
-                            <th>항목코드</th>
-                            <th>항목명</th>
-                            <th>항목명(영문)</th>
+                            <th>검사항목ID</th>
+                            <th>검사항목명</th>
+                            <th>검사항목명(영문)</th>
+                            <th>질병코드</th>
                             <th>R</th>
                             <th>G</th>
                             <th>B</th>
+                            <th>사용여부</th>
                             <th>등록일시</th>
                             <th>수정일시</th>
                         </tr>
                         </thead>
-                        <tfoot>
-                        <tr>
-                            <th>항목코드</th>
-                            <th>항목명</th>
-                            <th>항목명(영문)</th>
-                            <th>R</th>
-                            <th>G</th>
-                            <th>B</th>
-                            <th>등록일시</th>
-                            <th>수정일시</th>
-                        </tr>
-                        </tfoot>
+
                         <tbody>
-                        <tr th:each="item : ${list}">
+                        <tr th:each="item : ${list}" th:attr="onclick=|$.fnSelect('${item.id}');|">
                             <td th:text="${item.id}">10101</td>
                             <td th:text="${item.itemName}">잠혈</td>
                             <td th:text="${item.itemEngName}">Occult blood</td>
+                            <td th:text="${item.diseaseIds}">Occult blood</td>
                             <td th:text="${item.refRed}">23</td>
                             <td th:text="${item.refGreen}">139</td>
                             <td th:text="${item.refBlue}">56</td>
-                            <th th:text="${item.insDttm}">2021-02-16 15:38:00</th>
-                            <th th:text="${item.uptDttm}">2021-02-16 15:38:00</th>
+                            <td th:text="${item.chkAt}">56</td>
+                            <td th:text="${item.insDttm}">2021-02-16 15:38:00</td>
+                            <td th:text="${item.uptDttm}">2021-02-16 15:38:00</td>
                         </tr>
                         </tbody>
                     </table>

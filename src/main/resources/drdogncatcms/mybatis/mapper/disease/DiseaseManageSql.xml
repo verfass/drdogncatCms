@@ -36,4 +36,20 @@
             seq = #{seq}
     </select>
 
+    <update id="updateDisease" parameterType="diseaseManageVO">
+
+        UPDATE t_disease
+        SET
+            disease_name = #{diseaseName},
+            disease_desc = #{diseaseDesc},
+            disease_cause = #{diseaseCause},
+            disease_prevent = #{diseasePrevent},
+            chk_at = #{chkAt},
+            upt_dttm = now(),
+            upt_user = #{uptUser}
+        WHERE
+            seq = #{seq}
+
+    </update>
+
 </mapper>

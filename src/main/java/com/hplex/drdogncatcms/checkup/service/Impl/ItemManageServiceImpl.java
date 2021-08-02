@@ -30,4 +30,8 @@ public class ItemManageServiceImpl implements ItemManageService {
     }
 
     // update one
+    @Override
+    public void updateItem(ItemManageVO itemManageVO) throws Exception {
+        itemManageDAO.updateItem(itemManageVO);
+    }
 }

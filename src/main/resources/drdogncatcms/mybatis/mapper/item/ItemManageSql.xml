@@ -45,4 +45,26 @@
             ID = #{id}
     </select>
 
+    <update id="updateItem" parameterType="itemManageVO">
+
+        UPDATE t_checkup_item
+        SET
+            ITEM_NAME = #{itemName},
+            ITEM_ENG_NAME = #{itemEngName},
+            ITEM_DESCRIPTION = #{itemDescription},
+            ITEM_CAUSE = #{itemCause},
+            DISEASE_IDS = #{diseaseIds},
+            DISEASE_NAMES = #{diseaseNames},
+            PRODUCT_IDS = #{productIds},
+            REF_RED = #{refRed},
+            REF_GREEN = #{refGreen},
+            REF_BLUE = #{refBlue},
+            ORD = #{ord},
+            CHK_AT = #{chkAt},
+            UPT_DTTM = now()
+        WHERE
+            ID = #{id}
+
+    </update>
+
 </mapper>

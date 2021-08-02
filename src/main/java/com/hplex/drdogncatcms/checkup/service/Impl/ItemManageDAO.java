@@ -17,6 +17,6 @@ public interface ItemManageDAO {
     public ItemManageVO selectItem(String id);
 
     // update one
-
+    public void updateItem(ItemManageVO itemManageVO);
 
 }
