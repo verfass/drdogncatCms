@@ -81,7 +81,7 @@
                         </thead>
 
                         <tbody>
-                        <tr th:each="item : ${list}" th:attr="onclick=|$.fnSelect('${item.id}');|">
+                        <tr th:each="item : ${resultList}" th:attr="onclick=|$.fnSelect('${item.id}');|">
                             <td th:text="${item.id}">10101</td>
                             <td th:text="${item.itemName}">잠혈</td>
                             <td th:text="${item.itemEngName}">Occult blood</td>

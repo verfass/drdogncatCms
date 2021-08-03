@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hplex.drdogncatcms.disease.service.Impl.DiseaseRefManageDAO">
+
+    <resultMap type="diseaseRefManageVO" id="diseaseRefVO">
+        <result property="seq" column="seq"/>
+        <result property="itemId" column="item_id"/>
+        <result property="diseaseId" column="disease_id"/>
+        <result property="diseaseName" column="disease_name"/>
+    </resultMap>
+
+
+    <select id="selectDiseaseRefList" resultMap="diseaseRefVO">
+        SELECT
+            dis.seq seq,
+            dis.item_id item_id,
+            dis. disease_id disease_id,
+            (SELECT disease_name FROM t_disease WHERE seq = dis.disease_id LIMIT 1) disease_name
+        FROM
+            t_diseaseref AS dis
+        WHERE
+            1=1
+        <if test="searchItemId != ''">
+            AND
+            dis.item_id = #{searchItemId}
+        </if>
+        <if test="strSubQuery != ''">
+            AND
+            ${strSubjectQuery}
+        </if>
+        <if test="groupByQuery != ''">
+            GROUP BY
+            ${groupByQuery}
+        </if>
+        <if test="orderByQuery != ''">
+            ORDER BY
+            ${orderByQuery}
+        </if>
+    </select>
+
+    <select id="selectDiseaseRef" parameterType="String" resultMap="diseaseRefVO">
+        SELECT
+            seq, item_id, disease_id
+        FROM
+            t_diseaseref
+        WHERE
+            seq = #{seq}
+    </select>
+
+    <select id="selectDiseaseCnt" parameterType="hashmap" resultType="Integer">
+        SELECT
+            COUNT(*) cnt
+        FROM
+            t_diseaseref
+        WHERE
+            1=1
+            AND
+            item_id = #{itemId}
+            AND
+            disease_id = #{diseaseId}
+    </select>
+
+    <insert id="insertDiseaseRef" parameterType="diseaseRefManageVO">
+
+        INSERT INTO t_diseaseref
+            (item_id, disease_id)
+        VALUES
+            (#{itemId},#{diseaseId})
+
+    </insert>
+
+    <delete id="deleteDiseaseRef" parameterType="String">
+
+        DELETE FROM t_diseaseref
+        WHERE
+            item_id = #{itemId}
+    </delete>
+
+</mapper>

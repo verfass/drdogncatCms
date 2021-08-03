@@ -2,11 +2,14 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layouts/layoutDefault}">
 
 <!-- 페이지 고유 CSS 추가 -->
+
 <th:block layout:fragment="css">
     <!-- Page plugins -->
     <link rel="stylesheet" href="/assets/vendor/datatables.net-bs4/css/dataTables.bootstrap4.min.css">
     <link rel="stylesheet" href="/assets/vendor/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css">
     <link rel="stylesheet" href="/assets/vendor/datatables.net-select-bs4/css/select.bootstrap4.min.css">
+    <link rel="stylesheet" href="/assets/vendor/bootstrap-tagsinput/dist/bootstrap-tagsinput.css">
+    <link rel="stylesheet" href="/assets/vendor/bootstrap-tagsinput/dist/bootstrap-tagsinput-typeahead.css">
 </th:block>
 <!-- 페이지 고유 CSS 추가 -->
 
@@ -21,9 +24,31 @@
     <script src="/assets/vendor/datatables.net-buttons/js/buttons.flash.min.js"></script>
     <script src="/assets/vendor/datatables.net-buttons/js/buttons.print.min.js"></script>
     <script src="/assets/vendor/datatables.net-select/js/dataTables.select.min.js"></script>
+    <script src="/assets/vendor/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js"></script>
+
     <!-- Optional JS -->
-    <script type="text/javascript">
+
+    <script th:inline="javascript">
         $(function () {
+
+            // 질병목록 처리
+            $.fnCreateTags = function () {
+                let diseaseRefList = [[${diseaseRefList}]];
+                diseaseRefList.forEach(function(item){
+                    $("#diseases").tagsinput('add', item.diseaseId+"."+item.diseaseName);
+                });
+            };
+
+            $.fnCreateTags();
+
+            $("#diseases").focus(function(){
+                $("#diseases").blur();
+            });
+
+            $.fnTagsInput = function(diseaseName) {
+                $("#diseases").tagsinput('add', diseaseName);
+            };
+
             $.fnUpdate = function(form){
                 if($("input:checkbox[name=chkAtBox]").is(":checked") == true) {
                     $("input[name=chkAt]").val('1');
@@ -32,6 +57,7 @@
                 }
                 $("#form").submit();
             };
+
         });
     </script>
 
@@ -100,17 +126,15 @@
                 <div class="form-row">
                     <div class="col-md-12 mb-3">
                         <div class="form-group">
-                            <label class="form-control-label" for="diseaseIds">질병코드 목록</label>
-                            <input type="text" th:field="*{diseaseIds}" name="diseaseIds" id="diseaseIds" placeholder="" class="form-control" readonly>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-row">
-                    <div class="col-md-12 mb-3">
-                        <div class="form-group">
-                            <label class="form-control-label" for="diseaseNames">질병명 목록</label>
-                            <input type="text" th:field="*{diseaseNames}" name="diseaseNames" id="diseaseNames" placeholder="" class="form-control" readonly>
+                            <label class="form-control-label" for="diseaseIds">질병 목록</label>
+                            <input type="hidden" th:field="*{diseaseIds}" name="diseaseIds" id="diseaseIds">
+                            <input type="hidden" th:field="*{diseaseNames}" name="diseaseNames" id="diseaseNames">
+                            <input type="text" th:field="*{diseases}" name="diseases" id="diseases" placeholder="" class="form-control" data-toggle="tags" >
+                            <div class="diseaseSamples">
+                                <th:block th:each="list : ${diseaseList}">
+                                    <button type="button" class="btn btn-primary btn-sm" th:text="${list.seq + '.' + list.diseaseName}" th:attr="onclick=|$.fnTagsInput('${list.seq}.${list.diseaseName}');|"></button>
+                                </th:block>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -149,10 +173,12 @@
                     <div class="col-md-2 mb-3">
                         <div class="form-group">
                             <label class="form-control-label" for="chkAtBox">사용여부</label>
-                            <div class="custom-control custom-checkbox mb-3">
-                                <input type="hidden" th:field="*{chkAt}" name="chkAt" id="chkAt">
-                                <input type="checkbox" th:checked="${itemManageVO.chkAt=='1' ? true: false}" name="chkAtBox" id="chkAtBox" class="custom-control-input">
-                                <label class="custom-control-label" for="chkAtBox"></label>
+                            <div class="mb-3">
+                                <label class="custom-toggle">
+                                    <input type="hidden" th:field="*{chkAt}" name="chkAt" id="chkAt">
+                                    <input type="checkbox" th:checked="${itemManageVO.chkAt=='1' ? true: false}" name="chkAtBox" id="chkAtBox">
+                                    <span class="custom-toggle-slider rounded-circle" data-label-off="중지" data-label-on="사용"></span>
+                                </label>
                             </div>
                         </div>
                     </div>

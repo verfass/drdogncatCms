@@ -1,5 +1,6 @@
 package com.hplex.drdogncatcms.disease.service.Impl;
 
+import com.hplex.drdogncatcms.disease.service.DiseaseDefaultVO;
 import com.hplex.drdogncatcms.disease.service.DiseaseManageVO;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
@@ -11,7 +12,7 @@ import java.util.List;
 public interface DiseaseManageDAO {
 
     // select list
-    public List<DiseaseManageVO> selectDiseaseList();
+    public List<?> selectDiseaseList(DiseaseDefaultVO diseaseSearchVO);
 
     // select one
     public DiseaseManageVO selectDisease(String seq);

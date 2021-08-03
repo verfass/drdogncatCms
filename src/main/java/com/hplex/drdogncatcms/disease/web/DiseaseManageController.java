@@ -32,7 +32,16 @@ public class DiseaseManageController {
 
         log.info("itemList start ====================== ");
 
-        List<DiseaseManageVO> resultList = diseaseManageService.selectDiseaseList();
+        String strSubQuery = "";
+        String orderByQuery = "";
+        String groupByQuery = "";
+        orderByQuery = orderByQuery + " seq DESC ";
+
+        diseaseSearchVO.setStrSubQuery(strSubQuery);
+        diseaseSearchVO.setOrderByQuery(orderByQuery);
+        diseaseSearchVO.setGroupByQuery(groupByQuery);
+
+        List<?> resultList = diseaseManageService.selectDiseaseList(diseaseSearchVO);
 
         model.addAttribute("list", resultList);
 

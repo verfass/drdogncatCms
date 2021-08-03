@@ -1,5 +1,6 @@
 package com.hplex.drdogncatcms.disease.service.Impl;
 
+import com.hplex.drdogncatcms.disease.service.DiseaseDefaultVO;
 import com.hplex.drdogncatcms.disease.service.DiseaseManageService;
 import com.hplex.drdogncatcms.disease.service.DiseaseManageVO;
 import lombok.AllArgsConstructor;
@@ -18,11 +19,13 @@ public class DiseaseManageServiceImpl implements DiseaseManageService {
     private DiseaseManageDAO diseaseManageDAO;
 
     // select list
-    public List<DiseaseManageVO> selectDiseaseList() throws Exception {
-        return diseaseManageDAO.selectDiseaseList();
+    @Override
+    public List<?> selectDiseaseList(DiseaseDefaultVO diseaseSearchVO) throws Exception {
+        return diseaseManageDAO.selectDiseaseList(diseaseSearchVO);
     }
 
     // select one
+    @Override
     public DiseaseManageVO selectDisease(String seq) throws Exception {
         return diseaseManageDAO.selectDisease(seq);
     }

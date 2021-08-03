@@ -5,7 +5,7 @@ import java.util.List;
 public interface DiseaseManageService {
 
     // select list
-    public List<DiseaseManageVO> selectDiseaseList() throws Exception;
+    public List<?> selectDiseaseList(DiseaseDefaultVO diseaseSearchVO) throws Exception;
 
     // select one
     public DiseaseManageVO selectDisease(String seq) throws Exception;

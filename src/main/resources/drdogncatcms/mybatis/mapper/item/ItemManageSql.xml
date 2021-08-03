@@ -25,15 +25,33 @@
     </resultMap>
 
 
-    <select id="selectItemList" parameterType="String" resultMap="itemVO">
+    <select id="selectItemList" resultMap="itemVO">
         SELECT
             ID, PARENT_ID, CATEGORY_ID, ITEM_NAME, ITEM_ENG_NAME, ITEM_DESCRIPTION, ITEM_CAUSE, DISEASE_IDS, DISEASE_NAMES, PRODUCT_IDS, REF_RED, REF_GREEN, REF_BLUE, ORD, CHK_AT, DEL_AT, INS_DTTM, UPT_DTTM
         FROM
             t_checkup_item
         WHERE
-            CATEGORY_ID = #{categoryId}
+            1=1
+        <if test="searchCategoryId != ''">
+            AND
+            CATEGORY_ID = #{searchCategoryId}
+        </if>
+        <if test="searchChkAt != ''">
+            AND
+            CHK_AT = #{searchChkAt}
+        </if>
+        <if test="strSubQuery != ''">
+            AND
+            ${strSubjectQuery}
+        </if>
+        <if test="groupByQuery != ''">
+        GROUP BY
+            ${groupByQuery}
+        </if>
+        <if test="orderByQuery != ''">
         ORDER BY
-            ORD ASC
+            ${orderByQuery}
+        </if>
     </select>
 
     <select id="selectItem" parameterType="String" resultMap="itemVO">

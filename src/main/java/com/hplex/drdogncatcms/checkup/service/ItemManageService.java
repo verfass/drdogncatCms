@@ -5,7 +5,7 @@ import java.util.List;
 public interface ItemManageService {
 
     // select list
-    public List<ItemManageVO> selectItemList(String parentId) throws Exception;
+    public List<?> selectItemList(ItemDefaultVO itemSearchVO) throws Exception;
 
     // select one
     public ItemManageVO selectItem(String id) throws Exception;

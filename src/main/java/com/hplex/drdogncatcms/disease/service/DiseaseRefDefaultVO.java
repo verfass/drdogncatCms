@@ -11,12 +11,13 @@ import java.io.Serializable;
 @Getter
 @ToString
 @NoArgsConstructor
-public class DiseaseDefaultVO  implements Serializable {
+public class DiseaseRefDefaultVO implements Serializable {
 
-    private static final long serialVersionUID = -7510631968380806859L;
+    private static final long serialVersionUID = -2980265792842392299L;
 
     private String searchKeyword = "";
-    private String searchChkAt = "";
+//    private String searchChkAt = "";
+    private String searchItemId = "";
     private String strSubQuery = "";
     private String groupByQuery = "";
     private String orderByQuery = "";

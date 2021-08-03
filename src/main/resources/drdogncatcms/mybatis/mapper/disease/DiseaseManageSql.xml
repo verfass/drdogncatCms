@@ -18,13 +18,29 @@
     </resultMap>
 
 
-    <select id="selectDiseaseList" parameterType="String" resultMap="diseaseVO">
+    <select id="selectDiseaseList" resultMap="diseaseVO">
         SELECT
             seq, disease_name, disease_desc, disease_cause, disease_prevent, chk_at, del_at, ins_dttm, upt_dttm, ins_user, upt_user
         FROM
             t_disease
-        ORDER BY
-            seq DESC
+        WHERE
+            1=1
+        <if test="searchChkAt != ''">
+            AND
+            CHK_AT = #{searchChkAt}
+        </if>
+        <if test="strSubQuery != ''">
+            AND
+            ${strSubjectQuery}
+        </if>
+        <if test="groupByQuery != ''">
+            GROUP BY
+            ${groupByQuery}
+        </if>
+        <if test="orderByQuery != ''">
+            ORDER BY
+            ${orderByQuery}
+        </if>
     </select>
 
     <select id="selectDisease" parameterType="String" resultMap="diseaseVO">

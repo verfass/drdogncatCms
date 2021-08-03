@@ -1,5 +1,6 @@
 package com.hplex.drdogncatcms.checkup.service.Impl;
 
+import com.hplex.drdogncatcms.checkup.service.ItemDefaultVO;
 import com.hplex.drdogncatcms.checkup.service.ItemManageVO;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
@@ -11,7 +12,7 @@ import java.util.List;
 public interface ItemManageDAO {
 
     // select list
-    public List<ItemManageVO> selectItemList(String parentId);
+    public List<?> selectItemList(ItemDefaultVO itemSearchVO);
 
     // select one
     public ItemManageVO selectItem(String id);

@@ -1,5 +1,6 @@
 package com.hplex.drdogncatcms.checkup.service.Impl;
 
+import com.hplex.drdogncatcms.checkup.service.ItemDefaultVO;
 import com.hplex.drdogncatcms.checkup.service.ItemManageService;
 import com.hplex.drdogncatcms.checkup.service.ItemManageVO;
 import lombok.AllArgsConstructor;
@@ -19,8 +20,8 @@ public class ItemManageServiceImpl implements ItemManageService {
 
     // select list
     @Override
-    public List<ItemManageVO> selectItemList(String parentId) throws Exception{
-        return itemManageDAO.selectItemList(parentId);
+    public List<?> selectItemList(ItemDefaultVO itemSearchVO) throws Exception{
+        return itemManageDAO.selectItemList(itemSearchVO);
     }
 
     // select one

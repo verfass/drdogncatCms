@@ -23,6 +23,7 @@ public class ItemManageVO extends ItemDefaultVO {
     private String itemCause;
     private String diseaseIds;
     private String diseaseNames;
+    private String diseases;
     private String productIds;
     private String refRed;
     private String refGreen;

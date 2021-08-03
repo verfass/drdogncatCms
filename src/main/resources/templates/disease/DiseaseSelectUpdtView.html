@@ -103,10 +103,12 @@
                     <div class="col-md-2 mb-3">
                         <div class="form-group">
                             <label class="form-control-label" for="chkAtBox">사용여부</label>
-                            <div class="custom-control custom-checkbox mb-3">
-                                <input type="hidden" th:field="*{chkAt}" name="chkAt" id="chkAt">
-                                <input type="checkbox" th:checked="${diseaseManageVO.chkAt=='1' ? true: false}" name="chkAtBox" id="chkAtBox" class="custom-control-input">
-                                <label class="custom-control-label" for="chkAtBox"></label>
+                            <div class="mb-3">
+                                <label class="custom-toggle">
+                                    <input type="hidden" th:field="*{chkAt}" name="chkAt" id="chkAt">
+                                    <input type="checkbox" th:checked="${diseaseManageVO.chkAt=='1' ? true: false}" name="chkAtBox" id="chkAtBox">
+                                    <span class="custom-toggle-slider rounded-circle" data-label-off="중지" data-label-on="사용"></span>
+                                </label>
                             </div>
                         </div>
                     </div>
