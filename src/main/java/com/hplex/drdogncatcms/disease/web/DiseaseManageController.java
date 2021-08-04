@@ -49,6 +49,33 @@ public class DiseaseManageController {
 
     }
 
+    @RequestMapping("/disease/DiseaseInsertView")
+    public String diseaseInsertView(
+            @ModelAttribute("diseaseSearchVO") DiseaseDefaultVO diseaseSearchVO,
+            @ModelAttribute("diseaseManageVO") DiseaseManageVO diseaseManageVO,
+            Model model
+    )throws Exception {
+
+        log.info("diseaseInsertView start ====================== ");
+
+        return "/disease/DiseaseInsertView";
+
+    }
+
+    @RequestMapping("/disease/DiseaseInsert")
+    public String diseaseInsert(
+            @ModelAttribute("diseaseManageVO") DiseaseManageVO diseaseManageVO,
+            Model model
+    )throws Exception {
+
+        diseaseManageService.insertDisease(diseaseManageVO);
+
+        model.addAttribute("resultMsg", "입력 되었습니다.");
+
+        return "forward:/disease/DiseaseList";
+    }
+
+
     @RequestMapping("/disease/DiseaseSelectUpdtView")
     public String diseaseSelectUpdtView(
             @RequestParam(value="selectedCd", defaultValue="101") String selectedCd,

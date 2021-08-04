@@ -31,12 +31,12 @@ public class ItemManageController {
             HttpServletResponse response,
             @ModelAttribute("itemSearchVO") ItemDefaultVO itemSearchVO,
             @ModelAttribute("itemManageVO") ItemManageVO itemManageVO,
-            @RequestParam(value="selectedCd", defaultValue="101") String selectedCd,
+            @RequestParam(value="categoryId", defaultValue="101") String categoryId,
             Model model) throws Exception {
 
         log.info("itemList start ====================== ");
 
-        itemSearchVO.setSearchCategoryId(selectedCd);
+        itemSearchVO.setSearchCategoryId(categoryId);
         String strSubQuery = "";
         String orderByQuery = "";
         String groupByQuery = "";
@@ -48,7 +48,7 @@ public class ItemManageController {
         List<?> resultList = itemManageService.selectItemList(itemSearchVO);
 
         model.addAttribute("resultList", resultList);
-        model.addAttribute("selectedCd", selectedCd);
+        model.addAttribute("categoryId", categoryId);
 
         return "/checkup/ItemListView";
     }
@@ -125,7 +125,9 @@ public class ItemManageController {
 
         model.addAttribute("resultMsg", "수정 되었습니다.");
 
-        return "forward:/checkup/ItemList?selectCd="+itemManageVO.getParentId();
+        log.info("itemManageVO.getCategoryId() : " + itemManageVO.getCategoryId());
+
+        return "forward:/checkup/ItemList?categoryId="+itemManageVO.getCategoryId();
 
     }
 

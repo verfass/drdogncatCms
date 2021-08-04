@@ -21,47 +21,118 @@
     <script src="/assets/vendor/datatables.net-buttons/js/buttons.flash.min.js"></script>
     <script src="/assets/vendor/datatables.net-buttons/js/buttons.print.min.js"></script>
     <script src="/assets/vendor/datatables.net-select/js/dataTables.select.min.js"></script>
+    <script src="/se2/js/service/HuskyEZCreator.js" charset="utf-8"></script>
     <!-- Optional JS -->
+    <script type="text/javascript">
+        $(function () {
+
+            $("#menu30").click();
+            $("#bread1").text("닥터멍냥");
+            $("#bread2").text("검사관리");
+            $("#bread3").text("질병관리");
+
+
+            var oEditors = [];
+            var oEditors2 = [];
+            var oEditors3 = [];
+            nhn.husky.EZCreator.createInIFrame({
+                oAppRef: oEditors,
+                elPlaceHolder: "diseaseDesc",
+                sSkinURI: "/se2/SmartEditor2Skin.html",
+                fCreator: "createSEditor2",
+                htParams : {
+                    // 툴바 사용 여부 (true:사용/ false:사용하지 않음)
+                    bUseToolbar : true,
+                    // 입력창 크기 조절바 사용 여부 (true:사용/ false:사용하지 않음)
+                    bUseVerticalResizer : true,
+                    // 모드 탭(Editor | HTML | TEXT) 사용 여부 (true:사용/ false:사용하지 않음)
+                    bUseModeChanger : true
+                }
+            });
+            nhn.husky.EZCreator.createInIFrame({
+                oAppRef: oEditors2,
+                elPlaceHolder: "diseaseCause",
+                sSkinURI: "/se2/SmartEditor2Skin.html",
+                fCreator: "createSEditor2",
+                htParams : {
+                    // 툴바 사용 여부 (true:사용/ false:사용하지 않음)
+                    bUseToolbar : true,
+                    // 입력창 크기 조절바 사용 여부 (true:사용/ false:사용하지 않음)
+                    bUseVerticalResizer : true,
+                    // 모드 탭(Editor | HTML | TEXT) 사용 여부 (true:사용/ false:사용하지 않음)
+                    bUseModeChanger : true
+                }
+            });
+            nhn.husky.EZCreator.createInIFrame({
+                oAppRef: oEditors3,
+                elPlaceHolder: "diseasePrevent",
+                sSkinURI: "/se2/SmartEditor2Skin.html",
+                fCreator: "createSEditor2",
+                htParams : {
+                    // 툴바 사용 여부 (true:사용/ false:사용하지 않음)
+                    bUseToolbar : true,
+                    // 입력창 크기 조절바 사용 여부 (true:사용/ false:사용하지 않음)
+                    bUseVerticalResizer : true,
+                    // 모드 탭(Editor | HTML | TEXT) 사용 여부 (true:사용/ false:사용하지 않음)
+                    bUseModeChanger : true
+                }
+            });
+
+            $.fnInsert = function(form){
+                if($("input:checkbox[name=chkAtBox]").is(":checked") == true) {
+                    $("input[name=chkAt]").val('1');
+                } else {
+                    $("input[name=chkAt]").val('0');
+                }
+
+                oEditors.getById["diseaseDesc"].exec("UPDATE_CONTENTS_FIELD", []);
+                oEditors2.getById["diseaseCause"].exec("UPDATE_CONTENTS_FIELD", []);
+                oEditors3.getById["diseasePrevent"].exec("UPDATE_CONTENTS_FIELD", []);
+
+                $("#form").submit();
+            };
+
+            $.fnList = function(){
+                $("#listForm").attr("action", "/disease/DiseaseList");
+                $("#listForm").submit();
+            };
+
+        });
+    </script>
 </th:block>
 <!-- 페이지 고유 스크립트 추가 -->
 
 <div layout:fragment="content">
     <!--시작  -->
 
+    <!-- listForm -->
+    <form method="post" name="listForm" id="listForm">
+        <input type="hidden" name="selectedCd" id="selectedCd" />
+    </form>
+    <!-- listForm -->
+
     <div class="card">
         <!-- Card header -->
         <div class="card-header">
-            <h3 class="mb-0">검사항목명</h3>
+            <h3 class="mb-0">질병을 등록합니다.</h3>
         </div>
+        <!-- Card header -->
         <!-- Card body -->
         <div class="card-body">
-            <div class="row">
-                <div class="col-lg-8">
-                    <p class="mb-0">
-                        설명
-                    </p>
-                </div>
-            </div>
-            <hr />
-            <form method="post" action="#" th:action="@{/checkup/ItemSelectUpdt}" th:object="${itemManageVO}" name="itemManageVO" id="itemManageVO">
+
+            <form method="post" action="#" th:action="@{/disease/DiseaseInsert}" th:object="${diseaseManageVO}" name="form" id="form">
 
                 <div class="form-row">
-                    <div class="col-md-4 mb-3">
+<!--                    <div class="col-md-4 mb-3">-->
+<!--                        <div class="form-group">-->
+<!--                            <label class="form-control-label" for="seq">질병코드</label>-->
+<!--                            <input type="text" th:field="*{seq}" name="seq" id="seq" placeholder="" class="form-control" readonly>-->
+<!--                        </div>-->
+<!--                    </div>-->
+                    <div class="col-md-10 mb-3">
                         <div class="form-group">
-                            <label class="form-control-label" for="id">검사항목ID</label>
-                            <input type="text" th:field="*{id}" name="id" id="id" placeholder="" class="form-control" readonly>
-                        </div>
-                    </div>
-                    <div class="col-md-4 mb-3">
-                        <div class="form-group">
-                            <label class="form-control-label" for="itemName">검사항목명</label>
-                            <input type="text" th:field="*{itemName}" name="itemName" id="itemName" placeholder="" class="form-control" required>
-                        </div>
-                    </div>
-                    <div class="col-md-4 mb-3">
-                        <div class="form-group">
-                            <label class="form-control-label" for="itemEngName">검사항목명(영문)</label>
-                            <input type="text" th:field="*{itemEngName}" name="itemEngName" id="itemEngName" placeholder="" class="form-control">
+                            <label class="form-control-label" for="diseaseName">질병명</label>
+                            <input type="text" th:field="*{diseaseName}" name="diseaseName" id="diseaseName" placeholder="" class="form-control" required>
                         </div>
                     </div>
                 </div>
@@ -69,8 +140,8 @@
                 <div class="form-row">
                     <div class="col-md-12 mb-3">
                         <div class="form-group">
-                            <label class="form-control-label" for="itemDescription">검사항목 설명</label>
-                            <textarea th:field="*{itemDescription}" name="itemDescription" id="itemDescription" rows="5" class="form-control"></textarea>
+                            <label class="form-control-label" for="diseaseDesc">질병 설명</label>
+                            <textarea th:field="*{diseaseDesc}" name="diseaseDesc" id="diseaseDesc" rows="5" class="form-control" style="width:100%;"></textarea>
                         </div>
                     </div>
                 </div>
@@ -78,8 +149,8 @@
                 <div class="form-row">
                     <div class="col-md-12 mb-3">
                         <div class="form-group">
-                            <label class="form-control-label" for="itemCause">검사항목 원인</label>
-                            <textarea th:field="*{itemCause}" name="itemCause" id="itemCause" rows="5" class="form-control"></textarea>
+                            <label class="form-control-label" for="diseaseCause">질병 원인</label>
+                            <textarea th:field="*{diseaseCause}" name="diseaseCause" id="diseaseCause" rows="5" class="form-control" style="width:100%;"></textarea>
                         </div>
                     </div>
                 </div>
@@ -87,38 +158,8 @@
                 <div class="form-row">
                     <div class="col-md-12 mb-3">
                         <div class="form-group">
-                            <label class="form-control-label" for="diseaseIds">질병코드 목록</label>
-                            <input type="text" th:field="*{diseaseIds}" name="diseaseIds" id="diseaseIds" placeholder="" class="form-control" readonly>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-row">
-                    <div class="col-md-12 mb-3">
-                        <div class="form-group">
-                            <label class="form-control-label" for="diseaseNames">질병명 목록</label>
-                            <input type="text" th:field="*{diseaseNames}" name="diseaseNames" id="diseaseNames" placeholder="" class="form-control" readonly>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-row">
-                    <div class="col-md-4 mb-3">
-                        <div class="form-group">
-                            <label class="form-control-label" for="refRed">RGB 기준 값 RED</label>
-                            <input type="text" th:field="*{refRed}" name="refRed" id="refRed" placeholder="" class="form-control" required>
-                        </div>
-                    </div>
-                    <div class="col-md-4 mb-3">
-                        <div class="form-group">
-                            <label class="form-control-label" for="refGreen">RGB 기준 값 GREEN</label>
-                            <input type="text" th:field="*{refGreen}" name="refGreen" id="refGreen" placeholder="" class="form-control" required>
-                        </div>
-                    </div>
-                    <div class="col-md-4 mb-3">
-                        <div class="form-group">
-                            <label class="form-control-label" for="refBlue">RGB 기준 값 BLUE</label>
-                            <input type="text" th:field="*{refBlue}" name="refBlue" id="refBlue" placeholder="" class="form-control">
+                            <label class="form-control-label" for="diseasePrevent">질병 예방법</label>
+                            <textarea th:field="*{diseasePrevent}" name="diseasePrevent" id="diseasePrevent" rows="5" class="form-control" style="width:100%;"></textarea>
                         </div>
                     </div>
                 </div>
@@ -126,41 +167,64 @@
                 <div class="form-row">
                     <div class="col-md-2 mb-3">
                         <div class="form-group">
-                            <label class="form-control-label" for="ord">순서</label>
-                            <input type="text" th:field="*{ord}" name="ord" id="ord" placeholder="" class="form-control">
+                            <label class="form-control-label" for="chkAtBox">사용여부</label>
+                            <div class="mb-3">
+                                <label class="custom-toggle">
+                                    <input type="hidden" th:field="*{chkAt}" name="chkAt" id="chkAt">
+                                    <input type="checkbox" th:checked="${diseaseManageVO.chkAt=='1' ? true: false}" name="chkAtBox" id="chkAtBox">
+                                    <span class="custom-toggle-slider rounded-circle" data-label-off="중지" data-label-on="사용"></span>
+                                </label>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="form-row">
-                    <div class="col-md-2 mb-3">
-                        <div class="form-group">
-                            <label class="form-control-label" for="chkAt">활성</label>
-                            <input type="text" th:field="*{chkAt}" name="chkAt" id="chkAt" placeholder="" class="form-control">
-                        </div>
-                    </div>
-                </div>
+<!--                <div class="form-row">-->
+<!--                    <div class="col-md-4 mb-3">-->
+<!--                        <div class="form-group">-->
+<!--                            <label class="form-control-label" for="insDttm">등록일시</label>-->
+<!--                            <input type="text" th:field="*{insDttm}" name="insDttm" id="insDttm" placeholder="" class="form-control" readonly>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="col-md-4 mb-3">-->
+<!--                        <div class="form-group">-->
+<!--                            <label class="form-control-label" for="uptDttm">수정일시</label>-->
+<!--                            <input type="text" th:field="*{uptDttm}" name="uptDttm" id="uptDttm" placeholder="" class="form-control" readonly>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
 
-                <div class="form-row">
-                    <div class="col-md-4 mb-3">
-                        <div class="form-group">
-                            <label class="form-control-label" for="insDttm">등록일시</label>
-                            <input type="text" th:field="*{insDttm}" name="insDttm" id="insDttm" placeholder="" class="form-control" readonly>
-                        </div>
-                    </div>
-                    <div class="col-md-4 mb-3">
-                        <div class="form-group">
-                            <label class="form-control-label" for="uptDttm">수정일시</label>
-                            <input type="text" th:field="*{uptDttm}" name="uptDttm" id="uptDttm" placeholder="" class="form-control" readonly>
-                        </div>
-                    </div>
-                </div>
-
-                <button class="btn btn-primary" type="submit">수정하기</button>
+<!--                <div class="form-row">-->
+<!--                    <div class="col-md-4 mb-3">-->
+<!--                        <div class="form-group">-->
+<!--                            <label class="form-control-label" for="insUser">등록자</label>-->
+<!--                            <input type="text" th:field="*{insUser}" name="insUser" id="insUser" placeholder="" class="form-control" readonly>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="col-md-4 mb-3">-->
+<!--                        <div class="form-group">-->
+<!--                            <label class="form-control-label" for="uptUser">수정자</label>-->
+<!--                            <input type="text" th:field="*{uptUser}" name="uptUser" id="uptUser" placeholder="" class="form-control" readonly>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
 
             </form>
 
         </div>
+        <!-- Card body -->
+        <!-- Card Footer -->
+        <div class="card-footer bg-transparent">
+            <div class="row">
+                <div class="col">
+                    <button type="button" class="btn btn-secondary btn-lg" onclick="$.fnList();">목록가기</button>
+                </div>
+                <div class="col text-right">
+                    <button type="button" class="btn btn-primary btn-lg" onClick="$.fnInsert(document.forms[0]); return false;">등록하기</button>
+                </div>
+            </div>
+        </div>
+        <!-- Card Footer -->
     </div>
 
 

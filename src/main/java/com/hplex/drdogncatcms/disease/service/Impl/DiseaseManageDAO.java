@@ -19,4 +19,7 @@ public interface DiseaseManageDAO {
 
     // update one
     public void updateDisease(DiseaseManageVO diseaseManageVO);
+
+    // insert one
+    public void insertDisease(DiseaseManageVO diseaseManageVO);
 }
