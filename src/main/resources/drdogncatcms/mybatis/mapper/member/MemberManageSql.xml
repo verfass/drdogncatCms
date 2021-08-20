@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hplex.drdogncatcms.member.service.Impl.MemberManageDAO">
+
+    <resultMap type="memberManageVO" id="memberVO">
+        <result property="seq" column="seq"/>
+        <result property="phoneNumber" column="phone_number"/>
+        <result property="memberEmail" column="member_email"/>
+        <result property="memberPass" column="member_pass"/>
+        <result property="memberName" column="member_name"/>
+        <result property="memberCode" column="member_code"/>
+        <result property="refereeCode" column="referee_code"/>
+        <result property="socialKakaoId" column="social_kakao_id"/>
+        <result property="socialNaverId" column="social_naver_id"/>
+        <result property="socialAppleId" column="social_apple_id"/>
+        <result property="marketingAgree" column="marketing_agree"/>
+        <result property="memberState" column="member_state"/>
+        <result property="petId" column="pet_id"/>
+        <result property="joinDttm" column="join_dttm"/>
+        <result property="refereeDttm" column="referee_dttm"/>
+        <result property="withdrawDttm" column="withdraw_dttm"/>
+        <result property="connectDttm" column="connect_dttm"/>
+        <result property="marketingDttm" column="marketing_dttm"/>
+        <result property="chkAt" column="chk_at"/>
+        <result property="delAt" column="del_at"/>
+        <result property="insDttm" column="ins_dttm"/>
+        <result property="uptDttm" column="upt_dttm"/>
+        <result property="insUser" column="ins_user"/>
+        <result property="uptUser" column="upt_user"/>
+    </resultMap>
+
+
+    <select id="selectMemberList" resultMap="memberVO">
+        SELECT
+            ID, PARENT_ID, CATEGORY_ID, ITEM_NAME, ITEM_ENG_NAME, ITEM_DESCRIPTION, ITEM_CAUSE, DISEASE_IDS, DISEASE_NAMES, PRODUCT_IDS, REF_RED, REF_GREEN, REF_BLUE, ORD, CHK_AT, DEL_AT, INS_DTTM, UPT_DTTM
+        FROM
+            t_checkup_item
+        WHERE
+            1=1
+        <if test="searchCategoryId != ''">
+            AND
+            CATEGORY_ID = #{searchCategoryId}
+        </if>
+        <if test="searchChkAt != ''">
+            AND
+            CHK_AT = #{searchChkAt}
+        </if>
+        <if test="strSubQuery != ''">
+            AND
+            ${strSubjectQuery}
+        </if>
+        <if test="groupByQuery != ''">
+        GROUP BY
+            ${groupByQuery}
+        </if>
+        <if test="orderByQuery != ''">
+        ORDER BY
+            ${orderByQuery}
+        </if>
+    </select>
+
+    <select id="selectItem" parameterType="String" resultMap="itemVO">
+        SELECT
+            ID, PARENT_ID, CATEGORY_ID, ITEM_NAME, ITEM_ENG_NAME, ITEM_DESCRIPTION, ITEM_CAUSE, DISEASE_IDS, DISEASE_NAMES, PRODUCT_IDS, REF_RED, REF_GREEN, REF_BLUE, ORD, CHK_AT, DEL_AT, INS_DTTM, UPT_DTTM
+        FROM
+            t_checkup_item
+        WHERE
+            ID = #{id}
+    </select>
+
+    <update id="updateItem" parameterType="itemManageVO">
+
+        UPDATE t_checkup_item
+        SET
+            ITEM_NAME = #{itemName},
+            ITEM_ENG_NAME = #{itemEngName},
+            ITEM_DESCRIPTION = #{itemDescription},
+            ITEM_CAUSE = #{itemCause},
+            DISEASE_IDS = #{diseaseIds},
+            DISEASE_NAMES = #{diseaseNames},
+            PRODUCT_IDS = #{productIds},
+            REF_RED = #{refRed},
+            REF_GREEN = #{refGreen},
+            REF_BLUE = #{refBlue},
+            ORD = #{ord},
+            CHK_AT = #{chkAt},
+            UPT_DTTM = now()
+        WHERE
+            ID = #{id}
+
+    </update>
+
+</mapper>

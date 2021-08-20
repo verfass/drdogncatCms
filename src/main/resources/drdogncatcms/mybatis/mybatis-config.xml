@@ -9,5 +9,6 @@
         <typeAlias type="com.hplex.drdogncatcms.checkup.service.ItemManageVO" alias="itemManageVO" />
         <typeAlias type="com.hplex.drdogncatcms.disease.service.DiseaseManageVO" alias="diseaseManageVO" />
         <typeAlias type="com.hplex.drdogncatcms.disease.service.DiseaseRefManageVO" alias="diseaseRefManageVO" />
+        <typeAlias type="com.hplex.drdogncatcms.member.service.MemberManageVO" alias="memberManageVO" />
     </typeAliases>
 </configuration>
