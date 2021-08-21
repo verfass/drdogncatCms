@@ -33,18 +33,19 @@
 
     <select id="selectMemberList" resultMap="memberVO">
         SELECT
-            ID, PARENT_ID, CATEGORY_ID, ITEM_NAME, ITEM_ENG_NAME, ITEM_DESCRIPTION, ITEM_CAUSE, DISEASE_IDS, DISEASE_NAMES, PRODUCT_IDS, REF_RED, REF_GREEN, REF_BLUE, ORD, CHK_AT, DEL_AT, INS_DTTM, UPT_DTTM
+            seq, phone_number, member_email, member_pass, member_name, member_code, referee_code, social_kakao_id, social_naver_id, social_apple_id, marketing_agree, member_state, pet_id, join_dttm, referee_dttm, withdraw_dttm, connect_dttm, marketing_dttm, chk_at, del_at, ins_dttm, upt_dttm, ins_user, upt_user
         FROM
-            t_checkup_item
+            t_member
         WHERE
             1=1
-        <if test="searchCategoryId != ''">
+
+        <if test="searchKeyword != ''">
             AND
-            CATEGORY_ID = #{searchCategoryId}
+            member_name = #{searchKeyword}
         </if>
         <if test="searchChkAt != ''">
             AND
-            CHK_AT = #{searchChkAt}
+            chk_at = #{searchChkAt}
         </if>
         <if test="strSubQuery != ''">
             AND
@@ -60,34 +61,42 @@
         </if>
     </select>
 
-    <select id="selectItem" parameterType="String" resultMap="itemVO">
+    <select id="selectMember" parameterType="String" resultMap="memberVO">
         SELECT
-            ID, PARENT_ID, CATEGORY_ID, ITEM_NAME, ITEM_ENG_NAME, ITEM_DESCRIPTION, ITEM_CAUSE, DISEASE_IDS, DISEASE_NAMES, PRODUCT_IDS, REF_RED, REF_GREEN, REF_BLUE, ORD, CHK_AT, DEL_AT, INS_DTTM, UPT_DTTM
+            seq, phone_number, member_email, member_pass, member_name, member_code, referee_code, social_kakao_id, social_naver_id, social_apple_id, marketing_agree, member_state, pet_id, join_dttm, referee_dttm, withdraw_dttm, connect_dttm, marketing_dttm, chk_at, del_at, ins_dttm, upt_dttm, ins_user, upt_user
         FROM
-            t_checkup_item
+            t_member
         WHERE
-            ID = #{id}
+            seq = #{seq}
     </select>
 
-    <update id="updateItem" parameterType="itemManageVO">
+    <update id="updateMember" parameterType="memberManageVO">
 
-        UPDATE t_checkup_item
+        UPDATE t_member
         SET
-            ITEM_NAME = #{itemName},
-            ITEM_ENG_NAME = #{itemEngName},
-            ITEM_DESCRIPTION = #{itemDescription},
-            ITEM_CAUSE = #{itemCause},
-            DISEASE_IDS = #{diseaseIds},
-            DISEASE_NAMES = #{diseaseNames},
-            PRODUCT_IDS = #{productIds},
-            REF_RED = #{refRed},
-            REF_GREEN = #{refGreen},
-            REF_BLUE = #{refBlue},
-            ORD = #{ord},
-            CHK_AT = #{chkAt},
-            UPT_DTTM = now()
+            phone_number = #{phoneNumber},
+            member_email = #{memberEmail},
+            member_pass = #{memberPass},
+            member_name = #{memberName},
+            member_code = #{memberCode},
+            referee_code = #{refereeCode},
+            social_kakao_id = #{socialKakaoId},
+            social_naver_id = #{socialNaverId},
+            social_apple_id = #{socialAppleId},
+            marketing_agree = #{marketingAgree},
+            member_state = #{memberState},
+            pet_id = #{petId},
+            join_dttm = #{joinDttm},
+            referee_dttm = #{refereeDttm},
+            withdraw_dttm = #{withdrawDttm},
+            connect_dttm = #{connectDttm},
+            marketing_dttm = #{marketingDttm},
+            chk_at = #{chkAt},
+            del_at = #{delAt},
+            upt_dttm = now(),
+            upt_user = #{uptUser}
         WHERE
-            ID = #{id}
+            seq = #{seq}
 
     </update>
 

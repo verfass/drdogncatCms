@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layouts/layoutDefault}">
+
+<!-- 페이지 고유 CSS 추가 -->
+<script src="../../static/se2/js/service/HuskyEZCreator.js"></script>
+<th:block layout:fragment="css">
+    <!-- Page plugins -->
+    <link rel="stylesheet" href="/assets/vendor/datatables.net-bs4/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="/assets/vendor/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css">
+    <link rel="stylesheet" href="/assets/vendor/datatables.net-select-bs4/css/select.bootstrap4.min.css">
+</th:block>
+<!-- 페이지 고유 CSS 추가 -->
+
+<!-- 페이지 고유 스크립트 추가 -->
+<th:block layout:fragment="script">
+    <!-- Optional JS -->
+    <script src="/assets/vendor/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="/assets/vendor/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
+    <script src="/assets/vendor/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="/assets/vendor/datatables.net-buttons-bs4/js/buttons.bootstrap4.min.js"></script>
+    <script src="/assets/vendor/datatables.net-buttons/js/buttons.html5.min.js"></script>
+    <script src="/assets/vendor/datatables.net-buttons/js/buttons.flash.min.js"></script>
+    <script src="/assets/vendor/datatables.net-buttons/js/buttons.print.min.js"></script>
+    <script src="/assets/vendor/datatables.net-select/js/dataTables.select.min.js"></script>
+    <script src="/se2/js/service/HuskyEZCreator.js" charset="utf-8"></script>
+    <!-- Optional JS -->
+    <script type="text/javascript">
+        $(function () {
+
+            $("#menu30").click();
+            $("#bread1").text("닥터멍냥");
+            $("#bread2").text("회원 관리");
+            $("#bread3").text("회원 목록");
+
+            $.fnUpdate = function(form){
+                if($("input:checkbox[name=chkAtBox]").is(":checked") == true) {
+                    $("input[name=chkAt]").val('1');
+                } else {
+                    $("input[name=chkAt]").val('0');
+                }
+
+                if($("input:checkbox[name=marketingAgreeBox]").is(":checked") == true) {
+                    $("input[name=marketingAgree]").val('Y');
+                } else {
+                    $("input[name=marketingAgree]").val('N');
+                }
+
+                $("#form").submit();
+            };
+
+            $.fnList = function(){
+                $("#listForm").attr("action", "/member/MemberList");
+                $("#listForm").submit();
+            };
+
+        });
+    </script>
+
+
+</th:block>
+<!-- 페이지 고유 스크립트 추가 -->
+
+<div layout:fragment="content">
+    <!--시작  -->
+
+    <!-- listForm -->
+    <form method="post" name="listForm" id="listForm">
+        <input type="hidden" name="selectedCd" id="selectedCd" />
+    </form>
+    <!-- listForm -->
+
+    <div class="card">
+        <!-- Card header -->
+        <div class="card-header">
+            <h3 class="mb-0" th:text="${memberManageVO.memberEmail}"></h3>
+        </div>
+        <!-- Card header -->
+        <!-- Card body -->
+        <div class="card-body">
+
+            <form method="post" action="#" th:action="@{/member/MemberSelectUpdt}" th:object="${memberManageVO}" name="form" id="form">
+
+                <input type="hidden" th:field="*{delAt}">
+
+                <div class="form-row">
+                    <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="seq">회원번호</label>
+                            <input type="text" th:field="*{seq}" name="seq" id="seq" placeholder="" class="form-control" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="memberName">회원명</label>
+                            <input type="text" th:field="*{memberName}" name="memberName" id="memberName" placeholder="" class="form-control" readonly>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="phoneNumber">휴대전화번호</label>
+                            <input type="text" th:field="*{phoneNumber}" name="phoneNumber" id="phoneNumber" placeholder="" class="form-control" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="memberEmail">이메일</label>
+                            <input type="text" th:field="*{memberEmail}" name="memberEmail" id="memberEmail" placeholder="" class="form-control" required>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="col-md-8 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="memberPass">비밀번호</label>
+                            <input type="text" th:field="*{memberPass}" name="memberPass" id="memberPass" placeholder="" class="form-control" readonly>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="phoneNumber">대표 반려동물 id</label>
+                            <input type="text" th:field="*{petId}" name="petId" id="petId" placeholder="" class="form-control" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="memberCode">나의 추천인 코드</label>
+                            <input type="text" th:field="*{memberCode}" name="memberCode" id="memberCode" placeholder="" class="form-control" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="refereeCode">나에게 추천한 회원 코드</label>
+                            <input type="text" th:field="*{refereeCode}" name="refereeCode" id="refereeCode" placeholder="" class="form-control" readonly>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="socialKakaoId">카카오 고유 id</label>
+                            <input type="text" th:field="*{socialKakaoId}" name="socialKakaoId" id="socialKakaoId" placeholder="" class="form-control" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="socialNaverId">네이버 고유 id</label>
+                            <input type="text" th:field="*{socialNaverId}" name="socialNaverId" id="socialNaverId" placeholder="" class="form-control" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="socialAppleId">애플 고유 id</label>
+                            <input type="text" th:field="*{socialAppleId}" name="socialAppleId" id="socialAppleId" placeholder="" class="form-control" readonly>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="chkAtBox">마케팅 이용 동의</label>
+                            <div class="mb-3">
+                                <label class="custom-toggle">
+                                    <input type="hidden" th:field="*{marketingAgree}" name="marketingAgree" id="marketingAgree">
+                                    <input type="checkbox" th:checked="${memberManageVO.marketingAgree=='Y' ? true: false}" name="marketingAgreeBox" id="marketingAgreeBox">
+                                    <span class="custom-toggle-slider rounded-circle" data-label-off="미동의" data-label-on="동의"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="marketingDttm">마케팅 이용 동의 변경 일시</label>
+                            <input type="text" th:field="*{marketingDttm}" name="marketingDttm" id="marketingDttm" placeholder="" class="form-control" readonly>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="memberState">상태</label>
+                            <input type="text" th:field="*{memberState}" name="memberState" id="memberState" placeholder="" class="form-control" readonly>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div class="form-row">
+                    <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="chkAtBox">사용여부</label>
+                            <div class="mb-3">
+                                <label class="custom-toggle">
+                                    <input type="hidden" th:field="*{chkAt}" name="chkAt" id="chkAt">
+                                    <input type="checkbox" th:checked="${memberManageVO.chkAt=='1' ? true: false}" name="chkAtBox" id="chkAtBox">
+                                    <span class="custom-toggle-slider rounded-circle" data-label-off="비활성" data-label-on="활성"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="refereeDttm">추천인코드 입력 일시</label>
+                            <input type="text" th:field="*{refereeDttm}" name="refereeDttm" id="refereeDttm" placeholder="" class="form-control" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="connectDttm">마지막 접속 일시</label>
+                            <input type="text" th:field="*{connectDttm}" name="connectDttm" id="connectDttm" placeholder="" class="form-control" readonly>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="joinDttm">가입 일시</label>
+                            <input type="text" th:field="*{joinDttm}" name="joinDttm" id="joinDttm" placeholder="" class="form-control" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="withdrawDttm">탈퇴 일시</label>
+                            <input type="text" th:field="*{withdrawDttm}" name="withdrawDttm" id="withdrawDttm" placeholder="" class="form-control" readonly>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="insDttm">등록일시</label>
+                            <input type="text" th:field="*{insDttm}" name="insDttm" id="insDttm" placeholder="" class="form-control" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="uptDttm">수정일시</label>
+                            <input type="text" th:field="*{uptDttm}" name="uptDttm" id="uptDttm" placeholder="" class="form-control" readonly>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="insUser">등록자</label>
+                            <input type="text" th:field="*{insUser}" name="insUser" id="insUser" placeholder="" class="form-control" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="uptUser">수정자</label>
+                            <input type="text" th:field="*{uptUser}" name="uptUser" id="uptUser" placeholder="" class="form-control" readonly>
+                        </div>
+                    </div>
+                </div>
+
+
+            </form>
+
+        </div>
+        <!-- Card body -->
+        <!-- Card Footer -->
+        <div class="card-footer bg-transparent">
+            <div class="row">
+                <div class="col">
+                    <button type="button" class="btn btn-secondary btn-lg" onclick="$.fnList();">목록가기</button>
+                </div>
+                <div class="col text-right">
+                    <button type="button" class="btn btn-primary btn-lg" onClick="$.fnUpdate(document.forms[0]); return false;">수정하기</button>
+                </div>
+            </div>
+        </div>
+        <!-- Card Footer -->
+    </div>
+
+
+    <!-- 끝  -->
+</div>
+
+</html>
