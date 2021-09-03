@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layouts/layoutDefault}">
+
+<!-- 페이지 고유 CSS 추가 -->
+<script src="../../static/se2/js/service/HuskyEZCreator.js"></script>
+<th:block layout:fragment="css">
+    <!-- Page plugins -->
+    <link rel="stylesheet" href="/assets/vendor/datatables.net-bs4/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="/assets/vendor/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css">
+    <link rel="stylesheet" href="/assets/vendor/datatables.net-select-bs4/css/select.bootstrap4.min.css">
+</th:block>
+<!-- 페이지 고유 CSS 추가 -->
+
+<!-- 페이지 고유 스크립트 추가 -->
+<th:block layout:fragment="script">
+    <!-- Optional JS -->
+    <script src="/assets/vendor/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="/assets/vendor/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
+    <script src="/assets/vendor/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="/assets/vendor/datatables.net-buttons-bs4/js/buttons.bootstrap4.min.js"></script>
+    <script src="/assets/vendor/datatables.net-buttons/js/buttons.html5.min.js"></script>
+    <script src="/assets/vendor/datatables.net-buttons/js/buttons.flash.min.js"></script>
+    <script src="/assets/vendor/datatables.net-buttons/js/buttons.print.min.js"></script>
+    <script src="/assets/vendor/datatables.net-select/js/dataTables.select.min.js"></script>
+    <script src="/se2/js/service/HuskyEZCreator.js" charset="utf-8"></script>
+    <!-- Optional JS -->
+    <script type="text/javascript">
+        $(function () {
+
+            $("#menu20").click();
+            $("#bread1").text("닥터멍냥");
+            $("#bread2").text("회원 관리");
+            $("#bread3").text("반려동물 목록");
+
+            $.fnUpdate = function(form){
+                if($("input:checkbox[name=chkAtBox]").is(":checked") == true) {
+                    $("input[name=chkAt]").val('1');
+                } else {
+                    $("input[name=chkAt]").val('0');
+                }
+
+                if($("input:checkbox[name=marketingAgreeBox]").is(":checked") == true) {
+                    $("input[name=marketingAgree]").val('Y');
+                } else {
+                    $("input[name=marketingAgree]").val('N');
+                }
+
+                $("#form").submit();
+            };
+
+            $.fnList = function(){
+                $("#listForm").attr("action", "/mypets/MypetsList");
+                $("#listForm").submit();
+            };
+
+        });
+    </script>
+
+
+</th:block>
+<!-- 페이지 고유 스크립트 추가 -->
+
+<div layout:fragment="content">
+    <!--시작  -->
+
+    <!-- listForm -->
+    <form method="post" name="listForm" id="listForm">
+        <input type="hidden" name="selectedCd" id="selectedCd" />
+    </form>
+    <!-- listForm -->
+
+    <div class="card">
+        <!-- Card header -->
+        <div class="card-header">
+            <h3 class="mb-0" th:text="${mypetsManageVO.petName}"></h3>
+        </div>
+        <!-- Card header -->
+        <!-- Card body -->
+        <div class="card-body">
+
+            <form method="post" action="#" th:action="@{/mypets/MypetsSelectUpdt}" th:object="${mypetsManageVO}" name="form" id="form">
+
+                <input type="hidden" th:field="*{delAt}">
+
+                <div class="form-row">
+                    <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="seq">반려동물번호</label>
+                            <input type="text" th:field="*{seq}" name="seq" id="seq" placeholder="" class="form-control" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="memberSeq">보호자번호</label>
+                            <input type="text" th:field="*{memberSeq}" name="memberSeq" id="memberSeq" placeholder="" class="form-control" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="petName">반려동물명</label>
+                            <input type="text" th:field="*{petName}" name="petName" id="petName" placeholder="" class="form-control" readonly>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="petType">타입</label>
+                            <input type="text" th:field="*{petType}" name="petType" id="petType" placeholder="" class="form-control" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="petSize">크기</label>
+                            <input type="text" th:field="*{petSize}" name="petSize" id="petSize" placeholder="" class="form-control" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="petSex">성별</label>
+                            <input type="text" th:field="*{petSex}" name="petSex" id="petSex" placeholder="" class="form-control" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="petDesexualizationAt">중성화</label>
+                            <input type="text" th:field="*{petDesexualizationAt}" name="petDesexualizationAt" id="petDesexualizationAt" placeholder="" class="form-control" readonly>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="petBirthday">생일</label>
+                            <input type="text" th:field="*{petBirthday}" name="petBirthday" id="petBirthday" placeholder="" class="form-control" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="petWithday">가족이 된 날</label>
+                            <input type="text" th:field="*{petWithday}" name="petWithday" id="petWithday" placeholder="" class="form-control" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="petWeight">몸무게</label>
+                            <input type="text" th:field="*{petWeight}" name="petWeight" id="petWeight" placeholder="" class="form-control" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="petKind">종</label>
+                            <input type="text" th:field="*{petKind}" name="petKind" id="petKind" placeholder="" class="form-control" readonly>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="petLifePlace">생활 장소</label>
+                            <input type="text" th:field="*{petLifePlace}" name="petLifePlace" id="petLifePlace" placeholder="" class="form-control" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="petBmi">비만도</label>
+                            <input type="text" th:field="*{petBmi}" name="petBmi" id="petBmi" placeholder="" class="form-control" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="petUrineTimes">배뇨 횟수</label>
+                            <input type="text" th:field="*{petUrineTimes}" name="petUrineTimes" id="petUrineTimes" placeholder="" class="form-control" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="petDefecationTimes">배변 횟수</label>
+                            <input type="text" th:field="*{petDefecationTimes}" name="petDefecationTimes" id="petDefecationTimes" placeholder="" class="form-control" readonly>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="petVaccine1State">기초 접종</label>
+                            <input type="text" th:field="*{petVaccine1State}" name="petVaccine1State" id="petVaccine1State" placeholder="" class="form-control" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="petVaccine2State">사상충 접종</label>
+                            <input type="text" th:field="*{petVaccine2State}" name="petVaccine2State" id="petVaccine2State" placeholder="" class="form-control" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="petFamilyType">보호자 가족 구성</label>
+                            <input type="text" th:field="*{petFamilyType}" name="petFamilyType" id="petFamilyType" placeholder="" class="form-control" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="petPetsAmount">반려동물 구성</label>
+                            <input type="text" th:field="*{petPetsAmount}" name="petPetsAmount" id="petPetsAmount" placeholder="" class="form-control" readonly>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="petAloneTimes">혼자 있는 시간</label>
+                            <input type="text" th:field="*{petAloneTimes}" name="petAloneTimes" id="petAloneTimes" placeholder="" class="form-control" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="petWalkTimes">산책 시간</label>
+                            <input type="text" th:field="*{petWalkTimes}" name="petWalkTimes" id="petWalkTimes" placeholder="" class="form-control" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="petPastDisease">과거 질병</label>
+                            <input type="text" th:field="*{petPastDisease}" name="petPastDisease" id="petPastDisease" placeholder="" class="form-control" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="petAllergy">알레르기</label>
+                            <input type="text" th:field="*{petAllergy}" name="petAllergy" id="petAllergy" placeholder="" class="form-control" readonly>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="petRegNumber">등록 번호</label>
+                            <input type="text" th:field="*{petRegNumber}" name="petRegNumber" id="petRegNumber" placeholder="" class="form-control" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="petTrouble">고민 행동</label>
+                            <input type="text" th:field="*{petTrouble}" name="petTrouble" id="petTrouble" placeholder="" class="form-control" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="petPic">사진</label>
+                            <input type="text" th:field="*{petPic}" name="petPic" id="petPic" placeholder="" class="form-control" readonly>
+                            <img th:src="${'https://trepo.drdogncat.com/uploads' + mypetsManageVO.petPic}"/>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="chkAtBox">사용여부</label>
+                            <div class="mb-3">
+                                <label class="custom-toggle">
+                                    <input type="hidden" th:field="*{chkAt}" name="chkAt" id="chkAt">
+                                    <input type="checkbox" th:checked="${mypetsManageVO.chkAt=='1' ? true: false}" name="chkAtBox" id="chkAtBox">
+                                    <span class="custom-toggle-slider rounded-circle" data-label-off="비활성" data-label-on="활성"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="insDttm">등록일시</label>
+                            <input type="text" th:field="*{insDttm}" name="insDttm" id="insDttm" placeholder="" class="form-control" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="uptDttm">수정일시</label>
+                            <input type="text" th:field="*{uptDttm}" name="uptDttm" id="uptDttm" placeholder="" class="form-control" readonly>
+                        </div>
+                    </div>
+                </div>
+
+            </form>
+
+        </div>
+        <!-- Card body -->
+        <!-- Card Footer -->
+        <div class="card-footer bg-transparent">
+            <div class="row">
+                <div class="col">
+                    <button type="button" class="btn btn-secondary btn-lg" onclick="$.fnList();">목록가기</button>
+                </div>
+                <div class="col text-right">
+                    <button type="button" class="btn btn-primary btn-lg" onClick="$.fnUpdate(document.forms[0]); return false;">수정하기</button>
+                </div>
+            </div>
+        </div>
+        <!-- Card Footer -->
+    </div>
+
+
+    <!-- 끝  -->
+</div>
+
+</html>

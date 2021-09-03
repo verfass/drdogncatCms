@@ -30,7 +30,7 @@ public class DiseaseManageController {
             @ModelAttribute("diseaseManageVO") DiseaseManageVO diseaseManageVO,
             Model model) throws Exception {
 
-        log.info("itemList start ====================== ");
+        log.debug(Thread.currentThread().getStackTrace()[1].getMethodName() + " Start =========================");
 
         String strSubQuery = "";
         String orderByQuery = "";
@@ -56,7 +56,7 @@ public class DiseaseManageController {
             Model model
     )throws Exception {
 
-        log.info("diseaseInsertView start ====================== ");
+        log.debug(Thread.currentThread().getStackTrace()[1].getMethodName() + " Start =========================");
 
         return "/disease/DiseaseInsertView";
 
@@ -67,6 +67,8 @@ public class DiseaseManageController {
             @ModelAttribute("diseaseManageVO") DiseaseManageVO diseaseManageVO,
             Model model
     )throws Exception {
+
+        log.debug(Thread.currentThread().getStackTrace()[1].getMethodName() + " Start =========================");
 
         diseaseManageService.insertDisease(diseaseManageVO);
 
@@ -81,7 +83,7 @@ public class DiseaseManageController {
             @RequestParam(value="selectedCd", defaultValue="101") String selectedCd,
             Model model) throws Exception {
 
-        log.info("diseaseSelectUpdtView start ====================== ");
+        log.debug(Thread.currentThread().getStackTrace()[1].getMethodName() + " Start =========================");
 
         DiseaseManageVO diseaseManageVO = diseaseManageService.selectDisease(selectedCd);
 
@@ -98,7 +100,7 @@ public class DiseaseManageController {
             @ModelAttribute("diseaseManageVO") DiseaseManageVO diseaseManageVO,
             Model model) throws Exception {
 
-        log.info("diseaseSelectUpdt start ====================== ");
+        log.debug(Thread.currentThread().getStackTrace()[1].getMethodName() + " Start =========================");
 
         // 저장
         diseaseManageService.updateDisease(diseaseManageVO);

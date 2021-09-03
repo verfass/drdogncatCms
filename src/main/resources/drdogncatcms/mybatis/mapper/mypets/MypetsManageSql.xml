@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hplex.drdogncatcms.mypets.service.Impl.MypetsManageDAO">
+
+    <resultMap type="mypetsManageVO" id="mypetsVO">
+        <result property="seq" column="seq"/>
+        <result property="memberSeq" column="member_seq"/>
+        <result property="phoneNumber" column="phone_number"/>
+        <result property="petName" column="pet_name"/>
+        <result property="petType" column="pet_type"/>
+        <result property="petSize" column="pet_size"/>
+        <result property="petSex" column="pet_sex"/>
+        <result property="petDesexualizationAt" column="pet_desexualization_at"/>
+        <result property="petBirthday" column="pet_birthday"/>
+        <result property="petWithday" column="pet_withday"/>
+        <result property="petWeight" column="pet_weight"/>
+        <result property="petKind" column="pet_kind"/>
+        <result property="petLifePlace" column="pet_life_place"/>
+        <result property="petBmi" column="pet_bmi"/>
+        <result property="petUrineTimes" column="pet_urine_times"/>
+        <result property="petDefecationTimes" column="pet_defecation_times"/>
+        <result property="petVaccine1State" column="pet_vaccine1_state"/>
+        <result property="petVaccine2State" column="pet_vaccine2_state"/>
+        <result property="petFamilyType" column="pet_family_type"/>
+        <result property="petPetsAmount" column="pet_pets_amount"/>
+        <result property="petAloneTimes" column="pet_alone_times"/>
+        <result property="petWalkTimes" column="pet_walk_times"/>
+        <result property="petPastDisease" column="pet_past_disease"/>
+        <result property="petAllergy" column="pet_allergy"/>
+        <result property="petRegNumber" column="pet_reg_number"/>
+        <result property="petTrouble" column="pet_trouble"/>
+        <result property="petPic" column="pet_pic"/>
+        <result property="chkAt" column="chk_at"/>
+        <result property="delAt" column="del_at"/>
+        <result property="insDttm" column="ins_dttm"/>
+        <result property="uptDttm" column="upt_dttm"/>
+    </resultMap>
+
+
+    <select id="selectMypetsList" resultMap="mypetsVO">
+        SELECT
+            seq, member_seq, pet_name, pet_type, pet_size, pet_sex, pet_desexualization_at, pet_birthday, pet_withday, pet_weight, pet_kind, pet_life_place, pet_bmi, pet_urine_times, pet_defecation_times, pet_vaccine1_state, pet_vaccine2_state, pet_family_type, pet_pets_amount, pet_alone_times, pet_walk_times, pet_past_disease, pet_allergy, pet_reg_number, pet_trouble, pet_pic, chk_at, del_at, ins_dttm, upt_dttm
+        FROM
+            t_mypets
+        WHERE
+            1=1
+
+        <if test="searchKeyword != ''">
+            AND
+            pet_name = #{searchKeyword}
+        </if>
+        <if test="searchChkAt != ''">
+            AND
+            chk_at = #{searchChkAt}
+        </if>
+        <if test="strSubQuery != ''">
+            AND
+            ${strSubjectQuery}
+        </if>
+        <if test="groupByQuery != ''">
+        GROUP BY
+            ${groupByQuery}
+        </if>
+        <if test="orderByQuery != ''">
+        ORDER BY
+            ${orderByQuery}
+        </if>
+    </select>
+
+    <select id="selectMypets" parameterType="String" resultMap="mypetsVO">
+        SELECT
+            seq, member_seq, pet_name, pet_type, pet_size, pet_sex, pet_desexualization_at, pet_birthday, pet_withday, pet_weight, pet_kind, pet_life_place, pet_bmi, pet_urine_times, pet_defecation_times, pet_vaccine1_state, pet_vaccine2_state, pet_family_type, pet_pets_amount, pet_alone_times, pet_walk_times, pet_past_disease, pet_allergy, pet_reg_number, pet_trouble, pet_pic, chk_at, del_at, ins_dttm, upt_dttm
+        FROM
+            t_mypets
+        WHERE
+            seq = #{seq}
+    </select>
+
+    <update id="updateMypets" parameterType="mypetsManageVO">
+
+        UPDATE t_mypets
+        SET
+            member_seq = #{memberSeq},
+            pet_name = #{petName},
+            pet_type = #{petType},
+            pet_size = #{petSize},
+            pet_sex = #{petSex},
+            pet_desexualization_at = #{petDesexualizationAt},
+            pet_birthday = #{petBirthday},
+            pet_withday = #{petWithday},
+            pet_weight = #{petWeight},
+            pet_kind = #{petKind},
+            pet_life_place = #{petLifePlace},
+            pet_bmi = #{petBmi},
+            pet_urine_times = #{petUrineTimes},
+            pet_defecation_times = #{petDefecationTimes},
+            pet_vaccine1_state = #{petVaccine1State},
+            pet_vaccine2_state = #{petVaccine2State},
+            pet_family_type = #{petFamilyType},
+            pet_pets_amount = #{petPetsAmount},
+            pet_alone_times = #{petAloneTimes},
+            pet_walk_times = #{petWalkTimes},
+            pet_past_disease = #{petPastDisease},
+            pet_allergy = #{petAllergy},
+            pet_reg_number = #{petRegNumber},
+            pet_trouble = #{petTrouble},
+            chk_at = #{chkAt},
+            del_at = #{delAt},
+            upt_dttm = now()
+        WHERE
+            seq = #{seq}
+
+    </update>
+
+</mapper>

@@ -30,11 +30,11 @@
             $("#menu20").click();
             $("#bread1").text("닥터멍냥");
             $("#bread2").text("회원 관리");
-            $("#bread3").text("회원 목록");
+            $("#bread3").text("반려동물 목록");
 
             $.fnSelect = function(cd){
                 $("input[name=selectedCd]").val(cd);
-                $("#listForm").attr("action", "/member/MemberSelectUpdtView");
+                $("#listForm").attr("action", "/mypets/MypetsSelectUpdtView");
                 $("#listForm").submit();
             };
 
@@ -77,8 +77,8 @@
             <div class="card">
                 <!-- Card header -->
                 <div class="card-header">
-                    <h3 class="mb-0" th:text="'회원 목록'"></h3>
-                    <p class="text-sm mb-0" th:text="'회원을 관리합니다.'"></p>
+                    <h3 class="mb-0" th:text="'반려동물 목록'"></h3>
+                    <p class="text-sm mb-0" th:text="'반려동물을 관리합니다.'"></p>
                 </div>
                 <!-- Card header -->
                 <!-- Card Body -->
@@ -88,11 +88,15 @@
                             <thead class="thead-light">
                             <tr>
                                 <th>No</th>
-                                <th>전화번호</th>
-                                <th>이메일</th>
-                                <th>나의코드</th>
-                                <th>마케팅이용동의</th>
-                                <th>상태</th>
+                                <th>보호자번호</th>
+                                <th>반려동물명</th>
+                                <th>타입</th>
+                                <th>크기</th>
+                                <th>성별</th>
+                                <th>중성화</th>
+                                <th>생일</th>
+                                <th>몸무게</th>
+                                <th>종</th>
                                 <th>활성화</th>
                                 <th>등록일시</th>
                                 <th>수정일시</th>
@@ -102,11 +106,15 @@
                             <tbody>
                             <tr th:each="item : ${resultList}" th:attr="onclick=|$.fnSelect('${item.seq}');|">
                                 <td th:text="${item.seq}"></td>
-                                <td th:text="${item.phoneNumber}"></td>
-                                <td th:text="${item.memberEmail}"></td>
-                                <td th:text="${item.memberCode}"></td>
-                                <td th:text="${item.marketingAgree}"></td>
-                                <td th:text="${item.memberState}"></td>
+                                <td th:text="${item.memberSeq}"></td>
+                                <td th:text="${item.petName}"></td>
+                                <td th:text="${item.petType}"></td>
+                                <td th:text="${item.petSize}"></td>
+                                <td th:text="${item.petSex}"></td>
+                                <td th:text="${item.petDesexualizationAt}"></td>
+                                <td th:text="${item.petBirthday}"></td>
+                                <td th:text="${item.petWeight}"></td>
+                                <td th:text="${item.petKind}"></td>
                                 <td th:text="${item.chkAt}"></td>
                                 <td th:text="${item.insDttm}"></td>
                                 <td th:text="${item.uptDttm}"></td>

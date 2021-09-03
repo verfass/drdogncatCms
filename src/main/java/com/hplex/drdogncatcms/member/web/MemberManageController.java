@@ -31,7 +31,7 @@ public class MemberManageController {
             @ModelAttribute("memberManageVO") MemberManageVO memberManageVO,
             Model model) throws Exception {
 
-        log.info("/member/MemberList start ====================== ");
+        log.debug(Thread.currentThread().getStackTrace()[1].getMethodName() + " Start =========================");
 
         String strSubQuery = "";
         String orderByQuery = "";
@@ -55,7 +55,7 @@ public class MemberManageController {
             @RequestParam(value="selectedCd", defaultValue="") String selectedCd,
             Model model) throws Exception {
 
-        log.info("memberSelectUpdtView start ====================== ");
+        log.debug(Thread.currentThread().getStackTrace()[1].getMethodName() + " Start =========================");
 
         MemberManageVO memberManageVO = memberManageService.selectMember(selectedCd);
 
@@ -72,7 +72,7 @@ public class MemberManageController {
             @ModelAttribute("memberManageVO") MemberManageVO memberManageVO,
             Model model) throws Exception {
 
-        log.info("diseaseSelectUpdt start ====================== ");
+        log.debug(Thread.currentThread().getStackTrace()[1].getMethodName() + " Start =========================");
 
         // 저장
         memberManageService.updateMember(memberManageVO);
