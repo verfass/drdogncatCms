@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hplex.drdogncatcms.mcheckup.service.Impl.McheckupManageDAO">
+
+    <resultMap type="mcheckupManageVO" id="mcheckupVO">
+        <result property="seq" column="seq"/>
+        <result property="memberSeq" column="member_seq"/>
+        <result property="modelName" column="model_name"/>
+        <result property="gubunCode" column="gubun_code"/>
+        <result property="petId" column="pet_id"/>
+        <result property="checkupGubun" column="checkup_gubun"/>
+        <result property="categoryId" column="category_id"/>
+        <result property="itemId" column="item_id"/>
+        <result property="challengeId" column="challenge_id"/>
+        <result property="targetRed" column="target_red"/>
+        <result property="targetGreen" column="target_green"/>
+        <result property="targetBlue" column="target_blue"/>
+        <result property="targetRed2" column="target_red2"/>
+        <result property="targetGreen2" column="target_green2"/>
+        <result property="targetBlue2" column="target_blue2"/>
+        <result property="whiteRed" column="white_red"/>
+        <result property="whiteGreen" column="white_green"/>
+        <result property="whiteBlue" column="white_blue"/>
+        <result property="whiteRed2" column="white_red2"/>
+        <result property="whiteGreen2" column="white_green2"/>
+        <result property="whiteBlue2" column="white_blue2"/>
+        <result property="colorDiff" column="color_diff"/>
+        <result property="colormetricNum" column="colormetric_num"/>
+        <result property="judgmentVal" column="judgment_val"/>
+        <result property="judgmentLabel" column="judgment_label"/>
+        <result property="judgmentRet" column="judgment_ret"/>
+        <result property="chkAt" column="chk_at"/>
+        <result property="delAt" column="del_at"/>
+        <result property="insDttm" column="ins_dttm"/>
+    </resultMap>
+
+
+    <select id="selectMcheckupList" resultMap="mcheckupVO">
+        SELECT
+            seq, member_seq, model_name, gubun_code, pet_id, checkup_gubun, category_id, item_id, challenge_id, target_red, target_green, target_blue, target_red2, target_green2, target_blue2, white_red, white_green, white_blue, white_red2, white_green2, white_blue2, color_diff, colormetric_num, judgment_val, judgment_label, judgment_ret, chk_at, del_at, ins_dttm
+        FROM
+        t_member_checkup
+        WHERE
+            1=1
+
+        <if test="searchKeyword != ''">
+            AND
+            member_name = #{searchKeyword}
+        </if>
+        <if test="searchChkAt != ''">
+            AND
+            chk_at = #{searchChkAt}
+        </if>
+        <if test="strSubQuery != ''">
+            AND
+            ${strSubjectQuery}
+        </if>
+        <if test="groupByQuery != ''">
+        GROUP BY
+            ${groupByQuery}
+        </if>
+        <if test="orderByQuery != ''">
+        ORDER BY
+            ${orderByQuery}
+        </if>
+    </select>
+
+    <select id="selectMcheckup" parameterType="String" resultMap="mcheckupVO">
+        SELECT
+            seq, member_seq, model_name, gubun_code, pet_id, checkup_gubun, category_id, item_id, challenge_id, target_red, target_green, target_blue, target_red2, target_green2, target_blue2, white_red, white_green, white_blue, white_red2, white_green2, white_blue2, color_diff, colormetric_num, judgment_val, judgment_label, judgment_ret, chk_at, del_at, ins_dttm
+        FROM
+            t_member_checkup
+        WHERE
+            seq = #{seq}
+    </select>
+
+    <update id="updateMcheckup" parameterType="mcheckupManageVO">
+
+        UPDATE t_member_checkup
+        SET
+            member_seq = #{memberSeq},
+            model_name = #{modelName},
+            gubun_code = #{gubunCode},
+            pet_id = #{petId},
+            checkup_gubun = #{checkupGubun},
+            category_id = #{categoryId},
+            item_id = #{itemId},
+            challenge_id = #{challengeId},
+            target_red = #{targetRed},
+            target_green = #{targetGreen},
+            target_blue = #{targetBlue},
+            target_red2 = #{targetRed2},
+            target_green2 = #{targetGreen2},
+            target_blue2 = #{targetBlue2},
+            white_red = #{whiteRed},
+            white_green = #{whiteGreen},
+            white_blue = #{whiteBlue},
+            white_red2 = #{whiteRed2},
+            white_green2 = #{whiteGreen2},
+            white_blue2 = #{whiteBlue2},
+            color_diff = #{colorDiff},
+            colormetric_num = #{colormetricNum},
+            judgment_val = #{judgmentVal},
+            judgment_label = #{judgmentLabel},
+            judgment_ret = #{judgmentRet},
+            chk_at = #{chkAt},
+            del_at = #{delAt}
+        WHERE
+            seq = #{seq}
+
+    </update>
+
+</mapper>

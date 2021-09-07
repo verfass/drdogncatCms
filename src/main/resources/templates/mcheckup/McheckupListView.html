@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layouts/layoutDefault}">
+
+<!-- 페이지 고유 CSS 추가 -->
+<th:block layout:fragment="css">
+    <!-- Page plugins -->
+    <link rel="stylesheet" href="/assets/vendor/datatables.net-bs4/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="/assets/vendor/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css">
+    <link rel="stylesheet" href="/assets/vendor/datatables.net-select-bs4/css/select.bootstrap4.min.css">
+</th:block>
+<!-- 페이지 고유 CSS 추가 -->
+
+<!-- 페이지 고유 스크립트 추가 -->
+<th:block layout:fragment="script">
+
+    <!-- Optional JS -->
+    <script src="/assets/vendor/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="/assets/vendor/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
+    <script src="/assets/vendor/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="/assets/vendor/datatables.net-buttons-bs4/js/buttons.bootstrap4.min.js"></script>
+    <script src="/assets/vendor/datatables.net-buttons/js/buttons.html5.min.js"></script>
+    <script src="/assets/vendor/datatables.net-buttons/js/buttons.flash.min.js"></script>
+    <script src="/assets/vendor/datatables.net-buttons/js/buttons.print.min.js"></script>
+    <script src="/assets/vendor/datatables.net-select/js/dataTables.select.min.js"></script>
+    <!-- Optional JS -->
+    <script type="text/javascript">
+        $(function () {
+
+            var categoryId = "[[${categoryId}]]";
+            $("#menu40").click();
+            $("#bread1").text("닥터멍냥");
+            $("#bread2").text("검사 결과 관리");
+            if (categoryId == '101') {
+                $("#bread3").text("10종 검사");
+            } else {
+                $("#bread3").text("신장질환 검사");
+            }
+
+            $.fnSelect = function(cd){
+                $("input[name=selectedCd]").val(cd);
+                $("#listForm").attr("action", "/mcheckup/McheckupSelectUpdtView");
+                $("#listForm").submit();
+            };
+
+            // $.fnResister = function(){
+            //     $("#listForm").attr("action", "/disease/DiseaseInsertView");
+            //     $("#listForm").submit();
+            // };
+
+            // $.fnList = function(){
+            //     $("#listForm").attr("action", "/mcheckup/McheckupListView");
+            //     $("#listForm").submit();
+            // };
+
+        });
+    </script>
+
+    <script  th:inline="javascript">
+        var resultMsg = "[[${resultMsg}]]";
+        if ((resultMsg.length > 0) && (resultMsg != "null")) alert(resultMsg);
+    </script>
+
+</th:block>
+<!-- 페이지 고유 스크립트 추가 -->
+
+<div layout:fragment="content">
+    <!--시작  -->
+
+    <!-- listForm -->
+    <form method="post" name="listForm" id="listForm">
+        <input type="hidden" name="categoryId" id="categoryId" th:value="${checkupSearchVO.searchCategoryId}" />
+        <input type="hidden" name="selectedCd" id="selectedCd" />
+    </form>
+    <!-- listForm -->
+
+    <!-- Table -->
+    <div class="row">
+        <div class="col">
+            <div class="card">
+                <!-- Card header -->
+                <div class="card-header">
+                    <h3 class="mb-0" th:text="${categoryId == '101'} ? '10종 검사 결과 관리' : '신장 검사 결과 관리'">10종 검사 관리</h3>
+                    <p class="text-sm mb-0" th:text="${categoryId == '101'} ? '10종 검사 결과 항목을 관리합니다.' : '신장 검사 결과 항목을 관리합니다.'">
+                        10종 검사 항목을 관리합니다.
+                    </p>
+                </div>
+                <!-- Card header -->
+                <!-- Card Body -->
+                <div class="card-body">
+                    <div class="table-responsive py-4">
+                        <table class="table table-flush" id="datatable-basic">
+                            <thead class="thead-light">
+                            <tr>
+                                <th>검사번호</th>
+                                <th>회원번호</th>
+                                <th>반려동물</th>
+
+                                <th:block th:if="${categoryId == '101'}">
+                                <th>백혈구</th>
+                                <th>우로빌리노겐</th>
+                                <th>잠혈</th>
+                                <th>빌리루빈</th>
+                                <th>케톤</th>
+                                <th>포도당</th>
+                                <th>단백질</th>
+                                <th>pH</th>
+                                <th>아질산염</th>
+                                <th>비중</th>
+                                </th:block>
+
+                                <th:block th:if="${categoryId == '201'}">
+                                <th>단백질2</th>
+                                <th>크레아티닌</th>
+                                <th>신장질환</th>
+                                </th:block>
+
+                                <th>정상</th>
+                                <th>비정상</th>
+
+                                <th>검사일시</th>
+                            </tr>
+                            </thead>
+
+                            <tbody>
+                            <tr th:each="item : ${resultList}" th:attr="onclick=|$.fnSelect('${item.checkupSeq}');|">
+
+                                <td th:text="${item.checkupSeq}"></td>
+                                <td th:text="${item.phoneNumber}"></td>
+                                <td th:text="${item.petName}"></td>
+
+                                <th:block th:if="${categoryId == '101'}">
+                                <td th:text="${item.ret1}"></td>
+                                <td th:text="${item.ret2}"></td>
+                                <td th:text="${item.ret3}"></td>
+                                <td th:text="${item.ret4}"></td>
+                                <td th:text="${item.ret5}"></td>
+                                <td th:text="${item.ret6}"></td>
+                                <td th:text="${item.ret7}"></td>
+                                <td th:text="${item.ret8}"></td>
+                                <td th:text="${item.ret9}"></td>
+                                <td th:text="${item.ret10}"></td>
+                                <td th:text="${item.succNum}"></td>
+                                <td th:text="${item.failNum}"></td>
+                                </th:block>
+
+                                <th:block th:if="${categoryId == '201'}">
+                                <td th:text="${item.ret11}"></td>
+                                <td th:text="${item.ret12}"></td>
+                                <td th:text="${item.ret13}"></td>
+                                <td th:text="${item.succNum}"></td>
+                                <td th:text="${item.failNum}"></td>
+                                </th:block>
+
+
+                                <td th:text="${item.checkupDttm}"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <!-- Card Body -->
+                <!-- Card Footer -->
+                <div class="card-footer bg-transparent">
+                    <div class="row">
+                        <div class="col">
+<!--                            <button type="button" class="btn btn-secondary btn-lg">목록가기</button>-->
+                        </div>
+                        <div class="col text-right">
+<!--                            <button type="button" class="btn btn-primary btn-lg">등록하기</button>-->
+                        </div>
+                    </div>
+                </div>
+                <!-- Card Footer -->
+            </div>
+        </div>
+    </div>
+    <!-- Table -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- 끝  -->
+</div>
+
+</html>

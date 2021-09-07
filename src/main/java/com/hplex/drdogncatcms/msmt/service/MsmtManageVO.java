@@ -9,7 +9,7 @@ import lombok.ToString;
 @Getter
 @ToString
 @NoArgsConstructor
-public class MsmtManageVo extends MsmtDefaultVO {
+public class MsmtManageVO extends MsmtDefaultVO {
 
     private static final long serialVersionUID = -605777722400908279L;
 

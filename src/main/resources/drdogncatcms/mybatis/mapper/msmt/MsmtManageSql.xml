@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hplex.drdogncatcms.msmt.service.Impl.MsmtManageDAO">
+
+    <resultMap type="msmtManageVO" id="msmtVO">
+        <result property="id" column="ID"/>
+        <result property="categoryId" column="CATEGORY_ID"/>
+        <result property="itemId" column="ITEM_ID"/>
+        <result property="envGubun" column="ENV_GUBUN"/>
+        <result property="colorDiffMin" column="COLOR_DIFF_MIN"/>
+        <result property="colorDiffMax" column="COLOR_DIFF_MAX"/>
+        <result property="colorMetricsNum" column="COLOR_METRICS_NUM"/>
+        <result property="judgmentVal" column="JUDGMENT_VAL"/>
+        <result property="judgmentLabel" column="JUDGMENT_LABEL"/>
+        <result property="judgmentRet" column="JUDGMENT_RET"/>
+        <result property="ord" column="ORD"/>
+        <result property="chkAt" column="CHK_AT"/>
+        <result property="delAt" column="DEL_AT"/>
+        <result property="insUser" column="INS_USER"/>
+        <result property="uptUser" column="UPT_USER"/>
+        <result property="insDttm" column="INS_DTTM"/>
+        <result property="uptDttm" column="UPT_DTTM"/>
+    </resultMap>
+
+
+    <select id="selectMsmtList" resultMap="msmtVO">
+        SELECT
+            ID, CATEGORY_ID, ITEM_ID, ENV_GUBUN, COLOR_DIFF_MIN, COLOR_DIFF_MAX, COLOR_METRICS_NUM, JUDGMENT_VAL, JUDGMENT_LABEL, JUDGMENT_RET, ORD, CHK_AT, DEL_AT, INS_USER, UPT_USER, INS_DTTM, UPT_DTTM
+        FROM
+            t_checkup_measurement
+        WHERE
+            1=1
+
+        <if test="searchKeyword != ''">
+            AND
+            member_name = #{searchKeyword}
+        </if>
+        <if test="searchChkAt != ''">
+            AND
+            chk_at = #{searchChkAt}
+        </if>
+        <if test="strSubQuery != ''">
+            AND
+            ${strSubjectQuery}
+        </if>
+        <if test="groupByQuery != ''">
+        GROUP BY
+            ${groupByQuery}
+        </if>
+        <if test="orderByQuery != ''">
+        ORDER BY
+            ${orderByQuery}
+        </if>
+    </select>
+
+    <select id="selectMsmt" parameterType="String" resultMap="msmtVO">
+        SELECT
+            ID, CATEGORY_ID, ITEM_ID, ENV_GUBUN, COLOR_DIFF_MIN, COLOR_DIFF_MAX, COLOR_METRICS_NUM, JUDGMENT_VAL, JUDGMENT_LABEL, JUDGMENT_RET, ORD, CHK_AT, DEL_AT, INS_USER, UPT_USER, INS_DTTM, UPT_DTTM
+        FROM
+            t_checkup_measurement
+        WHERE
+            seq = #{seq}
+    </select>
+
+    <update id="updateMsmt" parameterType="msmtManageVO">
+
+        UPDATE t_checkup_measurement
+        SET
+            CATEGORY_ID = #{categoryId},
+            ITEM_ID = #{itemId},
+            ENV_GUBUN = #{envGubun},
+            COLOR_DIFF_MIN = #{colorDiffMin},
+            COLOR_DIFF_MAX = #{colorDiffMax},
+            COLOR_METRICS_NUM = #{colorMetricsNum},
+            JUDGMENT_VAL = #{judgmentVal},
+            JUDGMENT_LABEL = #{judgmentLabel},
+            JUDGMENT_RET = #{judgmentRet},
+            ORD = #{ord},
+            CHK_AT = #{chkAt},
+            DEL_AT = #{delAt},
+            UPT_USER = #{uptUser},
+            UPT_DTTM = now()
+        WHERE
+            ID = #{id}
+
+    </update>
+
+</mapper>

@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layouts/layoutDefault}">
+
+<!-- 페이지 고유 CSS 추가 -->
+
+<th:block layout:fragment="css">
+    <!-- Page plugins -->
+    <link rel="stylesheet" href="/assets/vendor/datatables.net-bs4/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="/assets/vendor/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css">
+    <link rel="stylesheet" href="/assets/vendor/datatables.net-select-bs4/css/select.bootstrap4.min.css">
+    <link rel="stylesheet" href="/assets/vendor/bootstrap-tagsinput/dist/bootstrap-tagsinput.css">
+    <link rel="stylesheet" href="/assets/vendor/bootstrap-tagsinput/dist/bootstrap-tagsinput-typeahead.css">
+</th:block>
+<!-- 페이지 고유 CSS 추가 -->
+
+<!-- 페이지 고유 스크립트 추가 -->
+<th:block layout:fragment="script">
+    <!-- Optional JS -->
+    <script src="/assets/vendor/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="/assets/vendor/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
+    <script src="/assets/vendor/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="/assets/vendor/datatables.net-buttons-bs4/js/buttons.bootstrap4.min.js"></script>
+    <script src="/assets/vendor/datatables.net-buttons/js/buttons.html5.min.js"></script>
+    <script src="/assets/vendor/datatables.net-buttons/js/buttons.flash.min.js"></script>
+    <script src="/assets/vendor/datatables.net-buttons/js/buttons.print.min.js"></script>
+    <script src="/assets/vendor/datatables.net-select/js/dataTables.select.min.js"></script>
+    <script src="/assets/vendor/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js"></script>
+
+    <!-- Optional JS -->
+    <script th:inline="javascript">
+        $(function () {
+
+            var categoryId = [[${checkupManageVO.categoryId}]];
+            $("#menu40").click();
+            $("#bread1").text("닥터멍냥");
+            $("#bread2").text("검사 결과 관리");
+            if (categoryId == '101') {
+                $("#bread3").text("10종 검사");
+            } else {
+                $("#bread3").text("신장질환 검사");
+            }
+
+            $.fnList = function(){
+                $("#listForm").attr("action", "/mcheckup/McheckupList");
+                $("#listForm").submit();
+            };
+
+
+        });
+    </script>
+
+</th:block>
+<!-- 페이지 고유 스크립트 추가 -->
+
+<div layout:fragment="content">
+    <!--시작  -->
+
+    <!-- listForm -->
+    <form method="post" name="listForm" id="listForm">
+        <input type="hidden" name="categoryId" id="categoryId" th:value="${checkupManageVO.categoryId}" />
+        <input type="hidden" name="selectedCd" id="selectedCd" />
+    </form>
+    <!-- listForm -->
+
+    <div class="card">
+        <!-- Card header -->
+        <div class="card-header">
+            <h3 class="mb-0" th:text="${checkupManageVO.checkupSeq}">검사항목명</h3>
+        </div>
+        <!-- Card header -->
+        <!-- Card body -->
+        <div class="card-body">
+
+            <form method="post" action="#" th:action="@{/mcheckup/McheckupSelectUpdt}" th:object="${checkupManageVO}" name="form" id="form">
+
+                <input th:type="hidden" th:field="*{categoryId}"/>
+
+                <div class="form-row">
+                    <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="checkupSeq">검사번호</label>
+                            <input type="text" th:field="*{checkupSeq}" name="checkupSeq" id="checkupSeq" placeholder="" class="form-control" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="phoneNumber">회원번호</label>
+                            <input type="text" th:field="*{phoneNumber}" name="phoneNumber" id="phoneNumber" placeholder="" class="form-control" required>
+                        </div>
+                    </div>
+                    <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="petName">반려동물</label>
+                            <input type="text" th:field="*{petName}" name="petName" id="petName" placeholder="" class="form-control">
+                        </div>
+                    </div>
+                </div>
+
+                <th:block th:if="${categoryId == '101'}">
+                <div class="form-row">
+                    <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="itemName">항목</label>
+                            <input type="text" name="itemName" id="itemName" value="백혈구" class="form-control" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="rgb1">RGB</label>
+                            <input type="text" th:field="*{rgb1}" name="rgb1" id="rgb1" placeholder="" class="form-control" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="ret1">결과</label>
+                            <input type="text" th:field="*{ret1}" name="ret1" id="ret1" placeholder="" class="form-control" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="val1">값</label>
+                            <input type="text" th:field="*{val1}" name="val1" id="val1" placeholder="" class="form-control" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="label1">라벨</label>
+                            <input type="text" th:field="*{label1}" name="label1" id="label1" placeholder="" class="form-control" readonly>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="itemName">항목</label>
+                            <input type="text" name="itemName" id="itemName" value="우로빌리노겐" class="form-control" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="rgb2">RGB</label>
+                            <input type="text" th:field="*{rgb2}" name="rgb2" id="rgb2" placeholder="" class="form-control" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="ret2">결과</label>
+                            <input type="text" th:field="*{ret2}" name="ret2" id="ret2" placeholder="" class="form-control" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="val2">값</label>
+                            <input type="text" th:field="*{val2}" name="val2" id="val2" placeholder="" class="form-control" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="label2">라벨</label>
+                            <input type="text" th:field="*{label2}" name="label2" id="label2" placeholder="" class="form-control" readonly>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="itemName">항목</label>
+                            <input type="text" name="itemName" id="itemName" value="잠혈" class="form-control" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="rgb3">RGB</label>
+                            <input type="text" th:field="*{rgb3}" name="rgb3" id="rgb3" placeholder="" class="form-control" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="ret3">결과</label>
+                            <input type="text" th:field="*{ret3}" name="ret3" id="ret3" placeholder="" class="form-control" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="val3">값</label>
+                            <input type="text" th:field="*{val3}" name="val3" id="val3" placeholder="" class="form-control" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="label3">라벨</label>
+                            <input type="text" th:field="*{label3}" name="label3" id="label3" placeholder="" class="form-control" readonly>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="itemName">항목</label>
+                            <input type="text" name="itemName" id="itemName" value="빌리루빈" class="form-control" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="rgb4">RGB</label>
+                            <input type="text" th:field="*{rgb4}" name="rgb4" id="rgb4" placeholder="" class="form-control" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="ret4">결과</label>
+                            <input type="text" th:field="*{ret4}" name="ret4" id="ret4" placeholder="" class="form-control" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="val4">값</label>
+                            <input type="text" th:field="*{val4}" name="val4" id="val4" placeholder="" class="form-control" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="label4">라벨</label>
+                            <input type="text" th:field="*{label4}" name="label4" id="label4" placeholder="" class="form-control" readonly>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="itemName">항목</label>
+                            <input type="text" name="itemName" id="itemName" value="케톤" class="form-control" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="rgb5">RGB</label>
+                            <input type="text" th:field="*{rgb5}" name="rgb5" id="rgb5" placeholder="" class="form-control" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="ret5">결과</label>
+                            <input type="text" th:field="*{ret5}" name="ret5" id="ret5" placeholder="" class="form-control" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="val5">값</label>
+                            <input type="text" th:field="*{val5}" name="val5" id="val5" placeholder="" class="form-control" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="label5">라벨</label>
+                            <input type="text" th:field="*{label5}" name="label5" id="label5" placeholder="" class="form-control" readonly>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="itemName">항목</label>
+                            <input type="text" name="itemName" id="itemName" value="포도당" class="form-control" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="rgb6">RGB</label>
+                            <input type="text" th:field="*{rgb6}" name="rgb6" id="rgb6" placeholder="" class="form-control" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="ret6">결과</label>
+                            <input type="text" th:field="*{ret6}" name="ret6" id="ret6" placeholder="" class="form-control" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="val6">값</label>
+                            <input type="text" th:field="*{val6}" name="val6" id="val6" placeholder="" class="form-control" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="label6">라벨</label>
+                            <input type="text" th:field="*{label6}" name="label6" id="label6" placeholder="" class="form-control" readonly>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="itemName">항목</label>
+                            <input type="text" name="itemName" id="itemName" value="단백질" class="form-control" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="rgb7">RGB</label>
+                            <input type="text" th:field="*{rgb7}" name="rgb7" id="rgb7" placeholder="" class="form-control" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="ret7">결과</label>
+                            <input type="text" th:field="*{ret7}" name="ret7" id="ret7" placeholder="" class="form-control" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="val7">값</label>
+                            <input type="text" th:field="*{val7}" name="val7" id="val7" placeholder="" class="form-control" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="label7">라벨</label>
+                            <input type="text" th:field="*{label7}" name="label7" id="label7" placeholder="" class="form-control" readonly>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="itemName">항목</label>
+                            <input type="text" name="itemName" id="itemName" value="pH" class="form-control" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="rgb8">RGB</label>
+                            <input type="text" th:field="*{rgb8}" name="rgb8" id="rgb8" placeholder="" class="form-control" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="ret8">결과</label>
+                            <input type="text" th:field="*{ret8}" name="ret8" id="ret8" placeholder="" class="form-control" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="val8">값</label>
+                            <input type="text" th:field="*{val8}" name="val8" id="val8" placeholder="" class="form-control" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="label8">라벨</label>
+                            <input type="text" th:field="*{label8}" name="label8" id="label8" placeholder="" class="form-control" readonly>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="itemName">항목</label>
+                            <input type="text" name="itemName" id="itemName" value="아질산염" class="form-control" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="rgb9">RGB</label>
+                            <input type="text" th:field="*{rgb9}" name="rgb9" id="rgb9" placeholder="" class="form-control" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="ret9">결과</label>
+                            <input type="text" th:field="*{ret9}" name="ret9" id="ret9" placeholder="" class="form-control" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="val9">값</label>
+                            <input type="text" th:field="*{val9}" name="val9" id="val9" placeholder="" class="form-control" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="label9">라벨</label>
+                            <input type="text" th:field="*{label9}" name="label9" id="label9" placeholder="" class="form-control" readonly>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="itemName">항목</label>
+                            <input type="text" name="itemName" id="itemName" value="비중" class="form-control" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="rgb10">RGB</label>
+                            <input type="text" th:field="*{rgb10}" name="rgb10" id="rgb10" placeholder="" class="form-control" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="ret10">결과</label>
+                            <input type="text" th:field="*{ret10}" name="ret10" id="ret10" placeholder="" class="form-control" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="val10">값</label>
+                            <input type="text" th:field="*{val10}" name="val10" id="val10" placeholder="" class="form-control" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="label10">라벨</label>
+                            <input type="text" th:field="*{label10}" name="label10" id="label10" placeholder="" class="form-control" readonly>
+                        </div>
+                    </div>
+                </div>
+                </th:block>
+
+                <th:block th:if="${categoryId == '201'}">
+                <div class="form-row">
+                    <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="itemName">항목</label>
+                            <input type="text" name="itemName" id="itemName" value="단백질2" class="form-control" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="rgb11">RGB</label>
+                            <input type="text" th:field="*{rgb11}" name="rgb11" id="rgb11" placeholder="" class="form-control" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="ret11">결과</label>
+                            <input type="text" th:field="*{ret11}" name="ret11" id="ret11" placeholder="" class="form-control" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="val11">값</label>
+                            <input type="text" th:field="*{val11}" name="val11" id="val11" placeholder="" class="form-control" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="label11">라벨</label>
+                            <input type="text" th:field="*{label11}" name="label11" id="label11" placeholder="" class="form-control" readonly>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="itemName">항목</label>
+                            <input type="text" name="itemName" id="itemName" value="크레아티닌" class="form-control" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="rgb12">RGB</label>
+                            <input type="text" th:field="*{rgb12}" name="rgb12" id="rgb12" placeholder="" class="form-control" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="ret12">결과</label>
+                            <input type="text" th:field="*{ret12}" name="ret12" id="ret12" placeholder="" class="form-control" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="val12">값</label>
+                            <input type="text" th:field="*{val12}" name="val12" id="val12" placeholder="" class="form-control" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="label12">라벨</label>
+                            <input type="text" th:field="*{label12}" name="label12" id="label12" placeholder="" class="form-control" readonly>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="itemName">항목</label>
+                            <input type="text" name="itemName" id="itemName" value="신장질환" class="form-control" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="rgb13">RGB</label>
+                            <input type="text" th:field="*{rgb13}" name="rgb13" id="rgb13" placeholder="" class="form-control" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="ret13">결과</label>
+                            <input type="text" th:field="*{ret13}" name="ret13" id="ret13" placeholder="" class="form-control" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="val13">값</label>
+                            <input type="text" th:field="*{val13}" name="val13" id="val13" placeholder="" class="form-control" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="label13">라벨</label>
+                            <input type="text" th:field="*{label13}" name="label13" id="label13" placeholder="" class="form-control" readonly>
+                        </div>
+                    </div>
+                </div>
+                </th:block>
+
+
+
+                <div class="form-row">
+                    <div class="col-md-4 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="checkupDttm">검사일시</label>
+                            <input type="text" th:field="*{checkupDttm}" name="checkupDttm" id="checkupDttm" placeholder="" class="form-control" readonly>
+                        </div>
+                    </div>
+                </div>
+
+            </form>
+
+        </div>
+        <!-- Card body -->
+        <!-- Card Footer -->
+        <div class="card-footer bg-transparent">
+            <div class="row">
+                <div class="col">
+                    <button type="button" class="btn btn-secondary btn-lg" onclick="$.fnList();">목록가기</button>
+                </div>
+<!--                <div class="col text-right">-->
+<!--                    <button type="button" class="btn btn-primary btn-lg" onClick="$.fnUpdate(document.forms[0]); return false;">수정하기</button>-->
+<!--                </div>-->
+            </div>
+        </div>
+        <!-- Card Footer -->
+    </div>
+
+
+    <!-- 끝  -->
+</div>
+
+</html>

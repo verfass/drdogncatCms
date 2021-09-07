@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hplex.drdogncatcms.mcheckup.service.Impl.CheckupManageDAO">
+
+    <resultMap type="checkupManageVO" id="checkupVO">
+        <result property="categoryId" column="category_id"/>
+        <result property="checkupSeq" column="checkup_seq"/>
+        <result property="memberSeq" column="member_seq"/>
+        <result property="phoneNumber" column="phone_number"/>
+        <result property="petId" column="pet_id"/>
+        <result property="petName" column="pet_name"/>
+        <result property="checkupGubun" column="checkup_gubun"/>
+        <result property="rgb1" column="rgb1"/>
+        <result property="rgb2" column="rgb2"/>
+        <result property="rgb3" column="rgb3"/>
+        <result property="rgb4" column="rgb4"/>
+        <result property="rgb5" column="rgb5"/>
+        <result property="rgb6" column="rgb6"/>
+        <result property="rgb7" column="rgb7"/>
+        <result property="rgb8" column="rgb8"/>
+        <result property="rgb9" column="rgb9"/>
+        <result property="rgb10" column="rgb10"/>
+        <result property="rgb11" column="rgb11"/>
+        <result property="rgb12" column="rgb12"/>
+        <result property="rgb13" column="rgb13"/>
+        <result property="rgb14" column="rgb14"/>
+        <result property="ret1" column="ret1"/>
+        <result property="ret2" column="ret2"/>
+        <result property="ret3" column="ret3"/>
+        <result property="ret4" column="ret4"/>
+        <result property="ret5" column="ret5"/>
+        <result property="ret6" column="ret6"/>
+        <result property="ret7" column="ret7"/>
+        <result property="ret8" column="ret8"/>
+        <result property="ret9" column="ret9"/>
+        <result property="ret10" column="ret10"/>
+        <result property="ret11" column="ret11"/>
+        <result property="ret12" column="ret12"/>
+        <result property="ret13" column="ret13"/>
+        <result property="ret14" column="ret14"/>
+        <result property="val1" column="val1"/>
+        <result property="val2" column="val2"/>
+        <result property="val3" column="val3"/>
+        <result property="val4" column="val4"/>
+        <result property="val5" column="val5"/>
+        <result property="val6" column="val6"/>
+        <result property="val7" column="val7"/>
+        <result property="val8" column="val8"/>
+        <result property="val9" column="val9"/>
+        <result property="val10" column="val10"/>
+        <result property="val11" column="val11"/>
+        <result property="val12" column="val12"/>
+        <result property="val13" column="val13"/>
+        <result property="val14" column="val14"/>
+        <result property="label1" column="label1"/>
+        <result property="label2" column="label2"/>
+        <result property="label3" column="label3"/>
+        <result property="label4" column="label4"/>
+        <result property="label5" column="label5"/>
+        <result property="label6" column="label6"/>
+        <result property="label7" column="label7"/>
+        <result property="label8" column="label8"/>
+        <result property="label9" column="label9"/>
+        <result property="label10" column="label10"/>
+        <result property="label11" column="label11"/>
+        <result property="label12" column="label12"/>
+        <result property="label13" column="label13"/>
+        <result property="label14" column="label14"/>
+        <result property="succNum" column="succ_num"/>
+        <result property="failNum" column="fail_num"/>
+        <result property="checkupDttm" column="checkup_dttm"/>
+    </resultMap>
+
+
+    <select id="selectCheckupList" resultMap="checkupVO">
+        SELECT
+            category_id, checkup_seq, member_seq, phone_number, pet_id, pet_name, checkup_gubun, rgb1, rgb2, rgb3, rgb4, rgb5, rgb6, rgb7, rgb8, rgb9, rgb10, rgb11, rgb12, rgb13, rgb14, ret1, ret2, ret3, ret4, ret5, ret6, ret7, ret8, ret9, ret10, ret11, ret12, ret13, ret14, val1, val2, val3, val4, val5, val6, val7, val8, val9, val10, val11, val12, val13, val14, label1, label2, label3, label4, label5, label6, label7, label8, label9, label10, label11, label12, label13, label14, succ_num, fail_num, checkup_dttm
+        FROM
+            v_checkup
+        WHERE
+            1=1
+        <if test="searchCategoryId != ''">
+            AND
+            category_id = #{searchCategoryId}
+        </if>
+        <if test="searchKeyword != ''">
+            AND
+            category_id = #{searchKeyword}
+        </if>
+        <if test="strSubQuery != ''">
+            AND
+            ${strSubjectQuery}
+        </if>
+        <if test="groupByQuery != ''">
+        GROUP BY
+            ${groupByQuery}
+        </if>
+        <if test="orderByQuery != ''">
+        ORDER BY
+            ${orderByQuery}
+        </if>
+    </select>
+
+    <select id="selectCheckup" parameterType="String" resultMap="checkupVO">
+        SELECT
+            category_id, checkup_seq, member_seq, phone_number, pet_id, pet_name, checkup_gubun, rgb1, rgb2, rgb3, rgb4, rgb5, rgb6, rgb7, rgb8, rgb9, rgb10, rgb11, rgb12, rgb13, rgb14, ret1, ret2, ret3, ret4, ret5, ret6, ret7, ret8, ret9, ret10, ret11, ret12, ret13, ret14, val1, val2, val3, val4, val5, val6, val7, val8, val9, val10, val11, val12, val13, val14, label1, label2, label3, label4, label5, label6, label7, label8, label9, label10, label11, label12, label13, label14, succ_num, fail_num, checkup_dttm
+        FROM
+            v_checkup
+        WHERE
+            checkup_seq = #{seq}
+    </select>
+
+
+</mapper>
