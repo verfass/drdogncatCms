@@ -6,6 +6,8 @@
         <setting name="defaultStatementTimeout" value="25"/>
     </settings>
     <typeAliases>
+        <typeAlias type="com.hplex.drdogncatcms.admin.service.AdminManageVO" alias="adminManageVO" />
+        <typeAlias type="com.hplex.drdogncatcms.role.service.RoleManageVO" alias="roleManageVO" />
         <typeAlias type="com.hplex.drdogncatcms.checkup.service.ItemManageVO" alias="itemManageVO" />
         <typeAlias type="com.hplex.drdogncatcms.disease.service.DiseaseManageVO" alias="diseaseManageVO" />
         <typeAlias type="com.hplex.drdogncatcms.disease.service.DiseaseRefManageVO" alias="diseaseRefManageVO" />

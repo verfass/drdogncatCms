@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layouts/layoutDefault}">
+
+<!-- 페이지 고유 CSS 추가 -->
+<script src="../../static/se2/js/service/HuskyEZCreator.js"></script>
+<th:block layout:fragment="css">
+    <!-- Page plugins -->
+    <link rel="stylesheet" href="/assets/vendor/datatables.net-bs4/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="/assets/vendor/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css">
+    <link rel="stylesheet" href="/assets/vendor/datatables.net-select-bs4/css/select.bootstrap4.min.css">
+</th:block>
+<!-- 페이지 고유 CSS 추가 -->
+
+<!-- 페이지 고유 스크립트 추가 -->
+<th:block layout:fragment="script">
+    <!-- Optional JS -->
+    <script src="/assets/vendor/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="/assets/vendor/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
+    <script src="/assets/vendor/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="/assets/vendor/datatables.net-buttons-bs4/js/buttons.bootstrap4.min.js"></script>
+    <script src="/assets/vendor/datatables.net-buttons/js/buttons.html5.min.js"></script>
+    <script src="/assets/vendor/datatables.net-buttons/js/buttons.flash.min.js"></script>
+    <script src="/assets/vendor/datatables.net-buttons/js/buttons.print.min.js"></script>
+    <script src="/assets/vendor/datatables.net-select/js/dataTables.select.min.js"></script>
+    <!-- Optional JS -->
+    <script type="text/javascript">
+        $(function () {
+
+            $("#menu10").click();
+            $("#bread1").text("닥터멍냥");
+            $("#bread2").text("관리자 관리");
+            $("#bread3").text("권한 관리");
+
+            $.fnUpdate = function(form){
+                $("#form").submit();
+            };
+
+            $.fnList = function(){
+                $("#listForm").attr("action", "/role/RoleList");
+                $("#listForm").submit();
+            };
+
+        });
+    </script>
+
+
+</th:block>
+<!-- 페이지 고유 스크립트 추가 -->
+
+<div layout:fragment="content">
+    <!--시작  -->
+
+    <!-- listForm -->
+    <form method="post" name="listForm" id="listForm">
+        <input type="hidden" name="selectedCd" id="selectedCd" />
+    </form>
+    <!-- listForm -->
+
+    <div class="card">
+        <!-- Card header -->
+        <div class="card-header">
+            <h3 class="mb-0" th:text="${roleManageVO.roleName}"></h3>
+        </div>
+        <!-- Card header -->
+        <!-- Card body -->
+        <div class="card-body">
+
+            <form method="post" action="#" th:action="@{/role/RoleSelectUpdt}" th:object="${roleManageVO}" name="form" id="form">
+
+                <div class="form-row">
+                    <div class="col-md-3 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="seq">권한번호</label>
+                            <input type="text" th:field="*{seq}" name="seq" id="seq" placeholder="" class="form-control" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="role">권한코드</label>
+                            <input type="text" th:field="*{role}" name="role" id="role" placeholder="" class="form-control" readonly>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="col-md-3 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="roleName">권한명</label>
+                            <input type="text" th:field="*{roleName}" name="roleName" id="roleName" placeholder="" class="form-control" required>
+                        </div>
+                    </div>
+                </div>
+
+            </form>
+
+        </div>
+        <!-- Card body -->
+        <!-- Card Footer -->
+        <div class="card-footer bg-transparent">
+            <div class="row">
+                <div class="col">
+                    <button type="button" class="btn btn-secondary btn-lg" onclick="$.fnList();">목록가기</button>
+                </div>
+                <div class="col text-right">
+                    <button type="button" class="btn btn-primary btn-lg" onClick="$.fnUpdate(document.forms[0]); return false;">수정하기</button>
+                </div>
+            </div>
+        </div>
+        <!-- Card Footer -->
+    </div>
+
+
+    <!-- 끝  -->
+</div>
+
+</html>

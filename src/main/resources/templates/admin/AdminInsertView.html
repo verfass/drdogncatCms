@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layouts/layoutDefault}">
+
+<!-- 페이지 고유 CSS 추가 -->
+<th:block layout:fragment="css">
+    <!-- Page plugins -->
+    <link rel="stylesheet" href="/assets/vendor/datatables.net-bs4/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="/assets/vendor/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css">
+    <link rel="stylesheet" href="/assets/vendor/datatables.net-select-bs4/css/select.bootstrap4.min.css">
+</th:block>
+<!-- 페이지 고유 CSS 추가 -->
+
+<!-- 페이지 고유 스크립트 추가 -->
+<th:block layout:fragment="script">
+    <!-- Optional JS -->
+    <script src="/assets/vendor/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="/assets/vendor/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
+    <script src="/assets/vendor/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="/assets/vendor/datatables.net-buttons-bs4/js/buttons.bootstrap4.min.js"></script>
+    <script src="/assets/vendor/datatables.net-buttons/js/buttons.html5.min.js"></script>
+    <script src="/assets/vendor/datatables.net-buttons/js/buttons.flash.min.js"></script>
+    <script src="/assets/vendor/datatables.net-buttons/js/buttons.print.min.js"></script>
+    <script src="/assets/vendor/datatables.net-select/js/dataTables.select.min.js"></script>
+    <!-- Optional JS -->
+    <script type="text/javascript">
+        $(function () {
+
+            var pw = document.getElementById('pw');
+            var pw1 = document.getElementById('pw1');
+
+            $("#menu10").click();
+            $("#bread1").text("닥터멍냥");
+            $("#bread2").text("관리자 관리");
+            $("#bread3").text("관리자 관리");
+
+            $.fnInsert = function(form){
+                if($("input:checkbox[name=chkAtBox]").is(":checked") == true) {
+                    $("input[name=chkAt]").val('1');
+                } else {
+                    $("input[name=chkAt]").val('0');
+                }
+
+                if (pw.value != pw1.value) {
+                    alert("비밀번호를 확인해 주세요.");
+                    return false;
+                }
+
+                $("#form").submit();
+            };
+
+            $.fnList = function(){
+                $("#listForm").attr("action", "/admin/AdminList");
+                $("#listForm").submit();
+            };
+
+        });
+    </script>
+</th:block>
+<!-- 페이지 고유 스크립트 추가 -->
+
+<div layout:fragment="content">
+    <!--시작  -->
+
+    <!-- listForm -->
+    <form method="post" name="listForm" id="listForm">
+        <input type="hidden" name="selectedCd" id="selectedCd" />
+    </form>
+    <!-- listForm -->
+
+    <div class="card">
+        <!-- Card header -->
+        <div class="card-header">
+            <h3 class="mb-0">관리자를 등록합니다.</h3>
+        </div>
+        <!-- Card header -->
+        <!-- Card body -->
+        <div class="card-body">
+
+            <form method="post" action="#" th:action="@{/admin/AdminInsert}" th:object="${adminManageVO}" name="form" id="form">
+
+                <div class="form-row">
+                    <div class="col-md-3 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="id">관리자ID</label>
+                            <input type="text" th:field="*{id}" name="id" id="id" placeholder="" class="form-control" required>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="col-md-3 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="pw">비밀번호</label>
+                            <input type="text" th:field="*{pw}" name="pw" id="pw" placeholder="" class="form-control" required>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="pw1">비밀번호 확인</label>
+                            <input type="text" name="pw1" id="pw1" placeholder="" class="form-control" required>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="col-md-3 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="name">관리자명</label>
+                            <input type="text" th:field="*{name}" name="name" id="name" placeholder="" class="form-control" required>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="col-md-3 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="phone">핸드폰</label>
+                            <input type="text" th:field="*{phone}" name="phone" id="phone" placeholder="" class="form-control">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="col-md-3 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="email">이메일</label>
+                            <input type="text" th:field="*{email}" name="email" id="email" placeholder="" class="form-control" required>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="col-md-3 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="role">권한</label>
+                            <select th:field="*{role}" class="form-control" name="role" id="role">
+                                <option th:each="roleList : ${roleList}" th:value="${roleList.role}" th:text="${roleList.roleName}"></option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="chkAtBox">사용여부</label>
+                            <div class="mb-3">
+                                <label class="custom-toggle">
+                                    <input type="hidden" th:field="*{chkAt}" name="chkAt" id="chkAt">
+                                    <input type="checkbox" th:checked="${adminManageVO.chkAt=='1' ? true: false}" name="chkAtBox" id="chkAtBox">
+                                    <span class="custom-toggle-slider rounded-circle" data-label-off="중지" data-label-on="사용"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </form>
+
+        </div>
+        <!-- Card body -->
+        <!-- Card Footer -->
+        <div class="card-footer bg-transparent">
+            <div class="row">
+                <div class="col">
+                    <button type="button" class="btn btn-secondary btn-lg" onclick="$.fnList();">목록가기</button>
+                </div>
+                <div class="col text-right">
+                    <button type="button" class="btn btn-primary btn-lg" onClick="$.fnInsert(document.forms[0]); return false;">등록하기</button>
+                </div>
+            </div>
+        </div>
+        <!-- Card Footer -->
+    </div>
+
+
+    <!-- 끝  -->
+</div>
+
+</html>

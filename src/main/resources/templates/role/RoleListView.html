@@ -26,24 +26,24 @@
     <script type="text/javascript">
         $(function () {
 
-            $("#menu30").click();
+            $("#menu10").click();
             $("#bread1").text("닥터멍냥");
-            $("#bread2").text("검사관리");
-            $("#bread3").text("질병관리");
+            $("#bread2").text("관리자 관리");
+            $("#bread3").text("권한 관리");
 
             $.fnSelect = function(cd){
                 $("input[name=selectedCd]").val(cd);
-                $("#listForm").attr("action", "/disease/DiseaseSelectUpdtView");
+                $("#listForm").attr("action", "/role/RoleSelectUpdtView");
                 $("#listForm").submit();
             };
 
             $.fnResister = function(){
-                $("#listForm").attr("action", "/disease/DiseaseInsertView");
+                $("#listForm").attr("action", "/role/RoleInsertView");
                 $("#listForm").submit();
             };
 
             $.fnList = function(){
-                $("#listForm").attr("action", "/disease/DiseaseList");
+                $("#listForm").attr("action", "/role/RoleList");
                 $("#listForm").submit();
             };
 
@@ -53,7 +53,7 @@
     <script  th:inline="javascript">
         /*<![CDATA[*/
         var resultMsg = "[[${resultMsg}]]";
-        if (resultMsg.length > 0) alert(resultMsg);
+        if (!isEmpty(resultMsg)) alert(resultMsg);
         /*]]>*/
     </script>
 
@@ -76,9 +76,9 @@
             <div class="card">
                 <!-- Card header -->
                 <div class="card-header">
-                    <h3 class="mb-0">질병 관리</h3>
+                    <h3 class="mb-0">권한 관리</h3>
                     <p class="text-sm mb-0">
-                        질병을 관리합니다.
+                        관리자 권한을 관리합니다.
                     </p>
                 </div>
                 <!-- Card header -->
@@ -89,21 +89,15 @@
                         <table class="table table-flush" id="datatable-basic">
                             <thead class="thead-light">
                             <tr>
-                                <th>질병코드</th>
-                                <th>질병명</th>
-                                <th>사용여부</th>
-                                <th>등록일시</th>
-                                <th>수정일시</th>
+                                <th>권한코드</th>
+                                <th>권한명</th>
                             </tr>
                             </thead>
 
                             <tbody>
-                            <tr th:each="item : ${list}" th:attr="onclick=|$.fnSelect('${item.seq}');|">
-                                <td th:text="${item.seq}">10101</td>
-                                <td th:text="${item.diseaseName}">잠혈</td>
-                                <td th:text="${item.chkAt}">잠혈</td>
-                                <td th:text="${item.insDttm}">2021-02-16 15:38:00</td>
-                                <td th:text="${item.uptDttm}">2021-02-16 15:38:00</td>
+                            <tr th:each="item : ${resultList}" th:attr="onclick=|$.fnSelect('${item.seq}');|">
+                                <td th:text="${item.role}"></td>
+                                <td th:text="${item.roleName}"></td>
                             </tr>
                             </tbody>
                         </table>

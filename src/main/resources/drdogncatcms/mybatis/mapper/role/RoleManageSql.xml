@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hplex.drdogncatcms.role.service.Impl.RoleManageDAO">
+
+    <resultMap type="roleManageVO" id="roleVO">
+        <result property="seq" column="seq"/>
+        <result property="role" column="role"/>
+        <result property="roleName" column="roleName"/>
+    </resultMap>
+
+
+    <select id="selectRoleList" resultMap="roleVO">
+        SELECT
+            seq, role, roleName
+        FROM
+            t_role
+        WHERE
+            1=1
+        <if test="searchChkAt != ''">
+            AND
+            CHK_AT = #{searchChkAt}
+        </if>
+        <if test="strSubQuery != ''">
+            AND
+            ${strSubjectQuery}
+        </if>
+        <if test="groupByQuery != ''">
+            GROUP BY
+            ${groupByQuery}
+        </if>
+        <if test="orderByQuery != ''">
+            ORDER BY
+            ${orderByQuery}
+        </if>
+    </select>
+
+    <select id="selectRole" parameterType="String" resultMap="roleVO">
+        SELECT
+            seq, role, roleName
+        FROM
+            t_role
+        WHERE
+            seq = #{seq}
+    </select>
+
+    <insert id="insertRole">
+
+        INSERT INTO t_role
+            (role, roleName)
+        VALUES
+            (#{role}, #{roleName})
+
+    </insert>
+
+
+    <update id="updateRole">
+
+        UPDATE t_role
+        SET
+            role = #{role},
+            roleName = #{roleName}
+        WHERE
+            seq = #{seq}
+
+    </update>
+
+</mapper>

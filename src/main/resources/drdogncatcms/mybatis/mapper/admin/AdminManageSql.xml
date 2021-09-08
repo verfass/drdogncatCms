@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hplex.drdogncatcms.admin.service.Impl.AdminManageDAO">
+
+    <resultMap type="adminManageVO" id="adminVO">
+        <result property="seq" column="seq"/>
+        <result property="id" column="id"/>
+        <result property="pw" column="pw"/>
+        <result property="name" column="name"/>
+        <result property="phone" column="phone"/>
+        <result property="email" column="email"/>
+        <result property="role" column="role"/>
+    </resultMap>
+
+
+    <select id="selectAdminList" resultMap="adminVO">
+        SELECT
+            seq, id, pw, name, phone, email, role, chkAt
+        FROM
+            t_admin
+        WHERE
+            1=1
+        <if test="searchChkAt != ''">
+            AND
+            CHK_AT = #{searchChkAt}
+        </if>
+        <if test="strSubQuery != ''">
+            AND
+            ${strSubjectQuery}
+        </if>
+        <if test="groupByQuery != ''">
+            GROUP BY
+            ${groupByQuery}
+        </if>
+        <if test="orderByQuery != ''">
+            ORDER BY
+            ${orderByQuery}
+        </if>
+    </select>
+
+    <select id="selectAdmin" parameterType="String" resultMap="adminVO">
+        SELECT
+            seq, id, pw, name, phone, email, role, chkAt
+        FROM
+            t_admin
+        WHERE
+            seq = #{seq}
+    </select>
+
+    <insert id="insertAdmin">
+
+        INSERT INTO t_admin
+            (id, pw, name, phone, email, role, chkAt)
+        VALUES
+            (#{id}, #{pw}, #{name}, #{phone}, #{email}, #{role}, #{chkAt})
+
+    </insert>
+
+
+    <update id="updateAdmin">
+
+        UPDATE t_admin
+        SET
+            name = #{name},
+            phone = #{phone},
+            email = #{email},
+            role = #{role},
+            chkAt = #{chkAt}
+        WHERE
+            seq = #{seq}
+
+    </update>
+
+</mapper>
