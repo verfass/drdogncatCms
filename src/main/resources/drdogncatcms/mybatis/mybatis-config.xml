@@ -16,5 +16,8 @@
         <typeAlias type="com.hplex.drdogncatcms.mcheckup.service.CheckupManageVO" alias="checkupManageVO" />
         <typeAlias type="com.hplex.drdogncatcms.mcheckup.service.McheckupManageVO" alias="mcheckupManageVO" />
         <typeAlias type="com.hplex.drdogncatcms.msmt.service.MsmtManageVO" alias="msmtManageVO" />
+        <typeAlias type="com.hplex.drdogncatcms.faq.service.FaqManageVO" alias="faqManageVO" />
+        <typeAlias type="com.hplex.drdogncatcms.inquiry.service.InquiryManageVO" alias="inquiryManageVO" />
+        <typeAlias type="com.hplex.drdogncatcms.inquiry.service.InquiryTypeManageVO" alias="inquiryTypeManageVO" />
     </typeAliases>
 </configuration>

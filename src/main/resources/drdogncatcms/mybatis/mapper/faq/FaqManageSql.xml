@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hplex.drdogncatcms.faq.service.Impl.FaqManageDAO">
+
+    <resultMap type="faqManageVO" id="faqVO">
+        <result property="seq" column="seq"/>
+        <result property="faqType" column="faq_type"/>
+        <result property="faqSubject" column="faq_subject"/>
+        <result property="faqContent" column="faq_content"/>
+        <result property="faqOrder" column="faq_order"/>
+        <result property="chkAt" column="chk_at"/>
+        <result property="delAt" column="del_at"/>
+        <result property="insDttm" column="ins_dttm"/>
+        <result property="uptDttm" column="upt_dttm"/>
+        <result property="insUser" column="ins_user"/>
+        <result property="uptUser" column="upt_user"/>
+    </resultMap>
+
+    <select id="selectFaqList" resultMap="faqVO">
+        SELECT
+            seq, faq_type, faq_subject, faq_content, faq_order, chk_at, del_at, ins_dttm, upt_dttm, ins_user, upt_user
+        FROM
+            t_faq
+        WHERE
+            1=1
+        <if test="searchChkAt != ''">
+            AND
+            chk_at = #{searchChkAt}
+        </if>
+        <if test="strSubQuery != ''">
+            AND
+            ${strSubjectQuery}
+        </if>
+        <if test="groupByQuery != ''">
+            GROUP BY
+            ${groupByQuery}
+        </if>
+        <if test="orderByQuery != ''">
+            ORDER BY
+            ${orderByQuery}
+        </if>
+    </select>
+
+    <select id="selectFaq" parameterType="String" resultMap="faqVO">
+        SELECT
+            seq, faq_type, faq_subject, faq_content, faq_order, chk_at, del_at, ins_dttm, upt_dttm, ins_user, upt_user
+        FROM
+            t_faq
+        WHERE
+            seq = #{seq}
+    </select>
+
+    <insert id="insertFaq">
+
+        INSERT INTO t_faq
+            (faq_type, faq_subject, faq_content, faq_order, chk_at, del_at, ins_dttm, ins_user)
+        VALUES
+            (#{faqType}, #{faqSubject}, #{faqContent}, #{faqOrder}, #{chkAt}, #{delAt}, now(), #{insUser})
+
+    </insert>
+
+
+    <update id="updateFaq">
+
+        UPDATE t_faq
+        SET
+            faq_type = #{faqType},
+            faq_subject = #{faqSubject},
+            faq_content = #{faqContent},
+            faq_order = #{faqOrder},
+            chk_at = #{chkAt},
+            del_at = #{delAt},
+            upt_dttm = now(),
+            upt_user = #{uptUser}
+        WHERE
+            seq = #{seq}
+
+    </update>
+
+</mapper>
