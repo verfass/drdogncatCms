@@ -20,5 +20,6 @@
         <typeAlias type="com.hplex.drdogncatcms.inquiry.service.InquiryManageVO" alias="inquiryManageVO" />
         <typeAlias type="com.hplex.drdogncatcms.inquiry.service.InquiryTypeManageVO" alias="inquiryTypeManageVO" />
         <typeAlias type="com.hplex.drdogncatcms.notice.service.NoticeManageVO" alias="noticeManageVO" />
+        <typeAlias type="com.hplex.drdogncatcms.product.service.ProductManageVO" alias="productManageVO" />
     </typeAliases>
 </configuration>

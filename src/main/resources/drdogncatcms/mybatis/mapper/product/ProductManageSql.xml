@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hplex.drdogncatcms.product.service.Impl.ProductManageDAO">
+
+    <resultMap type="ProductManageVO" id="productVO">
+        <result property="categoryId" column="category_id"/>
+        <result property="checkupSeq" column="checkup_seq"/>
+        <result property="memberSeq" column="member_seq"/>
+        <result property="phoneNumber" column="phone_number"/>
+        <result property="petId" column="pet_id"/>
+        <result property="petName" column="pet_name"/>
+        <result property="checkupGubun" column="checkup_gubun"/>
+        <result property="rgb1" column="rgb1"/>
+        <result property="rgb2" column="rgb2"/>
+        <result property="rgb3" column="rgb3"/>
+    </resultMap>
+
+
+    <select id="selectProductList" resultMap="productVO">
+        SELECT
+            seq, product_name, product_price, product_img, product_link, product_ord, chk_at, del_at, ins_dttm, upt_dttm
+        FROM
+            t_product
+        WHERE
+            1=1
+        <if test="searchChkAt != ''">
+            AND
+            chk_at = #{searchChkAt}
+        </if>
+        <if test="strSubQuery != ''">
+            AND
+            ${strSubjectQuery}
+        </if>
+        <if test="groupByQuery != ''">
+            GROUP BY
+            ${groupByQuery}
+        </if>
+        <if test="orderByQuery != ''">
+            ORDER BY
+            ${orderByQuery}
+        </if>
+    </select>
+
+    <select id="selectProduct" parameterType="String" resultMap="productVO">
+        SELECT
+            seq, product_name, product_price, product_img, product_link, product_ord, chk_at, del_at, ins_dttm, upt_dttm
+        FROM
+            t_product
+        WHERE
+            seq = #{seq}
+    </select>
+
+    <insert id="insertProduct">
+
+        INSERT INTO t_product
+            (product_name, product_price, product_img, product_link, product_ord, chk_at, del_at, ins_dttm)
+        VALUES
+            (#{product_name}, #{product_price}, #{product_img}, #{product_link}, #{product_ord}, #{chk_at}, #{del_at}, now())
+
+    </insert>
+
+
+    <update id="updateProduct">
+
+        UPDATE t_product
+        SET
+            product_name = #{productName},
+            product_price = #{productPrice},
+            product_img = #{productImg},
+            product_link = #{productLink},
+            product_ord = #{productOrd},
+            chk_at = #{chkAt},
+            del_at = #{delAt},
+            upt_dttm = now()
+        WHERE
+            seq = #{seq}
+
+    </update>
+
+
+</mapper>
