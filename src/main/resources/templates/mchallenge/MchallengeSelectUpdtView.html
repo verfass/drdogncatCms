@@ -26,10 +26,10 @@
     <script type="text/javascript">
         $(function () {
 
-            $("#menu60").click();
+            $("#menu50").click();
             $("#bread1").text("닥터멍냥");
-            $("#bread2").text("Shop 관리");
-            $("#bread3").text("상품 관리");
+            $("#bread2").text("챌린지 관리");
+            $("#bread3").text("챌린지 도전 관리");
 
             $.fnUpdate = function(form){
                 if($("input:checkbox[name=chkAtBox]").is(":checked") == true) {
@@ -42,7 +42,7 @@
             };
 
             $.fnList = function(){
-                $("#listForm").attr("action", "/product/ProductList");
+                $("#listForm").attr("action", "/mchallenge/MchallengeList");
                 $("#listForm").submit();
             };
 
@@ -65,13 +65,13 @@
     <div class="card">
         <!-- Card header -->
         <div class="card-header">
-            <h3 class="mb-0" th:text="${productManageVO.productSubject}"></h3>
+            <h3 class="mb-0" th:text="${mchallengeManageVO.memberSeq}"></h3>
         </div>
         <!-- Card header -->
         <!-- Card body -->
         <div class="card-body">
 
-            <form method="post" action="#" th:action="@{/product/ProductSelectUpdt}" th:object="${productManageVO}" name="form" id="form">
+            <form method="post" action="#" th:action="@{/mchallenge/MchallengeSelectUpdt}" th:object="${mchallengeManageVO}" name="form" id="form">
 
                 <div class="form-row">
                     <div class="col-md-2 mb-3">
@@ -83,10 +83,16 @@
                 </div>
 
                 <div class="form-row">
-                    <div class="col-md-12 mb-3">
+                    <div class="col-md-2 mb-3">
                         <div class="form-group">
-                            <label class="form-control-label" for="productName">상품명</label>
-                            <input type="text" th:field="*{productName}" name="productName" id="productName" placeholder="" class="form-control" required>
+                            <label class="form-control-label" for="memberSeq">회원번호</label>
+                            <input type="text" th:field="*{memberSeq}" name="memberSeq" id="memberSeq" placeholder="" class="form-control" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="petId">반려동물 번호</label>
+                            <input type="text" th:field="*{petId}" name="petId" id="petId" placeholder="" class="form-control" readonly>
                         </div>
                     </div>
                 </div>
@@ -94,26 +100,44 @@
                 <div class="form-row">
                     <div class="col-md-2 mb-3">
                         <div class="form-group">
-                            <label class="form-control-label" for="productPrice">상품가격</label>
-                            <input type="text" th:field="*{productPrice}" name="productPrice" id="productPrice" placeholder="" class="form-control" required>
+                            <label class="form-control-label" for="seq">챌린지 id</label>
+                            <input type="text" th:field="*{challengeId}" name="challengeId" id="challengeId" placeholder="" class="form-control" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="categoryId">검사 카테고리 id</label>
+                            <input type="text" th:field="*{categoryId}" name="categoryId" id="categoryId" placeholder="" class="form-control" readonly>
                         </div>
                     </div>
                 </div>
 
                 <div class="form-row">
-                    <div class="col-md-12 mb-3">
+                    <div class="col-md-2 mb-3">
                         <div class="form-group">
-                            <label class="form-control-label" for="productImg">상품이미지</label>
-                            <input type="text" th:field="*{productImg}" name="productImg" id="productImg" placeholder="" class="form-control" required>
+                            <label class="form-control-label" for="checkupGubun">검사 시행 번호</label>
+                            <input type="text" th:field="*{checkupGubun}" name="checkupGubun" id="checkupGubun" placeholder="" class="form-control" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="resultId">검사 결과 id</label>
+                            <input type="text" th:field="*{resultId}" name="resultId" id="resultId" placeholder="" class="form-control" readonly>
                         </div>
                     </div>
                 </div>
 
                 <div class="form-row">
-                    <div class="col-md-12 mb-3">
+                    <div class="col-md-2 mb-3">
                         <div class="form-group">
-                            <label class="form-control-label" for="productLink">상품구매링크</label>
-                            <input type="text" th:field="*{productLink}" name="productLink" id="productLink" placeholder="" class="form-control" required>
+                            <label class="form-control-label" for="score">점수</label>
+                            <input type="text" th:field="*{score}" name="score" id="score" placeholder="" class="form-control" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="completeAt">완료여부</label>
+                            <input type="text" th:field="*{completeAt}" name="completeAt" id="completeAt" placeholder="" class="form-control" readonly>
                         </div>
                     </div>
                 </div>
@@ -125,7 +149,7 @@
                             <div class="mb-3">
                                 <label class="custom-toggle">
                                     <input type="hidden" th:field="*{chkAt}" name="chkAt" id="chkAt">
-                                    <input type="checkbox" th:checked="${productManageVO.chkAt=='1' ? true: false}" name="chkAtBox" id="chkAtBox">
+                                    <input type="checkbox" th:checked="${mchallengeManageVO.chkAt=='1' ? true: false}" name="chkAtBox" id="chkAtBox">
                                     <span class="custom-toggle-slider rounded-circle" data-label-off="중지" data-label-on="사용"></span>
                                 </label>
                             </div>
@@ -138,27 +162,6 @@
                         <div class="form-group">
                             <label class="form-control-label" for="insDttm">등록일시</label>
                             <input type="text" th:field="*{insDttm}" name="insDttm" id="insDttm" placeholder="" class="form-control" readonly>
-                        </div>
-                    </div>
-                    <div class="col-md-2 mb-3">
-                        <div class="form-group">
-                            <label class="form-control-label" for="uptDttm">수정일시</label>
-                            <input type="text" th:field="*{uptDttm}" name="uptDttm" id="uptDttm" placeholder="" class="form-control" readonly>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-row">
-                    <div class="col-md-2 mb-3">
-                        <div class="form-group">
-                            <label class="form-control-label" for="insUser">등록자</label>
-                            <input type="text" th:field="*{insUser}" name="insUser" id="insUser" placeholder="" class="form-control" readonly>
-                        </div>
-                    </div>
-                    <div class="col-md-2 mb-3">
-                        <div class="form-group">
-                            <label class="form-control-label" for="uptUser">수정자</label>
-                            <input type="text" th:field="*{uptUser}" name="uptUser" id="uptUser" placeholder="" class="form-control" readonly>
                         </div>
                     </div>
                 </div>

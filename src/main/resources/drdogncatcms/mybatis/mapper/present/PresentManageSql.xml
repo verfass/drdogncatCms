@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hplex.drdogncatcms.present.service.Impl.PresentManageDAO">
+
+    <resultMap type="PresentManageVO" id="presentVO">
+        <result property="seq" column="seq"/>
+        <result property="memberSeq" column="member_seq"/>
+        <result property="petId" column="pet_id"/>
+        <result property="presentGubun" column="present_gubun"/>
+        <result property="expirationDt" column="expiration_dt"/>
+        <result property="challengeId" column="challenge_id"/>
+        <result property="presentType" column="present_type"/>
+        <result property="presentCode" column="present_code"/>
+        <result property="presentName" column="present_name"/>
+        <result property="presentNum" column="present_num"/>
+        <result property="reviewLink" column="review_link"/>
+        <result property="receiveName" column="receive_name"/>
+        <result property="receivePhonenumber" column="receive_phonenumber"/>
+        <result property="receivePost" column="receive_post"/>
+        <result property="receiveAddress1" column="receive_address1"/>
+        <result property="receiveAddress2" column="receive_address2"/>
+        <result property="deliveryMemo" column="delivery_memo"/>
+        <result property="deliveryCode" column="delivery_code"/>
+        <result property="deliverySearch" column="delivery_search"/>
+        <result property="stateStep" column="state_step"/>
+        <result property="rejectCode" column="reject_code"/>
+        <result property="rejectMemo" column="reject_memo"/>
+        <result property="chkAt" column="chk_at"/>
+        <result property="delAt" column="del_at"/>
+        <result property="insDttm" column="ins_dttm"/>
+        <result property="uptDttm" column="upt_dttm"/>
+        <result property="checkUser" column="check_user"/>
+        <result property="checkDttm" column="check_dttm"/>
+    </resultMap>
+
+
+    <select id="selectPresentList" resultMap="presentVO">
+        SELECT
+            seq, member_seq, pet_id, present_gubun, expiration_dt, challenge_id, present_type, present_code, present_name, present_num, review_link, receive_name, receive_phonenumber, receive_post, receive_address1, receive_address2, delivery_memo, delivery_code, delivery_search, state_step, reject_code, reject_memo, chk_at, del_at, ins_dttm, upt_dttm, check_user, check_dttm
+        FROM
+            t_present
+        WHERE
+            1=1
+        <if test="searchChkAt != ''">
+            AND
+            chk_at = #{searchChkAt}
+        </if>
+        <if test="strSubQuery != ''">
+            AND
+            ${strSubjectQuery}
+        </if>
+        <if test="groupByQuery != ''">
+            GROUP BY
+            ${groupByQuery}
+        </if>
+        <if test="orderByQuery != ''">
+            ORDER BY
+            ${orderByQuery}
+        </if>
+    </select>
+
+    <select id="selectPresent" parameterType="String" resultMap="presentVO">
+        SELECT
+            seq, member_seq, pet_id, present_gubun, expiration_dt, challenge_id, present_type, present_code, present_name, present_num, review_link, receive_name, receive_phonenumber, receive_post, receive_address1, receive_address2, delivery_memo, delivery_code, delivery_search, state_step, reject_code, reject_memo, chk_at, del_at, ins_dttm, upt_dttm, check_user, check_dttm
+        FROM
+            t_present
+        WHERE
+            seq = #{seq}
+    </select>
+
+    <insert id="insertPresent">
+
+        INSERT INTO t_present
+            (member_seq, pet_id, present_gubun, expiration_dt, challenge_id, present_type, present_code, present_name, present_num, review_link, receive_name, receive_phonenumber, receive_post, receive_address1, receive_address2, delivery_memo, delivery_code, delivery_search, state_step, reject_code, reject_memo, chk_at, del_at, ins_dttm, check_user, check_dttm)
+        VALUES
+            (#{member_seq}, #{pet_id}, #{present_gubun}, #{expiration_dt}, #{challenge_id}, #{present_type}, #{present_code}, #{present_name}, #{present_num}, #{review_link}, #{receive_name}, #{receive_phonenumber}, #{receive_post}, #{receive_address1}, #{receive_address2}, #{delivery_memo}, #{delivery_code}, #{delivery_search}, #{state_step}, #{reject_code}, #{reject_memo}, #{chk_at}, #{del_at}, now(), #{check_user}, #{check_dttm})
+
+    </insert>
+
+
+    <update id="updatePresent">
+
+        UPDATE t_present
+        SET
+            member_seq = #{memberSeq},
+            pet_id = #{petId},
+            present_gubun = #{presentGubun},
+            expiration_dt = #{expirationDt},
+            challenge_id = #{challengeId},
+            present_type = #{presentType},
+            present_code = #{presentCode},
+            present_name = #{presentName},
+            present_num = #{presentNum},
+            review_link = #{reviewLink},
+            receive_name = #{receiveName},
+            receive_phonenumber = #{receivePhonenumber},
+            receive_post = #{receivePost},
+            receive_address1 = #{receiveAddress1},
+            receive_address2 = #{receiveAddress2},
+            delivery_memo = #{deliveryMemo},
+            delivery_code = #{deliveryCode},
+            delivery_search = #{deliverySearch},
+            state_step = #{stateStep},
+            reject_code = #{rejectCode},
+            reject_memo = #{rejectMemo},
+            chk_at = #{chkAt},
+            del_at = #{delAt},
+            upt_dttm = now(),
+            check_user = #{checkUser},
+            check_dttm = #{checkDttm}
+        WHERE
+            seq = #{seq}
+
+    </update>
+
+
+</mapper>

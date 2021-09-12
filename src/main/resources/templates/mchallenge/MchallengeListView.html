@@ -26,24 +26,24 @@
     <script type="text/javascript">
         $(function () {
 
-            $("#menu60").click();
+            $("#menu50").click();
             $("#bread1").text("닥터멍냥");
-            $("#bread2").text("Shop 관리");
-            $("#bread3").text("상품 관리");
+            $("#bread2").text("챌린지 관리");
+            $("#bread3").text("챌린지 도전 관리");
 
             $.fnSelect = function(cd){
                 $("input[name=selectedCd]").val(cd);
-                $("#listForm").attr("action", "/product/ProductSelectUpdtView");
+                $("#listForm").attr("action", "/mchallenge/MchallengeSelectUpdtView");
                 $("#listForm").submit();
             };
 
             $.fnResister = function(){
-                $("#listForm").attr("action", "/product/ProductInsertView");
+                $("#listForm").attr("action", "/mchallenge/MchallengeInsertView");
                 $("#listForm").submit();
             };
 
             $.fnList = function(){
-                $("#listForm").attr("action", "/product/ProductList");
+                $("#listForm").attr("action", "/mchallenge/MchallengeList");
                 $("#listForm").submit();
             };
 
@@ -76,9 +76,9 @@
             <div class="card">
                 <!-- Card header -->
                 <div class="card-header">
-                    <h3 class="mb-0">상품 관리</h3>
+                    <h3 class="mb-0">챌린지 도전 관리</h3>
                     <p class="text-sm mb-0">
-                        상품을 관리합니다.
+                        챌린지 도전을 관리합니다.
                     </p>
                 </div>
                 <!-- Card header -->
@@ -90,27 +90,32 @@
                             <thead class="thead-light">
                             <tr>
                                 <th>번호</th>
-                                <th>상품명</th>
-                                <th>상품가격</th>
-                                <th>상품이미지</th>
-                                <th>상품구매링크</th>
+                                <th>회원번호</th>
+                                <th>반려동물 번호</th>
+                                <th>챌린지 id</th>
+                                <th>검사 카테고리 id</th>
+                                <th>검사 시행 번호</th>
+                                <th>검사 결과 id</th>
+                                <th>점수</th>
+                                <th>완료여부</th>
                                 <th>활성화</th>
                                 <th>등록일시</th>
-                                <th>수정일시</th>
                             </tr>
                             </thead>
 
                             <tbody>
                             <tr th:each="item : ${resultList}" th:attr="onclick=|$.fnSelect('${item.seq}');|">
                                 <td th:text="${item.seq}"></td>
-                                <td th:text="${item.productName}"></td>
-                                <td th:text="${item.productPrice}"></td>
-                                <td th:text="${item.productImg}"></td>
-                                <td th:text="${item.productLink}"></td>
-                                <td th:text="${item.productOrd}"></td>
+                                <td th:text="${item.memberSeq}"></td>
+                                <td th:text="${item.petId}"></td>
+                                <td th:text="${item.challengeId}"></td>
+                                <td th:text="${item.categoryId}"></td>
+                                <td th:text="${item.checkupGubun}"></td>
+                                <td th:text="${item.resultId}"></td>
+                                <td th:text="${item.score}"></td>
+                                <td th:text="${item.completeAt}"></td>
                                 <td th:text="${item.chkAt}"></td>
                                 <td th:text="${item.insDttm}"></td>
-                                <td th:text="${item.uptDttm}"></td>
                             </tr>
                             </tbody>
                         </table>
@@ -125,7 +130,7 @@
 <!--                            <button type="button" class="btn btn-secondary btn-lg">목록가기</button>-->
                         </div>
                         <div class="col text-right">
-                            <button type="button" class="btn btn-primary btn-lg" onclick="$.fnResister();">등록하기</button>
+<!--                            <button type="button" class="btn btn-primary btn-lg" onclick="$.fnResister();">등록하기</button>-->
                         </div>
                     </div>
                 </div>

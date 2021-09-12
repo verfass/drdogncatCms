@@ -21,5 +21,10 @@
         <typeAlias type="com.hplex.drdogncatcms.inquiry.service.InquiryTypeManageVO" alias="inquiryTypeManageVO" />
         <typeAlias type="com.hplex.drdogncatcms.notice.service.NoticeManageVO" alias="noticeManageVO" />
         <typeAlias type="com.hplex.drdogncatcms.product.service.ProductManageVO" alias="productManageVO" />
+        <typeAlias type="com.hplex.drdogncatcms.present.service.PresentManageVO" alias="presentManageVO" />
+        <typeAlias type="com.hplex.drdogncatcms.banner.service.BannerManageVO" alias="bannerManageVO" />
+        <typeAlias type="com.hplex.drdogncatcms.challenge.service.ChallengeManageVO" alias="challengeManageVO" />
+        <typeAlias type="com.hplex.drdogncatcms.mchallenge.service.MchallengeManageVO" alias="mchallengeManageVO" />
+        <typeAlias type="com.hplex.drdogncatcms.inform.service.InformManageVO" alias="informManageVO" />
     </typeAliases>
 </configuration>

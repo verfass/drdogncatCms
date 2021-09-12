@@ -21,15 +21,14 @@
     <script src="/assets/vendor/datatables.net-buttons/js/buttons.flash.min.js"></script>
     <script src="/assets/vendor/datatables.net-buttons/js/buttons.print.min.js"></script>
     <script src="/assets/vendor/datatables.net-select/js/dataTables.select.min.js"></script>
-    <script src="/se2/js/service/HuskyEZCreator.js" charset="utf-8"></script>
     <!-- Optional JS -->
     <script type="text/javascript">
         $(function () {
 
-            $("#menu60").click();
+            $("#menu70").click();
             $("#bread1").text("닥터멍냥");
-            $("#bread2").text("Shop 관리");
-            $("#bread3").text("상품 관리");
+            $("#bread2").text("운영 관리");
+            $("#bread3").text("배너 관리");
 
             $.fnInsert = function(form){
                 if($("input:checkbox[name=chkAtBox]").is(":checked") == true) {
@@ -42,7 +41,7 @@
             };
 
             $.fnList = function(){
-                $("#listForm").attr("action", "/product/ProductList");
+                $("#listForm").attr("action", "/banner/BannerList");
                 $("#listForm").submit();
             };
 
@@ -63,13 +62,13 @@
     <div class="card">
         <!-- Card header -->
         <div class="card-header">
-            <h3 class="mb-0">상품을 등록합니다.</h3>
+            <h3 class="mb-0">배너를 등록합니다.</h3>
         </div>
         <!-- Card header -->
         <!-- Card body -->
         <div class="card-body">
 
-            <form method="post" action="#" th:action="@{/product/ProductInsert}" th:object="${productManageVO}" name="form" id="form">
+            <form method="post" action="#" th:action="@{/banner/BannerInsert}" th:object="${bannerManageVO}" name="form" id="form">
 
                 <div class="form-row">
 <!--                    <div class="col-md-4 mb-3">-->
@@ -78,10 +77,28 @@
 <!--                            <input type="text" th:field="*{seq}" name="seq" id="seq" placeholder="" class="form-control" readonly>-->
 <!--                        </div>-->
 <!--                    </div>-->
+                    <div class="col-md-10 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="bannerTitle">배너 타이틀</label>
+                            <input type="text" th:field="*{bannerTitle}" name="bannerTitle" id="bannerTitle" placeholder="" class="form-control" required>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
                     <div class="col-md-12 mb-3">
                         <div class="form-group">
-                            <label class="form-control-label" for="productSubject">상품명</label>
-                            <input type="text" th:field="*{productSubject}" name="productSubject" id="productSubject" placeholder="" class="form-control" required>
+                            <label class="form-control-label" for="bannerImg">배너 이미지</label>
+                            <input type="text" th:field="*{bannerImg}" name="bannerImg" id="bannerImg" placeholder="" class="form-control" required>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="col-md-12 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="bannerLink">배너 링크</label>
+                            <input type="text" th:field="*{bannerLink}" name="bannerTitle" id="bannerLink" placeholder="" class="form-control" required>
                         </div>
                     </div>
                 </div>
@@ -89,26 +106,8 @@
                 <div class="form-row">
                     <div class="col-md-2 mb-3">
                         <div class="form-group">
-                            <label class="form-control-label" for="productPrice">상품가격</label>
-                            <input type="text" th:field="*{productPrice}" name="productPrice" id="productPrice" placeholder="" class="form-control" required>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-row">
-                    <div class="col-md-12 mb-3">
-                        <div class="form-group">
-                            <label class="form-control-label" for="productImg">상품이미지</label>
-                            <input type="text" th:field="*{productImg}" name="productImg" id="productImg" placeholder="" class="form-control" required>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-row">
-                    <div class="col-md-12 mb-3">
-                        <div class="form-group">
-                            <label class="form-control-label" for="productLink">상품구매링크</label>
-                            <input type="text" th:field="*{productLink}" name="productLink" id="productLink" placeholder="" class="form-control" required>
+                            <label class="form-control-label" for="bannerOrd">배너 순서</label>
+                            <input type="text" th:field="*{bannerOrd}" name="bannerOrd" id="bannerOrd" placeholder="" class="form-control" required>
                         </div>
                     </div>
                 </div>
@@ -120,7 +119,7 @@
                             <div class="mb-3">
                                 <label class="custom-toggle">
                                     <input type="hidden" th:field="*{chkAt}" name="chkAt" id="chkAt">
-                                    <input type="checkbox" th:checked="${productManageVO.chkAt=='1' ? true: false}" name="chkAtBox" id="chkAtBox">
+                                    <input type="checkbox" th:checked="${bannerManageVO.chkAt=='1' ? true: false}" name="chkAtBox" id="chkAtBox">
                                     <span class="custom-toggle-slider rounded-circle" data-label-off="중지" data-label-on="사용"></span>
                                 </label>
                             </div>

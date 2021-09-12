@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hplex.drdogncatcms.mchallenge.service.Impl.MchallengeManageDAO">
+
+    <resultMap type="MchallengeManageVO" id="mchallengeVO">
+        <result property="seq" column="seq"/>
+        <result property="memberSeq" column="member_seq"/>
+        <result property="petId" column="pet_id"/>
+        <result property="challengeId" column="challenge_id"/>
+        <result property="categoryId" column="category_id"/>
+        <result property="checkupGubun" column="checkup_gubun"/>
+        <result property="resultId" column="result_id"/>
+        <result property="score" column="score"/>
+        <result property="completeAt" column="complete_at"/>
+        <result property="chkAt" column="chk_at"/>
+        <result property="delAt" column="del_at"/>
+        <result property="insDttm" column="ins_dttm"/>
+    </resultMap>
+
+
+    <select id="selectMchallengeList" resultMap="mchallengeVO">
+        SELECT
+            seq, member_seq, pet_id, challenge_id, category_id, checkup_gubun, result_id, score, complete_at, chk_at, del_at, ins_dttm
+        FROM
+            t_member_challenge
+        WHERE
+            1=1
+        <if test="searchChkAt != ''">
+            AND
+            chk_at = #{searchChkAt}
+        </if>
+        <if test="strSubQuery != ''">
+            AND
+            ${strSubjectQuery}
+        </if>
+        <if test="groupByQuery != ''">
+            GROUP BY
+            ${groupByQuery}
+        </if>
+        <if test="orderByQuery != ''">
+            ORDER BY
+            ${orderByQuery}
+        </if>
+    </select>
+
+    <select id="selectMchallenge" parameterType="String" resultMap="mchallengeVO">
+        SELECT
+            seq, member_seq, pet_id, challenge_id, category_id, checkup_gubun, result_id, score, complete_at, chk_at, del_at, ins_dttm
+        FROM
+            t_member_challenge
+        WHERE
+            seq = #{seq}
+    </select>
+
+    <insert id="insertMchallenge">
+
+        INSERT INTO t_member_challenge
+            (member_seq, pet_id, challenge_id, category_id, checkup_gubun, result_id, score, complete_at, chk_at, del_at, ins_dttm)
+        VALUES
+            (#{member_seq}, #{pet_id}, #{challenge_id}, #{category_id}, #{checkup_gubun}, #{result_id}, #{score}, #{complete_at}, #{chk_at}, #{del_at}, now())
+
+    </insert>
+
+
+    <update id="updateMchallenge">
+
+        UPDATE t_member_challenge
+        SET
+            member_seq = #{memberSeq},
+            pet_id = #{petId},
+            challenge_id = #{challengeId},
+            category_id = #{categoryId},
+            checkup_gubun = #{checkupGubun},
+            result_id = #{resultId},
+            score = #{score},
+            complete_at = #{completeAt},
+            chk_at = #{chkAt},
+            del_at = #{delAt}
+        WHERE
+            seq = #{seq}
+
+    </update>
+
+
+</mapper>

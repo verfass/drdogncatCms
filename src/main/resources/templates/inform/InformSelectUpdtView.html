@@ -2,6 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layouts/layoutDefault}">
 
 <!-- 페이지 고유 CSS 추가 -->
+<script src="../../static/se2/js/service/HuskyEZCreator.js"></script>
 <th:block layout:fragment="css">
     <!-- Page plugins -->
     <link rel="stylesheet" href="/assets/vendor/datatables.net-bs4/css/dataTables.bootstrap4.min.css">
@@ -26,28 +27,48 @@
     <script type="text/javascript">
         $(function () {
 
-            $("#menu60").click();
+            $("#menu70").click();
             $("#bread1").text("닥터멍냥");
-            $("#bread2").text("Shop 관리");
-            $("#bread3").text("상품 관리");
+            $("#bread2").text("운영 관리");
+            $("#bread3").text("푸시 관리");
 
-            $.fnInsert = function(form){
+            var oEditors = [];
+            nhn.husky.EZCreator.createInIFrame({
+                oAppRef: oEditors,
+                elPlaceHolder: "informContent",
+                sSkinURI: "/se2/SmartEditor2Skin.html",
+                fCreator: "createSEditor2",
+                htParams : {
+                    // 툴바 사용 여부 (true:사용/ false:사용하지 않음)
+                    bUseToolbar : true,
+                    // 입력창 크기 조절바 사용 여부 (true:사용/ false:사용하지 않음)
+                    bUseVerticalResizer : true,
+                    // 모드 탭(Editor | HTML | TEXT) 사용 여부 (true:사용/ false:사용하지 않음)
+                    bUseModeChanger : true
+                }
+            });
+
+            $.fnUpdate = function(form){
                 if($("input:checkbox[name=chkAtBox]").is(":checked") == true) {
                     $("input[name=chkAt]").val('1');
                 } else {
                     $("input[name=chkAt]").val('0');
                 }
 
+                oEditors.getById["informContent"].exec("UPDATE_CONTENTS_FIELD", []);
+
                 $("#form").submit();
             };
 
             $.fnList = function(){
-                $("#listForm").attr("action", "/product/ProductList");
+                $("#listForm").attr("action", "/inform/InformList");
                 $("#listForm").submit();
             };
 
         });
     </script>
+
+
 </th:block>
 <!-- 페이지 고유 스크립트 추가 -->
 
@@ -63,34 +84,19 @@
     <div class="card">
         <!-- Card header -->
         <div class="card-header">
-            <h3 class="mb-0">상품을 등록합니다.</h3>
+            <h3 class="mb-0" th:text="${informManageVO.informTitle}"></h3>
         </div>
         <!-- Card header -->
         <!-- Card body -->
         <div class="card-body">
 
-            <form method="post" action="#" th:action="@{/product/ProductInsert}" th:object="${productManageVO}" name="form" id="form">
-
-                <div class="form-row">
-<!--                    <div class="col-md-4 mb-3">-->
-<!--                        <div class="form-group">-->
-<!--                            <label class="form-control-label" for="seq">질병코드</label>-->
-<!--                            <input type="text" th:field="*{seq}" name="seq" id="seq" placeholder="" class="form-control" readonly>-->
-<!--                        </div>-->
-<!--                    </div>-->
-                    <div class="col-md-12 mb-3">
-                        <div class="form-group">
-                            <label class="form-control-label" for="productSubject">상품명</label>
-                            <input type="text" th:field="*{productSubject}" name="productSubject" id="productSubject" placeholder="" class="form-control" required>
-                        </div>
-                    </div>
-                </div>
+            <form method="post" action="#" th:action="@{/inform/InformSelectUpdt}" th:object="${informManageVO}" name="form" id="form">
 
                 <div class="form-row">
                     <div class="col-md-2 mb-3">
                         <div class="form-group">
-                            <label class="form-control-label" for="productPrice">상품가격</label>
-                            <input type="text" th:field="*{productPrice}" name="productPrice" id="productPrice" placeholder="" class="form-control" required>
+                            <label class="form-control-label" for="seq">번호</label>
+                            <input type="text" th:field="*{seq}" name="seq" id="seq" placeholder="" class="form-control" readonly>
                         </div>
                     </div>
                 </div>
@@ -98,8 +104,8 @@
                 <div class="form-row">
                     <div class="col-md-12 mb-3">
                         <div class="form-group">
-                            <label class="form-control-label" for="productImg">상품이미지</label>
-                            <input type="text" th:field="*{productImg}" name="productImg" id="productImg" placeholder="" class="form-control" required>
+                            <label class="form-control-label" for="informTitle">알림 제목</label>
+                            <input type="text" th:field="*{informTitle}" name="informTitle" id="informTitle" placeholder="" class="form-control">
                         </div>
                     </div>
                 </div>
@@ -107,8 +113,26 @@
                 <div class="form-row">
                     <div class="col-md-12 mb-3">
                         <div class="form-group">
-                            <label class="form-control-label" for="productLink">상품구매링크</label>
-                            <input type="text" th:field="*{productLink}" name="productLink" id="productLink" placeholder="" class="form-control" required>
+                            <label class="form-control-label" for="informContent">알림 내용</label>
+                            <textarea th:field="*{informContent}" name="informContent" id="informContent" rows="5" class="form-control" style="width:100%;"></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="col-md-12 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="informLink">알림 링크</label>
+                            <input type="text" th:field="*{informLink}" name="informLink" id="informLink" placeholder="" class="form-control">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="col-md-12 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="confirmAt">확인 여부</label>
+                            <input type="text" th:field="*{confirmAt}" name="confirmAt" id="confirmAt" placeholder="" class="form-control">
                         </div>
                     </div>
                 </div>
@@ -120,10 +144,25 @@
                             <div class="mb-3">
                                 <label class="custom-toggle">
                                     <input type="hidden" th:field="*{chkAt}" name="chkAt" id="chkAt">
-                                    <input type="checkbox" th:checked="${productManageVO.chkAt=='1' ? true: false}" name="chkAtBox" id="chkAtBox">
+                                    <input type="checkbox" th:checked="${informManageVO.chkAt=='1' ? true: false}" name="chkAtBox" id="chkAtBox">
                                     <span class="custom-toggle-slider rounded-circle" data-label-off="중지" data-label-on="사용"></span>
                                 </label>
                             </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="insDttm">등록일시</label>
+                            <input type="text" th:field="*{insDttm}" name="insDttm" id="insDttm" placeholder="" class="form-control" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="confirmDttm">확인일시</label>
+                            <input type="text" th:field="*{confirmDttm}" name="confirmDttm" id="confirmDttm" placeholder="" class="form-control" readonly>
                         </div>
                     </div>
                 </div>
@@ -139,7 +178,7 @@
                     <button type="button" class="btn btn-secondary btn-lg" onclick="$.fnList();">목록가기</button>
                 </div>
                 <div class="col text-right">
-                    <button type="button" class="btn btn-primary btn-lg" onClick="$.fnInsert(document.forms[0]); return false;">등록하기</button>
+                    <button type="button" class="btn btn-primary btn-lg" onClick="$.fnUpdate(document.forms[0]); return false;">수정하기</button>
                 </div>
             </div>
         </div>

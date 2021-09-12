@@ -4,16 +4,16 @@
 <mapper namespace="com.hplex.drdogncatcms.product.service.Impl.ProductManageDAO">
 
     <resultMap type="ProductManageVO" id="productVO">
-        <result property="categoryId" column="category_id"/>
-        <result property="checkupSeq" column="checkup_seq"/>
-        <result property="memberSeq" column="member_seq"/>
-        <result property="phoneNumber" column="phone_number"/>
-        <result property="petId" column="pet_id"/>
-        <result property="petName" column="pet_name"/>
-        <result property="checkupGubun" column="checkup_gubun"/>
-        <result property="rgb1" column="rgb1"/>
-        <result property="rgb2" column="rgb2"/>
-        <result property="rgb3" column="rgb3"/>
+        <result property="seq" column="seq"/>
+        <result property="productName" column="product_name"/>
+        <result property="productPrice" column="product_price"/>
+        <result property="productImg" column="product_img"/>
+        <result property="productLink" column="product_link"/>
+        <result property="productOrd" column="product_ord"/>
+        <result property="chkAt" column="chk_at"/>
+        <result property="delAt" column="del_at"/>
+        <result property="insDttm" column="ins_dttm"/>
+        <result property="uptDttm" column="upt_dttm"/>
     </resultMap>
 
 

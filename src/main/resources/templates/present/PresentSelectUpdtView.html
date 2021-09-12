@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layouts/layoutDefault}">
+
+<!-- 페이지 고유 CSS 추가 -->
+<script src="../../static/se2/js/service/HuskyEZCreator.js"></script>
+<th:block layout:fragment="css">
+    <!-- Page plugins -->
+    <link rel="stylesheet" href="/assets/vendor/datatables.net-bs4/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="/assets/vendor/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css">
+    <link rel="stylesheet" href="/assets/vendor/datatables.net-select-bs4/css/select.bootstrap4.min.css">
+</th:block>
+<!-- 페이지 고유 CSS 추가 -->
+
+<!-- 페이지 고유 스크립트 추가 -->
+<th:block layout:fragment="script">
+    <!-- Optional JS -->
+    <script src="/assets/vendor/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="/assets/vendor/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
+    <script src="/assets/vendor/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="/assets/vendor/datatables.net-buttons-bs4/js/buttons.bootstrap4.min.js"></script>
+    <script src="/assets/vendor/datatables.net-buttons/js/buttons.html5.min.js"></script>
+    <script src="/assets/vendor/datatables.net-buttons/js/buttons.flash.min.js"></script>
+    <script src="/assets/vendor/datatables.net-buttons/js/buttons.print.min.js"></script>
+    <script src="/assets/vendor/datatables.net-select/js/dataTables.select.min.js"></script>
+    <!-- Optional JS -->
+    <script type="text/javascript">
+        $(function () {
+
+            $("#menu50").click();
+            $("#bread1").text("닥터멍냥");
+            $("#bread2").text("챌린지 관리");
+            $("#bread3").text("선물 관리");
+
+            $.fnUpdate = function(form){
+                if($("input:checkbox[name=chkAtBox]").is(":checked") == true) {
+                    $("input[name=chkAt]").val('1');
+                } else {
+                    $("input[name=chkAt]").val('0');
+                }
+
+                $("#form").submit();
+            };
+
+            $.fnList = function(){
+                $("#listForm").attr("action", "/present/PresentList");
+                $("#listForm").submit();
+            };
+
+        });
+    </script>
+
+
+</th:block>
+<!-- 페이지 고유 스크립트 추가 -->
+
+<div layout:fragment="content">
+    <!--시작  -->
+
+    <!-- listForm -->
+    <form method="post" name="listForm" id="listForm">
+        <input type="hidden" name="selectedCd" id="selectedCd" />
+    </form>
+    <!-- listForm -->
+
+    <div class="card">
+        <!-- Card header -->
+        <div class="card-header">
+            <h3 class="mb-0" th:text="${presentManageVO.presentSubject}"></h3>
+        </div>
+        <!-- Card header -->
+        <!-- Card body -->
+        <div class="card-body">
+
+            <form method="post" action="#" th:action="@{/present/PresentSelectUpdt}" th:object="${presentManageVO}" name="form" id="form">
+
+                <div class="form-row">
+                    <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="seq">번호</label>
+                            <input type="text" th:field="*{seq}" name="seq" id="seq" placeholder="" class="form-control" readonly>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="challengeId">챌린지id</label>
+                            <input type="text" th:field="*{challengeId}" name="challengeId" id="challengeId" placeholder="" class="form-control" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="memberSeq">회원번호</label>
+                            <input type="text" th:field="*{memberSeq}" name="memberSeq" id="memberSeq" placeholder="" class="form-control" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="petId">반려동물id</label>
+                            <input type="text" th:field="*{petId}" name="petId" id="petId" placeholder="" class="form-control" readonly>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="form-row">
+                    <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="presentGubun">선물구분</label>
+                            <input type="text" th:field="*{presentGubun}" name="presentGubun" id="presentGubun" placeholder="" class="form-control" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="expirationDt">선물신청 유효일자</label>
+                            <input type="text" th:field="*{expirationDt}" name="expirationDt" id="expirationDt" placeholder="" class="form-control" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="presentType">선물타입</label>
+                            <input type="text" th:field="*{presentType}" name="presentType" id="presentType" placeholder="" class="form-control" readonly>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="presentCode">선물코드</label>
+                            <input type="text" th:field="*{presentCode}" name="presentCode" id="presentCode" placeholder="" class="form-control" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="presentNum">선물회차</label>
+                            <input type="text" th:field="*{presentNum}" name="presentNum" id="presentNum" placeholder="" class="form-control" readonly>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="col-md-12 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="presentName">선물명</label>
+                            <input type="text" th:field="*{presentName}" name="presentName" id="presentName" placeholder="" class="form-control" readonly>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="col-md-12 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="presentNum">리뷰링크</label>
+                            <input type="text" th:field="*{reviewLink}" name="reviewLink" id="reviewLink" placeholder="" class="form-control" readonly>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="receiveName">수령자 이름</label>
+                            <input type="text" th:field="*{receiveName}" name="receiveName" id="receiveName" placeholder="" class="form-control" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="receivePhonenumber">수령자 휴대전화번호</label>
+                            <input type="text" th:field="*{receivePhonenumber}" name="receivePhonenumber" id="receivePhonenumber" placeholder="" class="form-control" readonly>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="receivePost">수령지 우편번호</label>
+                            <input type="text" th:field="*{receivePost}" name="receivePost" id="receivePost" placeholder="" class="form-control" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-5 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="receiveAddress1">수령지 기본주소</label>
+                            <input type="text" th:field="*{receiveAddress1}" name="receiveAddress1" id="receiveAddress1" placeholder="" class="form-control" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-5 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="receiveAddress2">수령지 상세주소</label>
+                            <input type="text" th:field="*{receiveAddress2}" name="receiveAddress2" id="receiveAddress2" placeholder="" class="form-control" readonly>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="col-md-12 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="deliveryMemo">배송메모</label>
+                            <input type="text" th:field="*{deliveryMemo}" name="deliveryMemo" id="deliveryMemo" placeholder="" class="form-control">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="deliveryCode">배송송장번호</label>
+                            <input type="text" th:field="*{deliveryCode}" name="deliveryCode" id="deliveryCode" placeholder="" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-md-10 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="deliverySearch">배송조회</label>
+                            <input type="text" th:field="*{deliverySearch}" name="deliverySearch" id="deliverySearch" placeholder="" class="form-control">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="stateStep">상태</label>
+                            <input type="text" th:field="*{stateStep}" name="stateStep" id="stateStep" placeholder="" class="form-control">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="rejectCode">리뷰 거부 사유 코드</label>
+                            <input type="text" th:field="*{rejectCode}" name="rejectCode" id="rejectCode" placeholder="" class="form-control">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="col-md-12 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="rejectMemo">리뷰 거부 상세 사유</label>
+                            <input type="text" th:field="*{rejectMemo}" name="rejectMemo" id="rejectMemo" placeholder="" class="form-control">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="chkAtBox">사용여부</label>
+                            <div class="mb-3">
+                                <label class="custom-toggle">
+                                    <input type="hidden" th:field="*{chkAt}" name="chkAt" id="chkAt">
+                                    <input type="checkbox" th:checked="${presentManageVO.chkAt=='1' ? true: false}" name="chkAtBox" id="chkAtBox">
+                                    <span class="custom-toggle-slider rounded-circle" data-label-off="중지" data-label-on="사용"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="insDttm">등록일시</label>
+                            <input type="text" th:field="*{insDttm}" name="insDttm" id="insDttm" placeholder="" class="form-control" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="uptDttm">수정일시</label>
+                            <input type="text" th:field="*{uptDttm}" name="uptDttm" id="uptDttm" placeholder="" class="form-control" readonly>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="insUser">등록자</label>
+                            <input type="text" th:field="*{insUser}" name="insUser" id="insUser" placeholder="" class="form-control" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="uptUser">수정자</label>
+                            <input type="text" th:field="*{uptUser}" name="uptUser" id="uptUser" placeholder="" class="form-control" readonly>
+                        </div>
+                    </div>
+                </div>
+
+            </form>
+
+        </div>
+        <!-- Card body -->
+        <!-- Card Footer -->
+        <div class="card-footer bg-transparent">
+            <div class="row">
+                <div class="col">
+                    <button type="button" class="btn btn-secondary btn-lg" onclick="$.fnList();">목록가기</button>
+                </div>
+                <div class="col text-right">
+                    <button type="button" class="btn btn-primary btn-lg" onClick="$.fnUpdate(document.forms[0]); return false;">수정하기</button>
+                </div>
+            </div>
+        </div>
+        <!-- Card Footer -->
+    </div>
+
+
+    <!-- 끝  -->
+</div>
+
+</html>

@@ -11,7 +11,7 @@ import lombok.ToString;
 @NoArgsConstructor
 public class ProductManageVO extends ProductDefaultVO {
 
-    private static final long serialVersionUID = 6610282861144679254L;
+    private static final long serialVersionUID = 4633499435549499787L;
 
     private String seq;
     private String productName;

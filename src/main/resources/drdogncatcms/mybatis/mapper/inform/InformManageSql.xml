@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hplex.drdogncatcms.inform.service.Impl.InformManageDAO">
+
+    <resultMap type="InformManageVO" id="informVO">
+        <result property="seq" column="seq"/>
+        <result property="memberSeq" column="member_seq"/>
+        <result property="informTitle" column="inform_title"/>
+        <result property="informContent" column="inform_content"/>
+        <result property="informLink" column="inform_link"/>
+        <result property="confirmAt" column="confirm_at"/>
+        <result property="chkAt" column="chk_at"/>
+        <result property="delAt" column="del_at"/>
+        <result property="insDttm" column="ins_dttm"/>
+        <result property="confirmDttm" column="confirm_dttm"/>
+    </resultMap>
+
+
+    <select id="selectInformList" resultMap="informVO">
+        SELECT
+            seq, member_seq, inform_title, inform_content, inform_link, confirm_at, chk_at, del_at, ins_dttm, confirm_dttm
+        FROM
+            t_member_inform
+        WHERE
+            1=1
+        <if test="searchChkAt != ''">
+            AND
+            chk_at = #{searchChkAt}
+        </if>
+        <if test="strSubQuery != ''">
+            AND
+            ${strSubjectQuery}
+        </if>
+        <if test="groupByQuery != ''">
+            GROUP BY
+            ${groupByQuery}
+        </if>
+        <if test="orderByQuery != ''">
+            ORDER BY
+            ${orderByQuery}
+        </if>
+    </select>
+
+    <select id="selectInform" parameterType="String" resultMap="informVO">
+        SELECT
+            seq, member_seq, inform_title, inform_content, inform_link, confirm_at, chk_at, del_at, ins_dttm, confirm_dttm
+        FROM
+            t_member_inform
+        WHERE
+            seq = #{seq}
+    </select>
+
+    <insert id="insertInform">
+
+        INSERT INTO t_member_inform
+            (member_seq, inform_title, inform_content, inform_link, confirm_at, chk_at, del_at, ins_dttm, confirm_dttm)
+        VALUES
+            (#{member_seq}, #{inform_title}, #{inform_content}, #{inform_link}, #{confirm_at}, #{chk_at}, #{del_at}, now(), #{confirm_dttm})
+
+    </insert>
+
+
+    <update id="updateInform">
+
+        UPDATE t_member_inform
+        SET
+            member_seq = #{memberSeq},
+            inform_title = #{informTitle},
+            inform_content = #{informContent},
+            inform_link = #{informLink},
+            confirm_at = #{confirmAt},
+            chk_at = #{chkAt},
+            del_at = #{delAt},
+            confirm_dttm = #{confirmDttm}
+        WHERE
+            seq = #{seq}
+
+    </update>
+
+
+</mapper>
