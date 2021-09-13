@@ -53,7 +53,7 @@
     <script  th:inline="javascript">
         /*<![CDATA[*/
         var resultMsg = "[[${resultMsg}]]";
-        if (resultMsg.length > 0) alert(resultMsg);
+        if (!isEmpty(resultMsg)) alert(resultMsg);
         /*]]>*/
     </script>
 

@@ -57,7 +57,7 @@
 
     <script  th:inline="javascript">
         var resultMsg = "[[${resultMsg}]]";
-        if ((resultMsg.length > 0) && (resultMsg != "null")) alert(resultMsg);
+        if (!isEmpty(resultMsg)) alert(resultMsg);
     </script>
 
 </th:block>
