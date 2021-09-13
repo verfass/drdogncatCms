@@ -18,7 +18,8 @@ spring:
 
   servlet:
     multipart:
-      location: /photo/tmp
+      enabled: true
+      location: ${java.io.tmpdir}
       maxFileSize: 100MB
       maxRequestSize: 200MB
 

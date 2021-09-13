@@ -128,6 +128,7 @@ public class BannerManageController {
         log.info("bannerManageVO : " + bannerManageVO.toString());
 
         model.addAttribute("bannerManageVO", bannerManageVO);
+        model.addAttribute("fileUrl", fileUrl);
 
         return "/banner/BannerSelectUpdtView";
 
