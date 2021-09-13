@@ -78,7 +78,6 @@
             JUDGMENT_RET = #{judgmentRet},
             ORD = #{ord},
             CHK_AT = #{chkAt},
-            DEL_AT = #{delAt},
             UPT_USER = #{uptUser},
             UPT_DTTM = now()
         WHERE

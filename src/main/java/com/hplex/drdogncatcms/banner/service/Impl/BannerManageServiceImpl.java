@@ -33,7 +33,7 @@ public class BannerManageServiceImpl implements BannerManageService {
 
     // insert one
     @Override
-    public int insertBanner(BannerManageVO bannerManageVO) throws Exception {
+    public String insertBanner(BannerManageVO bannerManageVO) throws Exception {
         return bannerManageDAO.insertBanner(bannerManageVO);
     }
 

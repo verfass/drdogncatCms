@@ -70,12 +70,6 @@
                     $("input[name=chkAt]").val('0');
                 }
 
-                if($("input:checkbox[name=answerAt]").is(":checked") == true) {
-                    $("input[name=answerAt]").val('1');
-                } else {
-                    $("input[name=answerAt]").val('0');
-                }
-
                 oEditors.getById["inquiryContent"].exec("UPDATE_CONTENTS_FIELD", []);
                 oEditors2.getById["answerContent"].exec("UPDATE_CONTENTS_FIELD", []);
 
@@ -173,21 +167,6 @@
                         <div class="form-group">
                             <label class="form-control-label" for="inquiryImgs">첨부 이미지 경로</label>
                             <input type="text" th:field="*{inquiryImgs}" name="inquiryImgs" id="inquiryImgs" placeholder="" class="form-control">
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-row">
-                    <div class="col-md-2 mb-3">
-                        <div class="form-group">
-                            <label class="form-control-label" for="chkAtBox">답변여부</label>
-                            <div class="mb-3">
-                                <label class="custom-toggle">
-                                    <input type="hidden" th:field="*{answerAt}" name="answerAt" id="answerAt">
-                                    <input type="checkbox" th:checked="${inquiryManageVO.answerAt=='1' ? true: false}" name="chkAtBoxx" id="chkAtBoxx">
-                                    <span class="custom-toggle-slider rounded-circle" data-label-off="답변 대기중" data-label-on="답변 완료"></span>
-                                </label>
-                            </div>
                         </div>
                     </div>
                 </div>

@@ -68,7 +68,7 @@
         <!-- Card body -->
         <div class="card-body">
 
-            <form method="post" action="#" th:action="@{/banner/BannerInsert}" th:object="${bannerManageVO}" name="form" id="form">
+            <form method="post" action="#" th:action="@{/banner/BannerInsert}" th:object="${bannerManageVO}" enctype="multipart/form-data" name="form" id="form">
 
                 <div class="form-row">
 <!--                    <div class="col-md-4 mb-3">-->
@@ -88,8 +88,9 @@
                 <div class="form-row">
                     <div class="col-md-12 mb-3">
                         <div class="form-group">
-                            <label class="form-control-label" for="bannerImg">배너 이미지</label>
-                            <input type="text" th:field="*{bannerImg}" name="bannerImg" id="bannerImg" placeholder="" class="form-control" required>
+                            <label class="form-control-label" for="file_upload">배너 이미지</label>
+                            <input type="hidden" th:field="*{bannerImg}" name="bannerImg" id="bannerImg">
+                            <input type="file" name="file" id="file_upload">
                         </div>
                     </div>
                 </div>

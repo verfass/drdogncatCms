@@ -16,6 +16,12 @@ spring:
       readOnly: false
       connectionTestQuery: SELECT 1
 
+  servlet:
+    multipart:
+      location: /photo/tmp
+      maxFileSize: 100MB
+      maxRequestSize: 200MB
+
   mail:
     host: smtp.gmail.com
     port: 587
@@ -30,7 +36,12 @@ spring:
 
   logging:
     config: classpath:log4j2.yml
+---
 
+file:
+  directory: c:/photo/resources/
+  minetype: image/gif,image/jpeg,image/png,image/bmp
+  url: https://trepo.drdogncat.com/resources
 ---
 
 spring:

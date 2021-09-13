@@ -14,7 +14,7 @@ public interface BannerManageService {
     public BannerManageVO selectBanner(String seq) throws Exception;
 
     // insert one
-    public int insertBanner(BannerManageVO bannerManageVO) throws Exception;
+    public String insertBanner(BannerManageVO bannerManageVO) throws Exception;
 
     // update one
     public void updateBanner(BannerManageVO bannerManageVO) throws Exception;

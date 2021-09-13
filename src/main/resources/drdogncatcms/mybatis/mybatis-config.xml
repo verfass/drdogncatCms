@@ -26,5 +26,6 @@
         <typeAlias type="com.hplex.drdogncatcms.challenge.service.ChallengeManageVO" alias="challengeManageVO" />
         <typeAlias type="com.hplex.drdogncatcms.mchallenge.service.MchallengeManageVO" alias="mchallengeManageVO" />
         <typeAlias type="com.hplex.drdogncatcms.inform.service.InformManageVO" alias="informManageVO" />
+        <typeAlias type="com.hplex.drdogncatcms.common.file.service.FileManageVO" alias="fileManageVO" />
     </typeAliases>
 </configuration>

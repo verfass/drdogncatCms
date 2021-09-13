@@ -12,12 +12,17 @@ import java.io.Serializable;
 @Getter
 @ToString
 @NoArgsConstructor
-public class FileManageVO implements Serializable {
+public class FileManageVO extends FileDefaultVO {
 
     private static final long serialVersionUID = 953656482741796827L;
 
+    private String seq;
+    private String sSeq;
+    private String type;
+    private String originFileName;
+    private String saveFileName;
+    private String fileSize;
+    private String delAt;
     private MultipartFile filedata;
-    private String callback;
-    private String callback_func;
 
 }

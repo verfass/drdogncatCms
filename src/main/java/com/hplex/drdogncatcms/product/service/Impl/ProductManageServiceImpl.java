@@ -33,7 +33,7 @@ public class ProductManageServiceImpl implements ProductManageService {
 
     // insert one
     @Override
-    public int insertProduct(ProductManageVO productManageVO) throws Exception {
+    public String insertProduct(ProductManageVO productManageVO) throws Exception {
         return productManageDAO.insertProduct(productManageVO);
     }
 

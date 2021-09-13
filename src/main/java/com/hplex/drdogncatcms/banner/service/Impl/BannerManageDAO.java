@@ -18,7 +18,7 @@ public interface BannerManageDAO {
     public BannerManageVO selectBanner(String seq);
 
     // insert one
-    public int insertBanner(BannerManageVO bannerManageVO);
+    public String insertBanner(BannerManageVO bannerManageVO);
 
     // update one
     public void updateBanner(BannerManageVO bannerManageVO);

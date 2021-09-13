@@ -3,13 +3,18 @@ package com.hplex.drdogncatcms.banner.web;
 import com.hplex.drdogncatcms.banner.service.BannerDefaultVO;
 import com.hplex.drdogncatcms.banner.service.BannerManageService;
 import com.hplex.drdogncatcms.banner.service.BannerManageVO;
+import com.hplex.drdogncatcms.common.file.service.FileManageService;
+import com.hplex.drdogncatcms.common.file.service.FileManageVO;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -17,10 +22,18 @@ import java.util.List;
 
 @Controller
 @Log4j2
-@AllArgsConstructor
 public class BannerManageController {
 
+    @Autowired
     private BannerManageService bannerManageService;
+
+    @Autowired
+    private FileManageService fileService;
+
+    @Value("${file.url}")
+    private String fileUrl;
+
+    private String type = "banner";
 
     @RequestMapping("/banner/BannerList")
     public String bannerList (
@@ -44,6 +57,7 @@ public class BannerManageController {
         List<?> resultList = bannerManageService.selectBannerList(bannerSearchVO);
 
         model.addAttribute("resultList", resultList);
+        model.addAttribute("fileUrl", fileUrl);
 
         return "/banner/BannerListView";
 
@@ -65,14 +79,38 @@ public class BannerManageController {
     @RequestMapping("/banner/BannerInsert")
     public String bannerInsert(
             @ModelAttribute("bannerManageVO") BannerManageVO bannerManageVO,
+            @RequestParam(value="file", required=false) MultipartFile file,
             Model model
     )throws Exception {
 
         log.debug(Thread.currentThread().getStackTrace()[1].getMethodName() + " Start =========================");
 
-        bannerManageService.insertBanner(bannerManageVO);
+        log.debug("file : " + file);
+        log.debug("file : " + file.toString());
 
-        model.addAttribute("resultMsg", "입력 되었습니다.");
+        String resultMsg = "";
+        String saveFileName = "";
+
+        String sSeq = bannerManageService.insertBanner(bannerManageVO);
+
+        if (!file.isEmpty()) {
+
+            if (fileService.isPermisionFileMimeType(file)) {
+                // 파일 저장
+                FileManageVO fileManageVO = new FileManageVO();
+                fileManageVO.setFiledata(file);
+                fileManageVO.setSSeq(sSeq);
+                fileManageVO.setType(type);
+                saveFileName = fileService.saveFile(fileManageVO);
+
+                bannerManageVO = bannerManageService.selectBanner(sSeq);
+                bannerManageVO.setBannerImg(saveFileName);
+                bannerManageService.updateBanner(bannerManageVO);
+            }
+        }
+
+        resultMsg = "입력 되었습니다.";
+        model.addAttribute("resultMsg", resultMsg);
 
         return "forward:/banner/BannerList";
     }
@@ -98,9 +136,32 @@ public class BannerManageController {
     @RequestMapping("/banner/BannerSelectUpdt")
     public String bannerSelectUpdt(
             @ModelAttribute("bannerManageVO") BannerManageVO bannerManageVO,
+            @RequestParam(value="file", required=false) MultipartFile file,
             Model model) throws Exception {
 
         log.debug(Thread.currentThread().getStackTrace()[1].getMethodName() + " Start =========================");
+
+        log.debug("file : " + file);
+        log.debug("file : " + file.toString());
+
+        String resultMsg = "";
+        String saveFileName = "";
+
+        String sSeq = bannerManageVO.getSeq();
+
+        if (!file.isEmpty()) {
+
+            if (fileService.isPermisionFileMimeType(file)) {
+                // 파일 저장
+                FileManageVO fileManageVO = new FileManageVO();
+                fileManageVO.setFiledata(file);
+                fileManageVO.setSSeq(sSeq);
+                fileManageVO.setType(type);
+                saveFileName = fileService.saveFile(fileManageVO);
+
+                bannerManageVO.setBannerImg(saveFileName);
+            }
+        }
 
         // 저장
         bannerManageService.updateBanner(bannerManageVO);

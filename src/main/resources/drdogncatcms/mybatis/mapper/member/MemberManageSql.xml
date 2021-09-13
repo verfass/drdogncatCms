@@ -92,7 +92,6 @@
             connect_dttm = #{connectDttm},
             marketing_dttm = #{marketingDttm},
             chk_at = #{chkAt},
-            del_at = #{delAt},
             upt_dttm = now(),
             upt_user = #{uptUser}
         WHERE

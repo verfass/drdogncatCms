@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hplex.drdogncatcms.common.file.service.Impl.FileManageDAO">
+
+    <resultMap type="faqManageVO" id="fileVO">
+        <result property="seq" column="seq"/>
+        <result property="sSeq" column="sSeq"/>
+        <result property="type" column="type"/>
+        <result property="originFileName" column="originFileName"/>
+        <result property="saveFileName" column="saveFileName"/>
+        <result property="fileSize" column="fileSize"/>
+        <result property="delAt" column="del_at"/>
+    </resultMap>
+
+    <select id="selectFileList" resultMap="fileVO">
+        SELECT
+            seq, sSeq, type, originFileName, saveFileName, fileSize, delAt
+        FROM
+            t_file
+        WHERE
+            1=1
+        <if test="strSubQuery != ''">
+            AND
+            ${strSubjectQuery}
+        </if>
+        <if test="groupByQuery != ''">
+            GROUP BY
+            ${groupByQuery}
+        </if>
+        <if test="orderByQuery != ''">
+            ORDER BY
+            ${orderByQuery}
+        </if>
+    </select>
+
+    <select id="selectFile" parameterType="hashMap" resultMap="fileVO">
+        SELECT
+            seq, sSeq, type, originFileName, saveFileName, fileSize, delAt
+        FROM
+            t_file
+        WHERE
+            sSeq = #{sSeq}
+            AND
+            type = #{type}
+    </select>
+
+    <insert id="insertFile">
+
+        INSERT INTO t_file
+            (sSeq, type, originFileName, saveFileName, fileSize, delAt)
+        VALUES
+            (#{sSeq}, #{type}, #{originFileName}, #{saveFileName}, #{fileSize}, 0)
+
+    </insert>
+
+
+    <update id="updateFile">
+
+        UPDATE t_file
+        SET
+            originFileName = #{originFileName},
+            type = #{type},
+            saveFileName = #{saveFileName},
+            fileSize = #{fileSize},
+            delAt = #{delAt}
+        WHERE
+            seq = #{seq}
+
+    </update>
+
+</mapper>

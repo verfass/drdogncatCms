@@ -57,7 +57,11 @@
         INSERT INTO t_banner
             (banner_title, banner_img, banner_link, banner_ord, chk_at, del_at, ins_dttm, ins_user)
         VALUES
-            (#{banner_title}, #{banner_img}, #{banner_link}, #{banner_ord}, #{chk_at}, #{del_at}, now(), #{ins_user})
+            (#{banner_title}, #{banner_img}, #{banner_link}, #{banner_ord}, #{chk_at}, 0, now(), #{ins_user})
+
+        <selectKey keyProperty="seq" resultType="String" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
 
     </insert>
 
@@ -71,7 +75,6 @@
             banner_link = #{bannerLink},
             banner_ord = #{bannerOrd},
             chk_at = #{chkAt},
-            del_at = #{delAt},
             upt_dttm = now(),
             upt_user = #{uptUser}
         WHERE

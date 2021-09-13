@@ -18,7 +18,7 @@ public interface ProductManageDAO {
     public ProductManageVO selectProduct(String seq);
 
     // insert one
-    public int insertProduct(ProductManageVO productManageVO);
+    public String insertProduct(ProductManageVO productManageVO);
 
     // update one
     public void updateProduct(ProductManageVO productManageVO);

@@ -113,6 +113,8 @@ public class InquiryManageController {
         log.debug(Thread.currentThread().getStackTrace()[1].getMethodName() + " Start =========================");
 
         // 저장
+        inquiryManageVO.setAnswerAt("0");
+        if (!inquiryManageVO.getAnswerContent().equals("")) inquiryManageVO.setAnswerAt("1");
         inquiryManageService.updateInquiry(inquiryManageVO);
 
         model.addAttribute("resultMsg", "수정 되었습니다.");

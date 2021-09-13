@@ -58,7 +58,7 @@
         INSERT INTO t_member_challenge
             (member_seq, pet_id, challenge_id, category_id, checkup_gubun, result_id, score, complete_at, chk_at, del_at, ins_dttm)
         VALUES
-            (#{member_seq}, #{pet_id}, #{challenge_id}, #{category_id}, #{checkup_gubun}, #{result_id}, #{score}, #{complete_at}, #{chk_at}, #{del_at}, now())
+            (#{member_seq}, #{pet_id}, #{challenge_id}, #{category_id}, #{checkup_gubun}, #{result_id}, #{score}, #{complete_at}, #{chk_at}, 0, now())
 
     </insert>
 
@@ -75,8 +75,7 @@
             result_id = #{resultId},
             score = #{score},
             complete_at = #{completeAt},
-            chk_at = #{chkAt},
-            del_at = #{delAt}
+            chk_at = #{chkAt}
         WHERE
             seq = #{seq}
 

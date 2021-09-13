@@ -56,7 +56,11 @@
         INSERT INTO t_product
             (product_name, product_price, product_img, product_link, product_ord, chk_at, del_at, ins_dttm)
         VALUES
-            (#{product_name}, #{product_price}, #{product_img}, #{product_link}, #{product_ord}, #{chk_at}, #{del_at}, now())
+            (#{productName}, #{productPrice}, #{productImg}, #{productLink}, #{productOrd}, #{chkAt}, 0, now())
+
+        <selectKey keyProperty="seq" resultType="String" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
 
     </insert>
 
@@ -71,7 +75,6 @@
             product_link = #{productLink},
             product_ord = #{productOrd},
             chk_at = #{chkAt},
-            del_at = #{delAt},
             upt_dttm = now()
         WHERE
             seq = #{seq}

@@ -14,7 +14,7 @@ public interface ProductManageService {
     public ProductManageVO selectProduct(String seq) throws Exception;
 
     // insert one
-    public int insertProduct(ProductManageVO productManageVO) throws Exception;
+    public String insertProduct(ProductManageVO productManageVO) throws Exception;
 
     // update one
     public void updateProduct(ProductManageVO productManageVO) throws Exception;

@@ -55,9 +55,9 @@
     <insert id="insertDisease">
 
         INSERT INTO t_disease
-            (disease_name, disease_desc, disease_cause, disease_prevent, chk_at, ins_dttm, ins_user)
+            (disease_name, disease_desc, disease_cause, disease_prevent, chk_at, del_at, ins_dttm, ins_user)
         VALUES
-            (#{diseaseName}, #{diseaseDesc}, #{diseaseCause}, #{diseasePrevent}, #{chkAt}, now(), #{insUser})
+            (#{diseaseName}, #{diseaseDesc}, #{diseaseCause}, #{diseasePrevent}, #{chkAt}, 0, now(), #{insUser})
 
     </insert>
 

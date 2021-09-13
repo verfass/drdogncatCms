@@ -106,7 +106,6 @@
             pet_reg_number = #{petRegNumber},
             pet_trouble = #{petTrouble},
             chk_at = #{chkAt},
-            del_at = #{delAt},
             upt_dttm = now()
         WHERE
             seq = #{seq}

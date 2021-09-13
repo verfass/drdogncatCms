@@ -65,13 +65,13 @@
     <div class="card">
         <!-- Card header -->
         <div class="card-header">
-            <h3 class="mb-0" th:text="${productManageVO.productSubject}"></h3>
+            <h3 class="mb-0" th:text="${productManageVO.productName}"></h3>
         </div>
         <!-- Card header -->
         <!-- Card body -->
         <div class="card-body">
 
-            <form method="post" action="#" th:action="@{/product/ProductSelectUpdt}" th:object="${productManageVO}" name="form" id="form">
+            <form method="post" action="#" th:action="@{/product/ProductSelectUpdt}" th:object="${productManageVO}" enctype="multipart/form-data" name="form" id="form">
 
                 <div class="form-row">
                     <div class="col-md-2 mb-3">
@@ -103,8 +103,7 @@
                 <div class="form-row">
                     <div class="col-md-12 mb-3">
                         <div class="form-group">
-                            <label class="form-control-label" for="productImg">상품이미지</label>
-                            <input type="text" th:field="*{productImg}" name="productImg" id="productImg" placeholder="" class="form-control" required>
+                            <img th:src="${fileUrl + productManageVO.getProductImg}">
                         </div>
                     </div>
                 </div>
@@ -112,8 +111,30 @@
                 <div class="form-row">
                     <div class="col-md-12 mb-3">
                         <div class="form-group">
+                            <label class="form-control-label" for="productImg">상품이미지</label>
+                            <input type="hidden" th:field="*{productImg}" name="productImg" id="productImg">
+                            <input type="file" name="file" id="file_upload">
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+                <div class="form-row">
+                    <div class="col-md-12 mb-3">
+                        <div class="form-group">
                             <label class="form-control-label" for="productLink">상품구매링크</label>
                             <input type="text" th:field="*{productLink}" name="productLink" id="productLink" placeholder="" class="form-control" required>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="productOrd">순서</label>
+                            <input type="text" th:field="*{productOrd}" name="productOrd" id="productOrd" placeholder="" class="form-control" required>
                         </div>
                     </div>
                 </div>
@@ -144,21 +165,6 @@
                         <div class="form-group">
                             <label class="form-control-label" for="uptDttm">수정일시</label>
                             <input type="text" th:field="*{uptDttm}" name="uptDttm" id="uptDttm" placeholder="" class="form-control" readonly>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-row">
-                    <div class="col-md-2 mb-3">
-                        <div class="form-group">
-                            <label class="form-control-label" for="insUser">등록자</label>
-                            <input type="text" th:field="*{insUser}" name="insUser" id="insUser" placeholder="" class="form-control" readonly>
-                        </div>
-                    </div>
-                    <div class="col-md-2 mb-3">
-                        <div class="form-group">
-                            <label class="form-control-label" for="uptUser">수정자</label>
-                            <input type="text" th:field="*{uptUser}" name="uptUser" id="uptUser" placeholder="" class="form-control" readonly>
                         </div>
                     </div>
                 </div>
