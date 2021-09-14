@@ -95,7 +95,7 @@ public class BannerManageController {
 
         if (!file.isEmpty()) {
 
-            if (fileService.isPermisionFileMimeType(file)) {
+//            if (fileService.isPermisionFileMimeType(file)) {
                 // 파일 저장
                 FileManageVO fileManageVO = new FileManageVO();
                 fileManageVO.setFiledata(file);
@@ -106,7 +106,7 @@ public class BannerManageController {
                 bannerManageVO = bannerManageService.selectBanner(sSeq);
                 bannerManageVO.setBannerImg(saveFileName);
                 bannerManageService.updateBanner(bannerManageVO);
-            }
+//            }
         }
 
         resultMsg = "입력 되었습니다.";
@@ -152,7 +152,7 @@ public class BannerManageController {
 
         if (!file.isEmpty()) {
 
-            if (fileService.isPermisionFileMimeType(file)) {
+//            if (fileService.isPermisionFileMimeType(file)) {
                 // 파일 저장
                 FileManageVO fileManageVO = new FileManageVO();
                 fileManageVO.setFiledata(file);
@@ -161,7 +161,7 @@ public class BannerManageController {
                 saveFileName = fileService.saveFile(fileManageVO);
 
                 bannerManageVO.setBannerImg(saveFileName);
-            }
+//            }
         }
 
         // 저장

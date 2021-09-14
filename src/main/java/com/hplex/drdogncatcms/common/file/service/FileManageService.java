@@ -21,12 +21,11 @@ public interface FileManageService {
     // insert one
     public void insertFile(FileManageVO fileManageVO) throws Exception;
 
-
     // save file
     public String saveFile(FileManageVO fileManageVO) throws Exception;
 
     public File convertFile(MultipartFile mfile) throws Exception;
 
-    public boolean isPermisionFileMimeType(MultipartFile file) throws Exception;
+//    public boolean isPermisionFileMimeType(MultipartFile file) throws Exception;
 
 }

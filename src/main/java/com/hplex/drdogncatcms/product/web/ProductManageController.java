@@ -96,7 +96,7 @@ public class ProductManageController {
 
         if (!file.isEmpty()) {
 
-            if (fileService.isPermisionFileMimeType(file)) {
+//            if (fileService.isPermisionFileMimeType(file)) {
                 // 파일 저장
                 FileManageVO fileManageVO = new FileManageVO();
                 fileManageVO.setFiledata(file);
@@ -107,7 +107,7 @@ public class ProductManageController {
                 productManageVO = productManageService.selectProduct(sSeq);
                 productManageVO.setProductImg(saveFileName);
                 productManageService.updateProduct(productManageVO);
-            }
+//            }
         }
 
         resultMsg = "입력 되었습니다.";
@@ -153,7 +153,7 @@ public class ProductManageController {
 
         if (!file.isEmpty()) {
 
-            if (fileService.isPermisionFileMimeType(file)) {
+//            if (fileService.isPermisionFileMimeType(file)) {
                 // 파일 저장
                 FileManageVO fileManageVO = new FileManageVO();
                 fileManageVO.setFiledata(file);
@@ -162,7 +162,7 @@ public class ProductManageController {
                 saveFileName = fileService.saveFile(fileManageVO);
 
                 productManageVO.setProductImg(saveFileName);
-            }
+//            }
         }
 
         // 저장
