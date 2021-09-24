@@ -47,11 +47,12 @@ dependencies {
     // Log
     implementation 'org.bgee.log4jdbc-log4j2:log4jdbc-log4j2-jdbc4.1:1.16'
     implementation 'org.springframework.boot:spring-boot-starter-log4j2'
+    implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.12.4'
 
     //Swagger2
     implementation "io.springfox:springfox-boot-starter:3.0.0"
 
-    implementation 'org.apache.tika:tika-parsers:1.27'
+//    implementation 'org.apache.tika:tika-parsers:1.27'
     implementation 'commons-io:commons-io:2.11.0'
 
 }

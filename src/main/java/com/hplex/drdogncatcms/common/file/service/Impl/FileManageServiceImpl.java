@@ -5,7 +5,6 @@ import com.hplex.drdogncatcms.common.file.service.FileManageVO;
 import com.hplex.drdogncatcms.common.file.service.FileDefaultVO;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.apache.tika.Tika;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -82,15 +81,25 @@ public class FileManageServiceImpl implements FileManageService {
             String saveFileName = fileManageVO.getSSeq() + "." + extension;
             String type = fileManageVO.getType();
 
+            log.debug("orginFileName : " + orginFileName);
+            log.debug("extension : " + extension);
+            log.debug("fileSize : " + fileSize);
+            log.debug("saveFileName : " + saveFileName);
+            log.debug("type : " + type);
+
             String uploadPath = fileDirectory + type + "/";
             String uploadFile = uploadPath + saveFileName;
             File destdir = new File(uploadPath); //디렉토리 가져오기
+
+            log.debug("fileDirectory : " + fileDirectory);
+            log.debug("uploadPath : " + uploadPath);
+            log.debug("uploadFile : " + uploadFile);
 
             if(!destdir.exists()){
                 destdir.mkdirs(); //디렉토리가 존재하지 않는다면 생성
             }
 
-            log.info("파일 저장 경로 = {}", uploadFile);
+            log.debug("파일 저장 경로 : " + uploadFile);
             file.transferTo(new File(uploadFile));
 
             fileManageVO.setOriginFileName(orginFileName);
@@ -99,6 +108,11 @@ public class FileManageServiceImpl implements FileManageService {
             fileManageVO.setDelAt("0");
 
             ret = "/" + type + "/" + saveFileName;
+
+            log.debug("ret : " + ret);
+
+
+
         }
 
         return ret;
@@ -130,18 +144,18 @@ public class FileManageServiceImpl implements FileManageService {
      * @return boolean
      * @throws Exception
      */
-    @Override
-    public boolean isPermisionFileMimeType(MultipartFile file) throws Exception {
-        final String[] PERMISSION_FILE_MIME_TYPE = ableMinetype;
-        String mimeType = new Tika().detect(convertFile(file));
-        boolean isPermisionFileMimeType = false;
-        for( int i = 0; i < PERMISSION_FILE_MIME_TYPE.length; i++ ) {
-            if( PERMISSION_FILE_MIME_TYPE[i].equals(mimeType) ) {
-                isPermisionFileMimeType = true;
-                break;
-            }
-        }
-        return isPermisionFileMimeType;
-    }
+//    @Override
+//    public boolean isPermisionFileMimeType(MultipartFile file) throws Exception {
+//        final String[] PERMISSION_FILE_MIME_TYPE = ableMinetype;
+//        String mimeType = new Tika().detect(convertFile(file));
+//        boolean isPermisionFileMimeType = false;
+//        for( int i = 0; i < PERMISSION_FILE_MIME_TYPE.length; i++ ) {
+//            if( PERMISSION_FILE_MIME_TYPE[i].equals(mimeType) ) {
+//                isPermisionFileMimeType = true;
+//                break;
+//            }
+//        }
+//        return isPermisionFileMimeType;
+//    }
 
 }

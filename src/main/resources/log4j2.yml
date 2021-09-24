@@ -1,6 +1,6 @@
 Configutation:
   name: Default
-  status: debug
+  status: warn
 
   Properties:
     Property:
@@ -44,9 +44,9 @@ Configutation:
         - ref: File_Appender
         - ref: RollingFile_Appender
     Logger:
-      - name: com.mbfsk.scm
+      - name: com.hplex.drdogncatcms
         additivity: false
-        level: error
+        level: debug
         AppenderRef:
           - ref: Console_Appender
           - ref: File_Appender

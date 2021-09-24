@@ -34,13 +34,15 @@ spring:
           auth: true
           starttls:
             enable: true
+---
 
   logging:
     config: classpath:log4j2.yml
+
 ---
 
 file:
-  directory: c:/photo/resources/
+  directory: /photo/resources/
   minetype: image/gif,image/jpeg,image/png,image/bmp
   url: https://trepo.drdogncat.com/resources
 ---
