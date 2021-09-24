@@ -39,7 +39,7 @@
         SELECT
             seq, member_seq, pet_id, present_gubun, expiration_dt, challenge_id, present_type, present_code, present_name, present_num, review_link, receive_name, receive_phonenumber, receive_post, receive_address1, receive_address2, delivery_memo, delivery_code, delivery_search, state_step, reject_code, reject_memo, chk_at, del_at, ins_dttm, upt_dttm, check_user, check_dttm
         FROM
-            t_present
+            t_member_present
         WHERE
             1=1
         <if test="searchChkAt != ''">
@@ -64,14 +64,14 @@
         SELECT
             seq, member_seq, pet_id, present_gubun, expiration_dt, challenge_id, present_type, present_code, present_name, present_num, review_link, receive_name, receive_phonenumber, receive_post, receive_address1, receive_address2, delivery_memo, delivery_code, delivery_search, state_step, reject_code, reject_memo, chk_at, del_at, ins_dttm, upt_dttm, check_user, check_dttm
         FROM
-            t_present
+            t_member_present
         WHERE
             seq = #{seq}
     </select>
 
     <insert id="insertPresent">
 
-        INSERT INTO t_present
+        INSERT INTO t_member_present
             (member_seq, pet_id, present_gubun, expiration_dt, challenge_id, present_type, present_code, present_name, present_num, review_link, receive_name, receive_phonenumber, receive_post, receive_address1, receive_address2, delivery_memo, delivery_code, delivery_search, state_step, reject_code, reject_memo, chk_at, del_at, ins_dttm, check_user, check_dttm)
         VALUES
             (#{member_seq}, #{pet_id}, #{present_gubun}, #{expiration_dt}, #{challenge_id}, #{present_type}, #{present_code}, #{present_name}, #{present_num}, #{review_link}, #{receive_name}, #{receive_phonenumber}, #{receive_post}, #{receive_address1}, #{receive_address2}, #{delivery_memo}, #{delivery_code}, #{delivery_search}, #{state_step}, #{reject_code}, #{reject_memo}, #{chk_at}, 0, now(), #{check_user}, #{check_dttm})
@@ -81,7 +81,7 @@
 
     <update id="updatePresent">
 
-        UPDATE t_present
+        UPDATE t_member_present
         SET
             member_seq = #{memberSeq},
             pet_id = #{petId},

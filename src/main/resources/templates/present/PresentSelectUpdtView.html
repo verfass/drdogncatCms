@@ -65,7 +65,7 @@
     <div class="card">
         <!-- Card header -->
         <div class="card-header">
-            <h3 class="mb-0" th:text="${presentManageVO.presentSubject}"></h3>
+            <h3 class="mb-0" th:text="${presentManageVO.presentName}"></h3>
         </div>
         <!-- Card header -->
         <!-- Card body -->
@@ -278,14 +278,14 @@
                 <div class="form-row">
                     <div class="col-md-2 mb-3">
                         <div class="form-group">
-                            <label class="form-control-label" for="insUser">등록자</label>
-                            <input type="text" th:field="*{insUser}" name="insUser" id="insUser" placeholder="" class="form-control" readonly>
+                            <label class="form-control-label" for="checkUser">체크자</label>
+                            <input type="text" th:field="*{checkUser}" name="checkUser" id="checkUser" placeholder="" class="form-control" readonly>
                         </div>
                     </div>
                     <div class="col-md-2 mb-3">
                         <div class="form-group">
-                            <label class="form-control-label" for="uptUser">수정자</label>
-                            <input type="text" th:field="*{uptUser}" name="uptUser" id="uptUser" placeholder="" class="form-control" readonly>
+                            <label class="form-control-label" for="checkDttm">체크일시</label>
+                            <input type="text" th:field="*{checkDttm}" name="checkDttm" id="checkDttm" placeholder="" class="form-control" readonly>
                         </div>
                     </div>
                 </div>
