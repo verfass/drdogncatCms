@@ -110,4 +110,20 @@ public class DiseaseManageController {
         return "forward:/disease/DiseaseList";
 
     }
+
+    @RequestMapping("/disease/DiseaseDelete")
+    public String diseaseDelete(
+            @ModelAttribute("diseaseManageVO") DiseaseManageVO diseaseManageVO,
+            Model model) throws Exception {
+
+        log.debug(Thread.currentThread().getStackTrace()[1].getMethodName() + " Start =========================");
+
+        // 저장
+        diseaseManageService.deleteDisease(diseaseManageVO);
+
+        model.addAttribute("resultMsg", "삭제 되었습니다.");
+
+        return "forward:/disease/DiseaseList";
+
+    }
 }

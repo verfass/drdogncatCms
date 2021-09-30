@@ -41,4 +41,10 @@ public class DiseaseManageServiceImpl implements DiseaseManageService {
     public void insertDisease(DiseaseManageVO diseaseManageVO) throws Exception {
         diseaseManageDAO.insertDisease(diseaseManageVO);
     }
+
+    // delete one
+    @Override
+    public void deleteDisease(DiseaseManageVO diseaseManageVO) throws Exception {
+        diseaseManageDAO.deleteDisease(diseaseManageVO);
+    }
 }

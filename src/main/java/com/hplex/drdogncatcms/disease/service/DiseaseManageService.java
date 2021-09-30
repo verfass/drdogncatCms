@@ -13,6 +13,9 @@ public interface DiseaseManageService {
     // update one
     public void updateDisease(DiseaseManageVO diseaseManageVO) throws Exception;
 
+    // delete one
+    public void deleteDisease(DiseaseManageVO diseaseManageVO) throws Exception;
+
     // insert one
     public void insertDisease(DiseaseManageVO diseaseManageVO) throws Exception;
 

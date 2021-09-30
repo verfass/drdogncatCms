@@ -22,4 +22,7 @@ public interface DiseaseManageDAO {
 
     // insert one
     public void insertDisease(DiseaseManageVO diseaseManageVO);
+
+    // delete one
+    public void deleteDisease(DiseaseManageVO diseaseManageVO);
 }

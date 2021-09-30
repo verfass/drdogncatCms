@@ -25,9 +25,11 @@
             t_disease
         WHERE
             1=1
+            AND
+            del_at = 0
         <if test="searchChkAt != ''">
             AND
-            CHK_AT = #{searchChkAt}
+            chk_at = #{searchChkAt}
         </if>
         <if test="strSubQuery != ''">
             AND
@@ -77,5 +79,13 @@
             seq = #{seq}
 
     </update>
+
+    <select id="deleteDisease" parameterType="String">
+        UPDATE t_disease
+        SET
+            del_at = 1
+        WHERE
+            seq = #{seq}
+    </select>
 
 </mapper>
